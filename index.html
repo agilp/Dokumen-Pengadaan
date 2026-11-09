@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="firebase-config.js"></script>
+<script>window.__fbReady=new Promise(function(r){window.__fbDone=r})</script>
 <title>Dokumen Pengadaan</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 </head>
@@ -40,6 +42,12 @@ button,input,select,textarea{font:inherit;color:inherit}
 .sp{flex:1}
 .who{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
 .bar .who{color:rgba(255,255,255,.8)}
+.bar .who small{font-size:11px;opacity:.85;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,.14)}
+.bar .who #who{color:#fff;font-weight:600}
+#gate{position:fixed;inset:0;z-index:999;background:#fff;display:none;align-items:center;justify-content:center;padding:24px}
+#gate .gc{max-width:440px;width:100%;border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 10px 40px rgba(20,40,75,.12);text-align:center}
+#gate h2{margin:0 0 8px;color:var(--navy)}#gate p{color:var(--muted);margin:6px 0 16px}
+@media print{#gate{display:none!important}}
 .bar .who select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.32);border-radius:10px;padding:5px 10px;color:#fff}
 .bar .who select option{color:var(--ink);background:#fff}
 .wrap{max-width:1080px;margin:0 auto;padding-top:28px;display:flex;flex-direction:column;gap:22px}
@@ -260,9 +268,7 @@ table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
   <button class="brand" data-go="" aria-label="Ke halaman awal"><b>Unit Bangunan Daop 2 Bandung</b><span>Dokumen Pengadaan</span></button>
   <span class="crumb" id="crumb"></span>
   <span class="sp"></span>
-  <label class="who" for="who">Masuk sebagai
-    <select id="who"><option>Admin 1 (input)</option><option>Admin 2 (verifikasi)</option></select>
-  </label>
+  <div class="who" id="whobox"><span id="who">Admin</span><small id="savest"></small></div>
 </div></div>
 
 <main class="wrap" id="app"></main>
@@ -1054,11 +1060,15 @@ V.format=()=>{
   <div class="panel"><div class="panel-h"><h2>Jenis dokumen</h2><span class="chip warn">Menunggu PDF format</span></div><div class="scroll"><table><thead><tr><th>Dokumen</th><th>Status template</th></tr></thead><tbody>${D.map(x=>`<tr><td>${x}</td><td>${(x==='RKS'||x==='Surat Undangan Pemilihan Langsung'||x==='Daftar Pengambilan Dokumen'||x==='FPPH'||x==='Pakta Integritas Mitra'||x==='SPPH'||x==='BA Pembukaan Penawaran'||x==='Ceklist Kelengkapan Administrasi dan Teknis')?'<span class="chip ok">Tersedia</span>':'<span class="chip">Belum ada</span>'}</td></tr>`).join('')}</tbody></table></div>
   <div class="note">Urutan pengerjaan yang diusulkan: SPK, BAST, lalu dokumen lainnya mengikuti timeline.</div></div>`;
 };
-V.admin=()=>`<div class="head"><span class="tag">Admin dan akses</span><h1>Dua admin</h1><p>Contoh pembagian peran. Pada versi online, tiap admin punya akun sendiri dan setiap perubahan tercatat.</p></div>
+V.admin=()=>`<div class="head"><span class="tag">Admin dan akses</span><h1>Dua admin</h1><p>Pembagian peran dua admin. Login memakai akun claude.ai masing-masing.</p></div>
  <div class="panel"><div class="scroll"><table><thead><tr><th>Akun</th><th>Peran</th><th>Boleh</th></tr></thead><tbody>
   <tr><td>Admin 1</td><td><span class="chip acc">Input</span></td><td>Membuat paket, mengubah tanggal dan nomor, menandai dokumen Proses.</td></tr>
   <tr><td>Admin 2</td><td><span class="chip ok">Verifikasi</span></td><td>Memeriksa dokumen dan menandai Selesai, melihat seluruh monitoring.</td></tr></tbody></table></div>
- <div class="note">Peran bisa disamakan kalau keduanya boleh melakukan semuanya. Pilihan masuk sebagai di pojok kanan atas hanya untuk peragaan.</div></div>
+ <div class="note">Peran bisa disamakan kalau keduanya boleh melakukan semuanya.</div></div>
+ <div class="panel"><div class="panel-h"><h2>Akun admin terdaftar</h2><span class="chip ${SAVE.db?'ok':'warn'}">${SAVE.db?'Database aktif':'Mode lokal'}</span></div><div class="scroll"><table><thead><tr><th>Slot</th><th>Pengguna</th><th></th></tr></thead><tbody>${[0,1].map(i=>`<tr><td>Admin ${i+1} (${i?'verifikasi':'input'})</td><td>${SAVE.slots[i]?esc(SAVE.names[SAVE.slots[i]]||'Pengguna terdaftar')+(SAVE.slots[i]===SAVE.uid?' (Anda)':''):'<span class="chip">kosong</span>'}</td><td>${SAVE.owner&&SAVE.slots[i]?`<button class="btn sm" data-slot-del="${i}">Lepas</button>`:''}</td></tr>`).join('')}</tbody></table></div>
+ <div class="note">Hanya dua orang yang bisa masuk. Orang pertama dan kedua yang masuk mengisi slot Admin 1 dan Admin 2. Pemilik halaman bisa melepas slot supaya diganti orang lain.</div></div>
+ <div class="panel"><div class="panel-h"><h2>Cadangan data</h2></div><div style="padding:14px 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button class="btn pri" id="bkexp">Ekspor data (JSON)</button><button class="btn" id="bkimp">Impor data</button><input type="file" id="bkfile" accept="application/json,.json" hidden><span class="src" id="bkmsg"></span></div>
+ <div class="note">Ekspor menyimpan semua paket, monitoring, mitra, penandatangan, logo, dan gambar kop ke satu file di perangkat Anda. Impor mengganti seluruh data sekarang dengan isi file tersebut.</div></div>
  <div class="panel"><div class="panel-h"><h2>Catatan perubahan</h2><span class="chip">contoh</span></div><div class="scroll"><table><tbody>
   <tr><td class="mono">13 Okt 2026</td><td>Admin 1</td><td>Membuat paket 53</td></tr>
   <tr><td class="mono">19 Okt 2026</td><td>Admin 2</td><td>SPK paket 53 ditandai Selesai</td></tr></tbody></table></div></div>`;
@@ -1192,7 +1202,117 @@ document.addEventListener('submit',e=>{
   const mi=Number(v('f_no')),r=MON[mi],p={id:nextId++,no:monNo(r,mi),nama:v('f_nama').trim(),rab:Number(v('f_rab')),pr:v('f_pr').trim(),done:0,proc:0,contoh:false,st:{},mon:r,...common,tglRab:iso(snap(TODAY)),tglPD:iso(snap(r&&r.tglpr?d0(r.tglpr):add(TODAY,7))),tglUji:iso(snap(add(TODAY,45))),tglBayar:iso(snap(add(TODAY,53)))};
   ensureDt(p);push(r);P.push(p);cur=p.id;prefill=null;location.hash='timeline';
 });
+/* ===== Penyimpanan database dan login 2 admin ===== */
+const SAVE={db:null,uid:null,owner:false,slots:[],names:{},ready:false,last:'',img:{},busy:false,tab:Math.random().toString(36).slice(2,9),pending:null};
+const pgate=h=>{let o=document.getElementById('gate');if(!o){o=document.createElement('div');o.id='gate';document.body.appendChild(o)}o.innerHTML=h?`<div class="gc">${h}</div>`:'';o.style.display=h?'flex':'none'};
+const setSt=t=>{const e=document.getElementById('savest');if(e)e.textContent=t};
+const snapState=()=>JSON.stringify({P:P.map(p=>({...p,mon:MON.indexOf(p.mon)})),MON,MIT,SGL,nextId,cur});
+function applyState(str){const o=JSON.parse(str);MON=o.MON;MIT=o.MIT;P.length=0;o.P.forEach(p=>{p.mon=p.mon>=0?MON[p.mon]:undefined;P.push(p)});SGL.length=0;o.SGL.forEach(x=>SGL.push(x));nextId=o.nextId;cur=o.cur;syncSign()}
+const IMG={top:{get:()=>KOP.top||'',set:v=>{KOP.top=v}},bot:{get:()=>KOP.bot===FOOTDEF?'':KOP.bot||'',set:v=>{KOP.bot=v||FOOTDEF}},logo:{get:()=>{const i=document.getElementById('logoimg');return i&&!i.hidden&&i.src.startsWith('data:')?i.src:''},set:v=>{if(v)setLogo(v)}}};
+const CH=80000;
+async function putBlob(name,str){const n=Math.max(1,Math.ceil(str.length/CH));for(let i=0;i<n;i++)await SAVE.db.doc('store/'+name+'_'+i).set({s:str.slice(i*CH,(i+1)*CH)});await SAVE.db.doc('store/'+name).set({n,by:SAVE.tab,at:Date.now()})}
+async function getBlob(name){const m=await SAVE.db.doc('store/'+name).get();if(!m.exists)return null;const n=m.data().n;let o='';for(let i=0;i<n;i++){const d=await SAVE.db.doc('store/'+name+'_'+i).get();if(!d.exists)return undefined;o+=d.data().s}return o}
+async function tick(){if(!SAVE.ready||SAVE.busy)return;SAVE.busy=true;try{
+  const st=snapState();if(st!==SAVE.last){setSt('Menyimpan…');await putBlob('data',st);SAVE.last=st}
+  for(const k in IMG){const v=IMG[k].get();if(v!==SAVE.img[k]){if(v.length>3e6){setSt('Gambar terlalu besar');SAVE.img[k]=v;continue}await putBlob('img_'+k,v);SAVE.img[k]=v}}
+  setSt('Tersimpan')}catch(e){setSt('Gagal menyimpan')}finally{SAVE.busy=false}}
+function applyRemote(){const a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)){setTimeout(applyRemote,2500);return}
+  const f=SAVE.pending;SAVE.pending=null;if(f)f();render(true)}
+function watch(name,onStr){let first=true;SAVE.db.doc('store/'+name).onSnapshot(async sn=>{if(first){first=false;return}if(!sn.exists)return;const d=sn.data();if(d.by===SAVE.tab)return;
+  try{const str=await getBlob(name);if(!str&&str!=='')return;onStr(str)}catch(_){}},()=>{})}
+const roleName=i=>i===0?'Admin 1 (input)':i===1?'Admin 2 (verifikasi)':'Pemilik';
+async function resolveNames(user){try{const ps=await user.profiles(SAVE.slots.filter(Boolean));for(const id in ps)SAVE.names[id]=ps[id].name||''}catch(_){}}
+function showWho(){const i=SAVE.slots.indexOf(SAVE.uid),e=document.getElementById('who');if(e)e.textContent=(SAVE.me&&SAVE.me.name?SAVE.me.name+' · ':'')+roleName(i>=0?i:(SAVE.owner?-1:-2))}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-slot-del]');if(!b||!SAVE.db||!SAVE.owner)return;const i=Number(b.dataset.slotDel),sl=SAVE.slots.slice();sl.splice(i,1);SAVE.db.doc('store/admins').set({slots:sl}).then(()=>{SAVE.slots=sl;render(true)})});
+const bkMsg=t=>{const e=document.getElementById('bkmsg');if(e)e.textContent=t};
+document.addEventListener('click',async e=>{
+  if(e.target.id==='bkimp'){document.getElementById('bkfile').click();return}
+  if(e.target.id!=='bkexp')return;
+  const img={};for(const k in IMG)img[k]=IMG[k].get();
+  const txt=JSON.stringify({app:'dokumen-pengadaan',v:1,at:new Date().toISOString(),state:snapState(),img});
+  const nm='cadangan-dokumen-pengadaan-'+new Date().toISOString().slice(0,10)+'.json';
+  try{const dl=window.claude&&claude.use?await claude.use('downloads'):null;
+    if(dl){const r=await dl.save({filename:nm,data:txt});bkMsg(r&&r.status==='saved'?'Tersimpan di perangkat':'Dibatalkan')}
+    else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download=nm;document.body.appendChild(a);a.click();a.remove();bkMsg('File diunduh')}
+  }catch(_){bkMsg('Gagal mengekspor')}});
+document.addEventListener('change',async e=>{
+  if(e.target.id!=='bkfile')return;const f=e.target.files[0];e.target.value='';if(!f)return;
+  try{const o=JSON.parse(await f.text());if(o.app!=='dokumen-pengadaan'||!o.state)throw 0;JSON.parse(o.state);
+    if(!confirm('Ganti seluruh data sekarang dengan isi file ini?'))return;
+    applyState(o.state);for(const k in IMG)if(o.img&&typeof o.img[k]==='string')IMG[k].set(o.img[k]);
+    render(true);bkMsg('Data diimpor'+(SAVE.ready?' dan sedang disimpan':''))}
+  catch(_){bkMsg('File tidak valid')}},true);
+async function boot(){
+  pgate('<h2>Memuat data…</h2><p>Menghubungkan ke database.</p>');
+  if(window.__fbReady)await window.__fbReady;
+  const tmo=new Promise(r=>setTimeout(()=>r('timeout'),12000));
+  const run=(async()=>{
+    if(!window.claude||!claude.use)return 'local';
+    const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
+    if(!db||!user)return 'local';
+    SAVE.db=db;const me=await user.me();SAVE.me=me;SAVE.uid=me.id;SAVE.owner=me.isOwner;
+    if(!me.id&&!me.isOwner)return 'noid';
+    const FB=!!window.__fbAdmins;
+    if(FB){SAVE.slots=window.__fbAdmins.slice(0,2);if(SAVE.slots.indexOf(me.id)<0)return 'full'}
+    const adRef=db.doc('store/admins');let d=FB?{slots:SAVE.slots}:((await adRef.get()).data()||{slots:[]});SAVE.slots=d.slots||[];
+    let idx=SAVE.slots.indexOf(me.id);
+    if(!FB&&idx<0&&(SAVE.slots.length<2||!me.isOwner)){
+      if(SAVE.slots.length>=2)return 'full';
+      const ok=await new Promise(res=>{pgate(`<h2>Masuk</h2><p>${esc(me.name||'Pengguna')}, slot <b>Admin ${SAVE.slots.length+1}</b> masih kosong. Daftar dan masuk sebagai admin?</p><button class="btn pri" id="gjoin">Masuk sebagai Admin ${SAVE.slots.length+1}</button>`);document.getElementById('gjoin').onclick=()=>res(true)});
+      pgate('<h2>Mendaftarkan…</h2>');
+      const l=await db.doc('store/claim').acquire({holder:me.id,ttlMs:8000});
+      if(!l.acquired)return 'busy';
+      d=(await adRef.get()).data()||{slots:[]};SAVE.slots=d.slots||[];
+      if(SAVE.slots.indexOf(me.id)<0){if(SAVE.slots.length>=2)return 'full';SAVE.slots.push(me.id);await adRef.set({slots:SAVE.slots})}
+    }
+    await resolveNames(user);
+    const str=await getBlob('data');
+    if(str){applyState(str);SAVE.last=str}
+    for(const k in IMG){const v=await getBlob('img_'+k);if(v!==null&&v!==undefined){IMG[k].set(v);SAVE.img[k]=v}else SAVE.img[k]=IMG[k].get()}
+    if(!FB)adRef.onSnapshot(async sn=>{const dd=sn.data()||{slots:[]};SAVE.slots=dd.slots||[];await resolveNames(user);showWho();
+      if(SAVE.uid&&!SAVE.owner&&SAVE.slots.indexOf(SAVE.uid)<0){SAVE.ready=false;pgate('<h2>Akses dilepas</h2><p>Slot admin Anda dilepas oleh pemilik. Muat ulang halaman untuk mendaftar kembali jika slot masih ada.</p>')}
+      else if((location.hash||'').replace('#','')==='admin')render(true)},()=>{});
+    watch('data',str=>{SAVE.pending=()=>{applyState(str);SAVE.last=str};applyRemote()});
+    for(const k in IMG)watch('img_'+k,v=>{SAVE.pending=()=>{IMG[k].set(v);SAVE.img[k]=v};applyRemote()});
+    return 'ok'})();
+  let r;try{r=await Promise.race([run,tmo])}catch(e){r='error'}
+  const msg={noid:'Anda belum masuk. Masuk ke claude.ai lalu buka kembali halaman ini.',full:'Dua admin sudah terdaftar. Minta pemilik halaman melepas satu slot.',busy:'Pendaftaran sedang diproses orang lain. Muat ulang halaman.'};
+  if(msg[r]){pgate(`<h2>Tidak bisa masuk</h2><p>${msg[r]}</p>`);return}
+  if(r==='ok'){SAVE.ready=true;pgate('');showWho();render(true);setSt('Tersimpan');setInterval(tick,2000);tick()}
+  else{pgate('');SAVE.db=null;const w=document.getElementById('who');if(w)w.textContent='Mode lokal';setSt(r==='local'?'Data tidak tersimpan':'Database tidak terjangkau')}
+}
 render();
+boot();
+</script>
+
+<script type="module">
+const cfg=window.FIREBASE_CONFIG;
+if(!cfg||!cfg.apiKey||String(cfg.apiKey).startsWith('ISI')){window.__fbDone(false)}
+else try{
+  const V='10.14.1',B='https://www.gstatic.com/firebasejs/'+V+'/';
+  const {initializeApp}=await import(B+'firebase-app.js');
+  const A=await import(B+'firebase-auth.js'),F=await import(B+'firebase-firestore.js');
+  const app=initializeApp(cfg),auth=A.getAuth(app),fs=F.getFirestore(app);
+  let u=await new Promise(res=>{const off=A.onAuthStateChanged(auth,x=>{off();res(x)})});
+  while(!u){
+    u=await new Promise(res=>{
+      const o=document.createElement('div');o.style.cssText='position:fixed;inset:0;z-index:1000;background:#fff;display:flex;align-items:center;justify-content:center;padding:24px;font-family:Plus Jakarta Sans,system-ui,sans-serif';
+      o.innerHTML='<form style="max-width:380px;width:100%;border:1px solid #DEE4EE;border-radius:18px;padding:28px;box-shadow:0 10px 40px rgba(20,40,75,.12)"><h2 style="margin:0 0 6px;color:#14284B">Masuk</h2><p style="margin:0 0 16px;color:#5F6C82;font-size:14px">Unit Bangunan Daop 2 Bandung. Khusus admin.</p><label style="font-size:13px;color:#5F6C82">Email</label><input name="e" type="email" required autocomplete="username" style="display:block;width:100%;box-sizing:border-box;margin:4px 0 12px;padding:10px;border:1px solid #DEE4EE;border-radius:10px;font:inherit"><label style="font-size:13px;color:#5F6C82">Kata sandi</label><input name="p" type="password" required autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;margin:4px 0 14px;padding:10px;border:1px solid #DEE4EE;border-radius:10px;font:inherit"><button style="width:100%;padding:11px;border:0;border-radius:10px;background:#14284B;color:#fff;font:inherit;font-weight:600;cursor:pointer">Masuk</button><p id="lerr" style="color:#B3261E;font-size:13px;margin:10px 0 0;min-height:18px"></p></form>';
+      document.body.appendChild(o);
+      o.querySelector('form').onsubmit=async ev=>{ev.preventDefault();const f=ev.target;
+        try{const c=await A.signInWithEmailAndPassword(auth,f.e.value.trim(),f.p.value);o.remove();res(c.user)}
+        catch(err){o.querySelector('#lerr').textContent='Email atau kata sandi salah.'}}
+    })}
+  const wrap=s=>({id:s.id,exists:s.exists(),data:()=>s.exists()?s.data():undefined,metadata:{}});
+  const db={doc:p=>{const ref=F.doc(fs,p);return{path:p,get:async()=>wrap(await F.getDoc(ref)),set:async d=>{await F.setDoc(ref,d)},acquire:async()=>({acquired:true}),onSnapshot:(n,e)=>F.onSnapshot(ref,s=>n(wrap(s)),e)}}};
+  const em=(u.email||'').toLowerCase(),nm=x=>String(x).split('@')[0];
+  const user={me:async()=>({id:em,name:nm(em),isOwner:false}),profiles:async ids=>Object.fromEntries(ids.map(i=>[i,{id:i,name:nm(i)}]))};
+  window.claude={use:async n=>n==='db'?db:n==='user'?user:null};
+  window.__fbAdmins=(window.FIREBASE_ADMINS||[]).map(x=>String(x).toLowerCase());
+  const box=document.getElementById('whobox');
+  if(box){const b=document.createElement('button');b.textContent='Keluar';b.style.cssText='margin-left:8px;padding:3px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.4);background:transparent;color:#fff;font:inherit;font-size:11px;cursor:pointer';b.onclick=async()=>{await A.signOut(auth);location.reload()};box.appendChild(b)}
+  window.__fbDone(true);
+}catch(e){console.error(e);window.__fbDone(false)}
 </script>
 
 </body>
