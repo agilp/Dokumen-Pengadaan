@@ -273,8 +273,8 @@ table.tl select.sel{padding:4px 8px}
 .nmin{min-width:210px}
 .twin{min-width:170px}
 .paper.land{max-width:1140px}
-.pg.land{min-height:0;padding:30px 36px}.pg.fit{padding-left:40px;padding-right:40px}.pg.fit .kopaddr{left:40px}.pg.fit .kopfoot{right:40px}
-@media print{.rkspad{height:24mm!important}.paper:not(.flat){padding:0 27mm!important}.paper.rksp{padding:0 15mm!important;font-size:14px!important}.paper.dfp .rkspad{height:16mm!important}@page land{size:A4 landscape;margin:0}.pg.land{page:land;height:210mm!important;min-height:210mm!important;padding:12mm 20mm!important}}
+.pg.land{min-height:0;padding:30px 36px}.pg.aw{padding-left:40px;padding-right:40px}.pg.fit{padding-left:40px;padding-right:40px}.pg.fit .kopaddr{left:40px}.pg.fit .kopfoot{right:40px}
+@media print{.pg.nf.aw{padding:20mm 15mm!important}.rkspad{height:24mm!important}.paper:not(.flat){padding:0 27mm!important}.paper.rksp{padding:0 15mm!important;font-size:14px!important}.paper.dfp .rkspad{height:16mm!important}@page land{size:A4 landscape;margin:0}.pg.land{page:land;height:210mm!important;min-height:210mm!important;padding:12mm 20mm!important}}
 .dtw{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .dtw .dn{min-width:48px;font-weight:600}
 table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
@@ -1355,7 +1355,7 @@ function aanwDoc(p){
   const sg=(r,nm,ni)=>`<td style="text-align:center;vertical-align:top;border:0!important;width:33%"><span style="font-size:12.5px">${r}</span><div style="height:62px"></div><b><u>${esc(nm)}</u></b><br><b>NIPP. ${esc(ni)}</b></td>`;
   const kv=(a,b)=>`<tr><td style="width:215px;vertical-align:top">${a}</td><td style="width:14px;vertical-align:top">:</td><td>${b}</td></tr>`;
   const peri=`<div style="border-top:4px solid #000;margin:12px 0 0"></div><div style="border-top:1px solid #000;margin-top:2px"></div>`;
-  return `<div class="pg nf"><div style="text-align:center;line-height:1.45">PT. KERETA API INDONESIA ( Persero)<br>DAOP 2 BANDUNG<br>JALAN STASIUN SELATAN&nbsp; NO. 25 BANDUNG<br>TELEPON NO. (022) 4230150 FAX NO. (022) 4237874</div>
+  return `<div class="pg nf aw"><div style="text-align:center;line-height:1.45">PT. KERETA API INDONESIA ( Persero)<br>DAOP 2 BANDUNG<br>JALAN STASIUN SELATAN&nbsp; NO. 25 BANDUNG<br>TELEPON NO. (022) 4230150 FAX NO. (022) 4237874</div>
 <div style="border-top:4px solid #000;margin:14px 0 12px"></div>
 <div style="text-align:center;line-height:1.5"><b>BERITA ACARA</b><br><b>Penjelasan Umum Administrasi dan Teknis (Aanwijzing)</b><br>PEKERJAAN<br><b>${esc(nmK(p))}</b></div>
 <div style="border-top:4px solid #000;margin:12px 0 14px"></div>
@@ -1367,7 +1367,7 @@ function aanwDoc(p){
 <tr><td style="vertical-align:top">3.</td><td><table style="width:100%">${kv('Waktu',esc(k.aanwJam)+' - sampai dengan selesai')}</table></td></tr></table>
 <p style="margin:14px 0 2px">Pokok-pokok penjelasan, perubahan dan penambahan adalah sebagai berikut :</p>
 <div style="border-bottom:1px solid #000;height:19px"><b><i><u>Sudah jelas dan dapat dimengerti</u></i></b></div>${ln(19)}</div>
-<div class="pg nf">${ln(12)}
+<div class="pg nf aw">${ln(12)}
 <p style="text-align:right;margin:14px 0 14px">Bandung, ${fmtL(t)}</p>
 <p style="text-align:center;margin:0 0 10px">Pejabat Pengadaan Barang /Jasa</p>
 <table style="width:100%;margin-bottom:56px"><tr>${sg('Ketua Pengadaan Barang/Jasa<br>Unit Bangunan',SIGN.ketua,SIGN.ketuaNipp)}${sg('Anggota Pengadaan Barang/Jasa<br>Unit Bangunan',SIGN.tim3,SIGN.tim3Nipp)}${sg('Anggota Pengadaan Barang/Jasa<br>Unit Bangunan',SIGN.tim2,SIGN.tim2Nipp)}</tr></table>
