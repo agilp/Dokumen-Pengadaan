@@ -474,7 +474,9 @@ function gen(p,raw){
    ['Negosiasi','BA Negosiasi',n('BAN',ban),ban],
    ['Negosiasi','Keputusan Penetapan Penyedia',n('KPPBJ',ban),ban],
    ['Negosiasi','Pakta Integritas PBJ','-',ban],
+   ['SPK','Surat Pernyataan','-',spk],
    ['SPK','Surat Perintah Kerja (SPK)',n('SPK',spk),spk],
+   ['SPK','Lampiran SPK',n('SPK',spk),spk],
    ['SPK','Selesai pekerjaan (batas akhir)','-',fin],
    ['Serah terima','Surat Permohonan Pengujian Mitra',ex,uj],
    ['Serah terima','RDS Permohonan Pengujian',n('PPP',uj),uj],
@@ -486,16 +488,17 @@ function gen(p,raw){
    ['Penagihan','Surat Permohonan Pembayaran Mitra',ex,by],
    ['Penagihan','Invoice','-',by],['Penagihan','Kwitansi','-',by],
   ];
-  if(p.rv!==2){const ix=R.findIndex(r=>r[1]==='Pakta Integritas PBJ');
-    if(p.dt&&p.dt.length===R.length-1)p.dt.splice(ix,0,p.dt[ix-1]);
-    for(const f of ['nov','st']){const o=p[f];if(o&&typeof o==='object'){const q={};for(const k in o){const n=Number(k);q[Number.isInteger(n)&&n>=ix?n+1:k]=o[k]}p[f]=q}}
-    p.rv=2}
+  if(p.rv!==3){const NEW=['Pakta Integritas PBJ','Surat Pernyataan','Lampiran SPK'],done=p.rv===2?1:0;
+    for(const nm of NEW.slice(done)){const ix=R.findIndex(r=>r[1]===nm);
+      if(p.dt&&p.dt.length===R.length-(NEW.length-NEW.indexOf(nm)))p.dt.splice(ix,0,nm==='Surat Pernyataan'?p.dt[ix]:p.dt[ix-1]);
+      for(const f of ['nov','st']){const o=p[f];if(o&&typeof o==='object'){const q={};for(const k in o){const n=Number(k);q[Number.isInteger(n)&&n>=ix?n+1:k]=o[k]}p[f]=q}}}
+    p.rv=3}
   return R.map((r,i)=>{let tg=r[3],no=r[2];if(!raw&&p.dt&&p.dt[i]){tg=d0(p.dt[i]);no=String(no).replace(/\/[IVX]+\/DO\.2-\d{4}$/,'/'+ROMAN[tg.getUTCMonth()+1]+'/DO.2-'+tg.getUTCFullYear())}const mit=r[2]===ex;if(mit&&p.nov&&p.nov[i])no=p.nov[i];return {i,mit,tahap:r[0],dok:r[1],no,tgl:tg,st:(()=>{const nv=(p.nov&&p.nov[i])||'';const mm=/^Surat Penawaran Mitra (\d)/.exec(r[1]);if(mit){if(!nv)return 'Belum';if(mm){const tw=(p.rks&&p.rks.tawar||[])[Number(mm[1])-1];return Number(tw)>0?'Selesai':'Proses'}return 'Selesai'}return tg<=TODAY?'Selesai':'Belum'})()};});
 }
 const STAGES=['Perencanaan','Persiapan','Penjelasan','Penawaran','Negosiasi','SPK','Serah terima','Penagihan'];
 const late=x=>false;
 const stat=p=>{const d=gen(p);const s=d.filter(x=>x.st==='Selesai').length;return{d,s,t:d.length,pct:Math.round(s/d.length*100),late:d.filter(late).length,next:d.filter(x=>x.st!=='Selesai').sort((a,b)=>a.tgl-b.tgl)[0]}};
-const DOCMAP=[['Surat Permintaan Penawaran Harga','spph','Pratinjau'],['BA Pembukaan Penawaran Harga','bapph','BAPPH'],['BA Pembukaan Penawaran Harga','ceklist','Ceklist'],['Ceklist Kelengkapan','ceklist','Pratinjau'],['Formulir Permintaan Penawaran Harga','fpph','FPPH'],['Formulir Permintaan Penawaran Harga','pakta','Pakta'],['Pakta Integritas PBJ','paktapbj','Pratinjau'],['Surat Undangan Negosiasi','uneg','Pratinjau'],['BA Analisis Kewajaran Harga','baakh','Pratinjau'],['BA Negosiasi','ban','Pratinjau'],['Keputusan Penetapan','kp','Pratinjau'],['Rencana Kerja dan Syarat','rks','Pratinjau'],['Surat Undangan Pemilihan Langsung','undangan','Pratinjau'],['Daftar Pengambilan Dokumen','daftar','Pratinjau'],['BA Rapat Penjelasan','undangan','Undangan'],['BA Rapat Penjelasan','daftar','Daftar']];
+const DOCMAP=[['Surat Permintaan Penawaran Harga','spph','Pratinjau'],['BA Pembukaan Penawaran Harga','bapph','BAPPH'],['BA Pembukaan Penawaran Harga','ceklist','Ceklist'],['Ceklist Kelengkapan','ceklist','Pratinjau'],['Formulir Permintaan Penawaran Harga','fpph','FPPH'],['Formulir Permintaan Penawaran Harga','pakta','Pakta'],['Pakta Integritas PBJ','paktapbj','Pratinjau'],['Surat Undangan Negosiasi','uneg','Pratinjau'],['BA Analisis Kewajaran Harga','baakh','Pratinjau'],['BA Negosiasi','ban','Pratinjau'],['Keputusan Penetapan','kp','Pratinjau'],['Surat Pernyataan','suratpern','Pratinjau'],['Surat Perintah Kerja (SPK)','spkdoc','Pratinjau'],['Lampiran SPK','spklamp','Pratinjau'],['Rencana Kerja dan Syarat','rks','Pratinjau'],['Surat Undangan Pemilihan Langsung','undangan','Pratinjau'],['Daftar Pengambilan Dokumen','daftar','Pratinjau'],['BA Rapat Penjelasan','undangan','Undangan'],['BA Rapat Penjelasan','daftar','Daftar']];
 const docBtns=d=>{if(/^(Rencana Anggaran Biaya|Purchase Requisition|Persetujuan Dana)/.test(d))return '';const m=DOCMAP.filter(([p])=>d.startsWith(p));return m.length?m.map(([,k,l],n)=>`<button class="btn sm ${n?'':'pri'}" data-act="doc-open" data-doc="${k}" title="Buat surat: ${l}">${l}</button>`).join(' '):'<button class="btn sm" disabled title="Format PDF belum diterima">Belum ada</button>'};
 const DOCR=d=>d.startsWith('Rencana Kerja dan Syarat')?'rks':d==='Surat Undangan Pemilihan Langsung'?'undangan':'';
 function ensureDt(p){if(!p.dt)p.dt=gen(p,true).map(x=>iso(x.tgl))}
@@ -1034,6 +1037,77 @@ function kpDoc(p){
 <table style="margin:0 0 20px"><tr><td style="width:60px">Franco</td><td style="width:14px">:</td><td>Wilayah Daop 2 Bandung</td></tr></table>
 <div style="margin-left:55%;text-align:center"><p style="margin:0">Bandung, ${fmtL(t)}</p><p style="margin:0"><b>Pejabat PBJ Unit Bangunan<br>Ketua,</b></p><div style="height:70px"></div><b><u>${esc(SIGN.ketua)}</u></b><br><b>NIPP. ${esc(SIGN.ketuaNipp)}</b></div>
 </div></div>`}
+
+/* ---------- SPK, lampiran, surat pernyataan ---------- */
+const tglN=t=>String(t.getUTCDate()).padStart(2,'0')+'/'+String(t.getUTCMonth()+1).padStart(2,'0')+'/'+t.getUTCFullYear();
+const SKDIR='No.SK.M/KH.608/VI/43/SAP/KA-2023 Tanggal 22 Juli 2023';
+const pihak1=p=>`${esc(SIGN.mgr)}, dalam hal ini bertindak selaku Manager Bangunan, berdasarkan Surat Keputusan Direksi ${SKDIR}, dalam hal ini bertindak untuk dan atas nama PT Kereta Api Indonesia (Persero) berkedudukan di Daop 2 Bandung, dengan demikian sah dan memenuhi syarat bertindak untuk dan atas nama Perseroan tersebut di atas, selanjutnya disebut PIHAK PERTAMA.`;
+const pihak2=p=>{const nm=lowNm(p),m=nm?MIT.find(x=>x.nama===nm):null;return nm?`${esc(dirOf(nm))}, dalam hal ini bertindak selaku Direktur ${esc(nm)}, berkedudukan di ${esc((m&&m.alamat)||'')}, dengan demikian sah dan memenuhi syarat bertindak untuk dan atas nama perusahaan tersebut di atas, selanjutnya disebut PIHAK KEDUA.`:''};
+const ttd2=(p,h)=>{const nm=lowNm(p);return `<table style="width:100%"><tr><td style="text-align:center;vertical-align:bottom;border:0!important;width:50%"><b>PIHAK KEDUA,</b><br>${esc(nm)}<div style="height:${h}px"></div><b><u>${esc(dirOf(nm))||'&nbsp;'}</u></b><br>Direktur</td><td style="text-align:center;vertical-align:bottom;border:0!important"><b>PIHAK PERTAMA,</b><br>a.n. PT KAI Daop 2 Bandung<div style="height:${h}px"></div><b><u>${esc(SIGN.mgr)}</u></b><br>Manager Bangunan</td></tr></table>`};
+const spkNilai=p=>(p.mon&&Number(p.mon.spk))||0;
+V.suratpern=()=>{const p=pkg(cur);return docView('Surat Pernyataan','Surat Pernyataan',suratPernDoc(p),kpmiss(p),'flat')};
+function suratPernDoc(p){
+  const d=rowOf(p,'Surat Pernyataan'),kp=rowOf(p,'Keputusan Penetapan'),t=d.tgl,pk='Pekerjaan '+esc(nmK(p));
+  const li=(n,tx,ind=0)=>`<div style="display:flex;gap:6px;margin:0 0 6px ${ind}px;text-align:justify"><span style="width:24px;flex:none">${n}</span><span>${tx}</span></div>`;
+  return `<div class="pg nf"><div style="padding:10px 18px;line-height:1.5">
+<p style="text-align:center;margin:0 0 16px"><b><u>SURAT PERNYATAAN</u></b></p>
+<p style="text-align:justify;margin:0 0 8px">Pada Hari ini ${hariL(t).replace(' bulan ',' Bulan ').replace(' Tahun ',' tahun ')} (${tglN(t)}), yang bertandatangan di bawah ini:</p>
+${li('1.',pihak1(p))}${li('2.',pihak2(p))}
+<p style="text-align:justify;margin:10px 0 8px">PIHAK PERTAMA dan PIHAK KEDUA, selanjutnya secara bersama-sama disebut PARA PIHAK dengan ini menerangkan sebagai berikut :</p>
+${li('1.','Surat Keputusan Penetapan Penyediaan Barang/Jasa Dengan Metode Pengadaan Langsung Ketua PBJ Unit Bangunan Daop 2 Bandung Nomor : '+esc(kp.no)+' tanggal '+fmtL(kp.tgl))}
+${li('2.','Sehubungan dengan dan sebagai pelaksana Code Of Conduct (CoC) di PT KERETA API INDONESIA (PERSERO) dengan ini kami tegaskan :')}
+${li('a.','Kami Seluruh Jajaran Karyawan dan Pimpinan PT Kereta Api Indonesia (Persero) TIDAK MEMINTA DAN MENERIMA Pemberian, dalam bentuk apapun baik uang maupun barang terkait dengan '+pk,30)}
+${li('b.','MENGHIMBAU DAN MELARANG Kepada Bapak/Ibu untuk memberikan Pemberian dalam bentuk apapun, baik berupa uang maupun barang terkait dengan '+pk,30)}
+${li('c.','Kami Seluruh Jajaran Karyawan dan Pimpinan TIDAK MEMBERIKAN apapun baik uang maupun barang terkait dengan '+pk,30)}
+${li('d.','Perjanjian/Surat Perintah Kerja (SPK) akan segera diterbitkan.',30)}
+<p style="text-align:justify;margin:12px 0 14px">Demikian Surat Pernyataan ini dibuat dan ditanda tangani oleh PARA PIHAK di atas materai secukupnya dalam rangkap 2 (dua) dan untuk digunakan sebagaimana mestinya.</p>
+${ttd2(p,80)}
+</div></div>`}
+V.spkdoc=()=>{const p=pkg(cur);return docView('Surat Perintah Kerja (SPK)','Surat Perintah Kerja (SPK)',spkDoc(p),kpmiss(p),'flat')};
+function spkDoc(p){
+  const k=rks(p),d=rowOf(p,'Surat Perintah Kerja (SPK)'),kp=rowOf(p,'Keputusan Penetapan'),fin=rowOf(p,'Selesai pekerjaan'),t=d.tgl,spk=spkNilai(p),jm=Number(k.jaminan)||0,pem=Number(k.pem)||0;
+  const hd=(a,b)=>`<tr><td style="width:150px;vertical-align:top">${a}</td><td style="width:14px;vertical-align:top">:</td><td style="text-align:justify">${b}</td></tr>`;
+  const ro=(x,y)=>`<div style="display:flex;gap:6px;margin:0 0 6px;text-align:justify"><span style="width:20px;flex:none">${x}</span><span>${y}</span></div>`;
+  const pg1=`<div class="pg nf"><div style="padding:10px 18px;line-height:1.5">
+<p style="text-align:center;margin:0"><b>SURAT PERINTAH KERJA</b></p>
+<p style="text-align:center;margin:0 0 14px">Nomor : ${esc(d.no)}</p>
+<p style="text-align:center;margin:0 0 4px">TENTANG</p>
+<p style="text-align:center;margin:0 0 4px"><b>${esc(nmK(p)).toUpperCase()}</b></p>
+<p style="text-align:center;margin:0 0 14px">TAHUN ${t.getUTCFullYear()}</p>
+<p style="text-align:justify;margin:0 0 8px">Pada hari ini ${hariL(t)} (${tglN(t)}), bertempat di Kantor Daerah Operasi 2 Bandung PT Kereta Api Indonesia (Persero), yang bertandatangan di bawah ini:</p>
+${ro('I',pihak1(p))}${ro('II',pihak2(p))}
+<p style="text-align:justify;margin:10px 0 10px">PIHAK PERTAMA dan PIHAK KEDUA, selanjutnya secara bersama-sama disebut PARA PIHAK dengan ini sepakat menandatangani Surat Perintah Kerja (selanjutnya disebut “SPK”)dengan ketentuan sebagai berikut :</p>
+<table style="margin-bottom:8px">${hd('Pekerjaan','PIHAK PERTAMA dengan ini memberikan Perintah Kerja untuk melaksanakan '+esc(nmK(p))+' sesuai dengan Surat Keputusan Penetapan Penyedia Barang/Jasa Nomor : '+esc(kp.no)+' tanggal '+fmtL(kp.tgl)+' kepada PIHAK KEDUA (selanjutnya disebut “Pekerjaan”) dan PIHAK KEDUA sepakat menerima dan melaksanakan Perintah Kerja tersebut.')}</table>
+<table style="margin-bottom:8px">${hd('Harga','Harga Pekerjaan yang disepakati oleh PARA PIHAK adalah sebesar : '+rpx(spk).replace('Rp ','Rp ')+' ('+(spk?esc(Terb(spk))+' Rupiah':'')+'), belum termasuk PPN.')}</table>
+<table style="margin-bottom:8px">${hd('Penyerahan Barang','PIHAK KEDUA wajib menyerahkan Hasil Pekerjaan paling lambat '+p.pen+' ('+esc(Terb(p.pen))+') Hari Kalender terhitung sejak tanggal '+fmtL(t)+' s.d '+fmtL(fin.tgl)+' sudah termasuk masa pengujian sampai diterbitkannya Berita Acara Serah Terima (BAST) Hasil Pekerjaan. (apabila penyerahan Hasil Pekerjaan dilakukan secara bertahap maka klausul penyerahan Hasil Pekerjaan disesuaikan dengan ketentuan di RKS.)')}</table>
+<table style="margin-bottom:8px">${hd('Denda','Apabila PIHAK KEDUA tidak menyerahkan Hasil Pekerjaan sesuai dengan waktu yang telah ditetapkan, maka PIHAK KEDUA dikenakan sanksi denda sebesar 1‰ (satu permil) dari Nilai SPK tanpa PPN untuk setiap hari kalender keterlambatan dengan denda maksimum mencapai 5% (lima persen).')}</table>
+<table>${hd('Jaminan',`${ro('1.','PIHAK KEDUA menjamin akan melaksanakan Pekerjaan sesuai dengan SPK dan dokumen Pengadaan yang merupakan satu kesatuan dengan SPK ini, antara lain:<br>a. Kerangka Acuan Kerja (KAK) / Rencana Kerja dan Syarat-Syarat (RKS);<br>b. Berita Acara Penjelasan.')}${ro('2.','PIHAK KEDUA menjamin bahwa Hasil Pekerjaan yang diserahkan dalam kondisi baik, bebas dari cacat, baik yang terlihat maupun tersembunyi, dalam kondisi 100% baru dan siap untuk digunakan;')}${ro('3.','PIHAK KEDUA segera mengganti Hasil Pekerjaan yang diserahkan, apabila berdasarkan hasil pengujian ternyata Hasil Pekerjaan dinyatakan tidak sesuai dengan SPK ini dengan tidak mengenakan tambahan biaya;')}${ro('4.','PIHAK KEDUA menjamin mutu atas Hasil Pekerjaan berupa Barang/Jasa yang diserahkan untuk jangka waktu '+jm+' ('+esc(Terb(jm))+') hari terhitung Sejak diterbitkan BAST.')}${ro('5.','PIHAK KEDUA Membebaskan PIHAK PERTAMA dari Segala Tuntutan Kerugian PIHAK KETIGA yang timbul akibat dari Pekerjaan PIHAK KEDUA.')}`)}</table>
+</div></div>`;
+  const dok=['Salinan Surat Perintah Kerja','Faktur Pajak','Nota Permohonan Pembayaran','Faktur Tagihan/Invoice atau Kuitansi dengan materai cukup','Daftar Penerimaan Barang/Jasa (DPB/J)','Berita Acara Serah Terima (BAST) Barang/Jasa yang ditandatangani bersama dengan Penyedia Barang/Jasa','Nomor rekening Bank Penyedia Barang/Jasa','Surat Jaminan Mutu dengan jangka waktu '+jm+' ('+esc(String(Terb(jm)).toLowerCase())+') hari terhitung Sejak diterbitkannya BAST','Foto Pekerjaan'];
+  const pg2=`<div class="pg nf"><div style="padding:10px 18px;line-height:1.5">
+<table style="margin-bottom:8px">${hd('Pembayaran','Pembayaran dilakukan oleh PIHAK PERTAMA kepada PIHAK KEDUA setelah Pekerjaan diselesaikan dan diterima dengan baik, dengan melampirkan dokumen penagihan sebagai berikut :')}</table>
+<div style="margin:0 0 14px 164px">${dok.map((x,i)=>`<div style="display:flex;gap:6px;margin:0 0 3px"><span style="width:20px;flex:none">${'abcdefghi'[i]}.</span><span>${x};</span></div>`).join('').replace(/;<\/span><\/div>$/,'.</span></div>')}</div>
+<p style="text-align:justify;margin:0 0 18px">Demikian Surat Perintah Kerja ini dibuat dan ditandatangani oleh PARA PIHAK di atas meterai secukupnya dalam rangkap 2 (dua) dan untuk dilaksanakan sebaik-baiknya oleh PARA PIHAK.</p>
+${ttd2(p,80)}
+</div></div>`;
+  return pg1+pg2}
+V.spklamp=()=>{const p=pkg(cur);return docView('Lampiran SPK','Lampiran SPK',spkLampDoc(p),kpmiss(p),'flat')};
+function spkLampDoc(p){
+  const d=rowOf(p,'Lampiran SPK'),spk=spkNilai(p),c='border:1px solid #000;padding:4px 6px';
+  const blank=Array.from({length:8},()=>`<tr>${('<td style="'+c+';height:24px"></td>').repeat(8)}</tr>`).join('');
+  return `<div class="pg nf"><div style="padding:10px 12px;line-height:1.45">
+<p style="text-align:center;margin:0"><b>LAMPIRAN SURAT PERINTAH KERJA (SPK)</b></p>
+<p style="text-align:center;margin:0 0 14px">Nomor : ${esc(d.no)}</p>
+<p style="margin:0">PEKERJAAN : <b>${esc(nmK(p))}</b></p><p style="margin:0 0 10px">LOKASI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: DAOP 2 BANDUNG</p>
+<table style="width:100%;border-collapse:collapse;font-size:13px">
+<tr><td rowspan="2" style="${c};text-align:center;width:40px"><b>NO</b></td><td rowspan="2" style="${c};text-align:center;width:50px"><b>VOL</b></td><td rowspan="2" style="${c};text-align:center;width:50px"><b>SAT</b></td><td rowspan="2" style="${c};text-align:center"><b>ITEM PEKERJAAN</b></td><td colspan="2" style="${c};text-align:center"><b>Harga Satuan (Rp)</b></td><td colspan="2" style="${c};text-align:center"><b>Jumlah Harga (Rp)</b></td></tr>
+<tr>${['Upah','Bahan','Upah','Bahan'].map(x=>`<td style="${c};text-align:center;width:90px"><b>${x}</b></td>`).join('')}</tr>
+${blank}
+<tr><td colspan="4" style="${c};text-align:right"><b>JUMLAH SUB TOTAL (PEMBULATAN)</b></td><td colspan="2" style="${c}"></td><td style="${c};text-align:center">-</td><td style="${c};text-align:center">-</td></tr>
+<tr><td colspan="4" style="${c};text-align:right"><b>JUMLAH TOTAL (SEBELUM PPN)</b></td><td colspan="4" style="${c};text-align:right"><b>${spk?spk.toLocaleString('id-ID'):'-'}</b></td></tr>
+<tr><td colspan="8" style="${c}">Terbilang : <i>${spk?esc(Terb(spk))+' Rupiah':''}</i></td></tr></table>
+<div style="margin-top:20px">${ttd2(p,80)}</div>
+</div></div>`}
 V.pakta=()=>{const p=pkg(cur),k=rks(p),miss=[];if(!k.peserta.some(Boolean))miss.push('peserta');
   return docView('Pakta Integritas Mitra','Formulir Permintaan Penawaran Harga',paktaDoc(p),miss,'flat')};
 function fpphDoc(p){
@@ -1182,7 +1256,7 @@ V.input=()=>{const tabs=[['mitra','Mitra'],['sign','Penandatangan'],['kop','Kop 
 V.format=()=>{
   const D=['RAB','Purchase Requisition','Persetujuan Dana','RKS','Surat Undangan Pemilihan Langsung','Daftar Pengambilan Dokumen','BA Aanwijzing','SPPH','FPPH','Pakta Integritas Mitra','BA Pembukaan Penawaran','Ceklist Kelengkapan Administrasi dan Teknis','BA Analisis Kewajaran Harga','Surat Undangan Negosiasi','BA Negosiasi','KPPBJ','Pakta Integritas PBJ','SPK','RDS Permohonan Pengujian','Laporan Penyelesaian Pekerjaan','Daftar Penerimaan Barang dan Jasa','BA Pengujian','BAST','Surat Jaminan Mutu','Invoice','Kwitansi'];
   return `<div class="head"><span class="tag">Format dokumen</span><h1>Template surat</h1><p>Isi tiap surat dibuat dari PDF format BUMN, satu jenis dokumen per tahap. Contoh PDF yang sudah masuk baru berisi timeline, belum isi surat.</p></div>
-  <div class="panel"><div class="panel-h"><h2>Jenis dokumen</h2><span class="chip warn">Menunggu PDF format</span></div><div class="scroll"><table><thead><tr><th>Dokumen</th><th>Status template</th></tr></thead><tbody>${D.map(x=>`<tr><td>${x}</td><td>${(x==='RKS'||x==='Surat Undangan Pemilihan Langsung'||x==='Daftar Pengambilan Dokumen'||x==='FPPH'||x==='Pakta Integritas Mitra'||x==='Pakta Integritas PBJ'||x==='Surat Undangan Negosiasi'||x==='BA Analisis Kewajaran Harga'||x==='BA Negosiasi'||x==='KPPBJ'||x==='SPPH'||x==='BA Pembukaan Penawaran'||x==='Ceklist Kelengkapan Administrasi dan Teknis')?'<span class="chip ok">Tersedia</span>':'<span class="chip">Belum ada</span>'}</td></tr>`).join('')}</tbody></table></div>
+  <div class="panel"><div class="panel-h"><h2>Jenis dokumen</h2><span class="chip warn">Menunggu PDF format</span></div><div class="scroll"><table><thead><tr><th>Dokumen</th><th>Status template</th></tr></thead><tbody>${D.map(x=>`<tr><td>${x}</td><td>${(x==='RKS'||x==='Surat Undangan Pemilihan Langsung'||x==='Daftar Pengambilan Dokumen'||x==='FPPH'||x==='Pakta Integritas Mitra'||x==='Pakta Integritas PBJ'||x==='Surat Pernyataan'||x==='Lampiran SPK'||x==='Surat Perintah Kerja (SPK)'||x==='Surat Undangan Negosiasi'||x==='BA Analisis Kewajaran Harga'||x==='BA Negosiasi'||x==='KPPBJ'||x==='SPPH'||x==='BA Pembukaan Penawaran'||x==='Ceklist Kelengkapan Administrasi dan Teknis')?'<span class="chip ok">Tersedia</span>':'<span class="chip">Belum ada</span>'}</td></tr>`).join('')}</tbody></table></div>
   <div class="note">Urutan pengerjaan yang diusulkan: SPK, BAST, lalu dokumen lainnya mengikuti timeline.</div></div>`;
 };
 V.admin=()=>`<div class="head"><span class="tag">Admin dan akses</span><h1>Dua admin</h1><p>Pembagian peran dua admin. Login memakai akun claude.ai masing-masing.</p></div>
@@ -1199,7 +1273,7 @@ V.admin=()=>`<div class="head"><span class="tag">Admin dan akses</span><h1>Dua a
   <tr><td class="mono">19 Okt 2026</td><td>Admin 2</td><td>SPK paket 53 ditandai Selesai</td></tr></tbody></table></div></div>`;
 
 /* ---------- router ---------- */
-const TITLES={'spph':'Surat Permintaan Penawaran Harga','bapph':'BA Pembukaan Penawaran','ceklist':'Ceklist Kelengkapan','fpph':'Formulir Penawaran Harga','pakta':'Pakta Integritas','paktapbj':'Pakta Integritas PBJ','uneg':'Surat Undangan Negosiasi','baakh':'BA Analisis Kewajaran Harga','ban':'BA Negosiasi','kp':'Keputusan Penetapan','input':'Data input','daftar':'Daftar pengambilan dokumen','undangan':'Surat Undangan','':'','paket':'Paket pengadaan','baru':'Buat paket baru','timeline':'Timeline dokumen','dashboard':'Dashboard','monitoring':'Monitoring','mitra':'Mitra','rks':'Surat RKS','format':'Format dokumen','admin':'Admin dan akses'};
+const TITLES={'spph':'Surat Permintaan Penawaran Harga','bapph':'BA Pembukaan Penawaran','ceklist':'Ceklist Kelengkapan','fpph':'Formulir Penawaran Harga','pakta':'Pakta Integritas','paktapbj':'Pakta Integritas PBJ','suratpern':'Surat Pernyataan','spkdoc':'Surat Perintah Kerja (SPK)','spklamp':'Lampiran SPK','uneg':'Surat Undangan Negosiasi','baakh':'BA Analisis Kewajaran Harga','ban':'BA Negosiasi','kp':'Keputusan Penetapan','input':'Data input','daftar':'Daftar pengambilan dokumen','undangan':'Surat Undangan','':'','paket':'Paket pengadaan','baru':'Buat paket baru','timeline':'Timeline dokumen','dashboard':'Dashboard','monitoring':'Monitoring','mitra':'Mitra','rks':'Surat RKS','format':'Format dokumen','admin':'Admin dan akses'};
 function render(keep){
   let h=(location.hash||'').replace('#','');if(!(h in TITLES))h='';
   if(h==='mitra'){inTab='mitra';h='input';lastHash='input';try{history.replaceState(null,'','#input')}catch(_){}}
