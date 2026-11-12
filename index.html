@@ -176,6 +176,7 @@ table.uni tr.stagehd td{height:auto}
 table.uni .rowbar{display:flex;align-items:center;gap:8px;min-width:130px}
 table.uni .rowbar .bar-t{flex:1;min-width:60px}
 .paperwrap{background:var(--soft);padding:20px;overflow-x:auto}
+.rkspad{height:0}.rkstab{width:100%;border-collapse:collapse}.paper .rkstab>thead>tr>td,.paper .rkstab>tfoot>tr>td,.paper .rkstab>tbody>tr>td{padding:0}
 .paper{background:#fff;color:#000;font-family:'Times New Roman',Times,serif;font-size:13.5px;line-height:1.45;max-width:820px;margin:0 auto;padding:84px 64px;border:1px solid var(--line);box-shadow:var(--shadow);text-align:left}
 .paper p{margin:0 0 5px}
 .paper table,.paper table td{font:inherit;color:inherit}
@@ -272,7 +273,7 @@ table.tl select.sel{padding:4px 8px}
 .twin{min-width:170px}
 .paper.land{max-width:1140px}
 .pg.land{min-height:0;padding:30px 36px}
-@media print{@page land{size:A4 landscape;margin:0}.pg.land{page:land;height:210mm!important;min-height:210mm!important;padding:12mm 14mm!important}}
+@media print{.rkspad{height:24mm!important}.paper:not(.flat){padding:0 22mm!important}@page land{size:A4 landscape;margin:0}.pg.land{page:land;height:210mm!important;min-height:210mm!important;padding:12mm 14mm!important}}
 .dtw{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .dtw .dn{min-width:48px;font-weight:600}
 table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
@@ -918,7 +919,7 @@ function docView(tag,start,body,miss,cls=''){
     <a class="btn" href="#timeline">Timeline</a><button class="btn" data-act="pk-edit">Ubah identitas surat</button><button class="btn" data-act="doc-copy">Salin ke Word</button><button class="btn pri" data-act="pv-on">Pratinjau layar penuh</button></div>
    <div class="note">Isian surat diambil dari form paket, jadi di sini tinggal diperiksa lalu dicetak. Untuk mencetak, buka menu cetak peramban (Ctrl+P, atau Cmd+P di Mac): yang tercetak hanya isi surat. Bila menu cetak tidak terbuka dari halaman ini, pakai Salin ke Word lalu cetak dari Word.${miss.length?`<br><b style="color:var(--warn)">Belum terisi: ${miss.join(', ')}.</b> Klik Ubah identitas surat untuk melengkapi.`:''}</div></div>
   <div class="pvbar"><button class="btn pri sm" data-act="pv-off">Keluar pratinjau</button><span>Cetak dengan Ctrl+P (Cmd+P di Mac). Hanya isi surat yang tercetak.</span></div>
-  <div class="paperwrap"><div class="paper ${cls}" id="rksdoc">${body}</div></div>`}
+  <div class="paperwrap"><div class="paper ${cls}" id="rksdoc">${start.startsWith('Rencana Kerja dan Syarat')?`<table class="rkstab"><thead><tr><td><div class="rkspad"></div></td></tr></thead><tfoot><tr><td><div class="rkspad"></div></td></tr></tfoot><tbody><tr><td>${body}</td></tr></tbody></table>`:body}</div></div>`}
 V.rks=()=>{const p=pkg(cur),k=rks(p),miss=[];
   if(!k.peserta.some(Boolean))miss.push('peserta');
   return docView('Surat RKS','Rencana Kerja dan Syarat',rksDoc(p),miss)};
@@ -1465,7 +1466,7 @@ function render(keep){P.forEach(p=>{p.ppn=12});MON.forEach(r=>{r.tarif=12});
   if(key==='baru'){if(editId===null)fillFromMon(document.getElementById('f_no').value);else{angUI();updSpkDate()}}
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
   document.getElementById('crumb').textContent=h?'/ '+TITLES[h]:'';
-  document.body.classList.toggle('homev',key==='home');{let ps=document.getElementById('pgs');if(!ps){ps=document.createElement('style');ps.id='pgs';document.head.appendChild(ps)}ps.textContent=key==='rks'?'@media print{@page{size:A4;margin:22mm 0}.paper:not(.flat){padding:0 22mm!important}}':''}const MW=key==='home'?'1360px':key==='monitoring'?'1500px':key==='timeline'?'1240px':(key==='input'&&inTab==='mitra')||key==='paket'?'1240px':key==='input'?'900px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
+  document.body.classList.toggle('homev',key==='home');const MW=key==='home'?'1360px':key==='monitoring'?'1500px':key==='timeline'?'1240px':(key==='input'&&inTab==='mitra')||key==='paket'?'1240px':key==='input'?'900px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
   if(!keep)window.scrollTo(0,0);
 }
 let lastHash=(location.hash||'').slice(1),navStack=[],goingBack=false;
