@@ -218,6 +218,7 @@ table.uni .rowbar .bar-t{flex:1;min-width:60px}
 #frm .panel{margin-bottom:18px}
 table.wide [data-mir]{font-size:13px;font-weight:400}
 .sub .grid2{padding:16px 18px}
+.docnav{position:fixed;top:50%;transform:translateY(-50%);z-index:20;width:46px;height:70px;border:0;border-radius:12px;background:var(--navy);color:#fff;font-size:28px;line-height:1;cursor:pointer;opacity:.88;box-shadow:0 6px 18px rgba(20,40,75,.35)}.docnav:hover{opacity:1;background:var(--orange,#E8751A)}.docnav.l{left:10px}.docnav.r{right:10px}@media (max-width:900px){.docnav{width:34px;height:54px;font-size:22px;opacity:.7}.docnav.l{left:2px}.docnav.r{right:2px}}@media print{.docnav{display:none!important}}
 .pvbar{display:none;position:sticky;top:0;z-index:6;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:var(--navy);color:#fff;font-size:13px}
 body.pv .pvbar{display:flex}
 body.pv .bar,body.pv .notpv{display:none}
@@ -1458,12 +1459,22 @@ V.admin=()=>`<div class="head"><span class="tag">Admin dan akses</span><h1>Dua a
 
 /* ---------- router ---------- */
 const TITLES={'spph':'Surat Permintaan Penawaran Harga','bapph':'BA Pembukaan Penawaran','ceklist':'Ceklist Kelengkapan','fpph':'Formulir Penawaran Harga','pakta':'Pakta Integritas','paktapbj':'Pakta Integritas PBJ','suratpern':'Surat Pernyataan','coverspk':'Cover SPK','akw1':'Analisis Kewajaran Mitra 1','akw2':'Analisis Kewajaran Mitra 2','akw3':'Analisis Kewajaran Mitra 3','lembar':'Lembar Pemeriksaan Dokumen','rdsppp':'Surat Permohonan Pengujian','bapp':'BA Pengujian Barang/Jasa','bapplamp':'Lampiran BA Pengujian','paktapeng':'Pakta Integritas Penguji','bast':'BA Serah Terima (BAST)','spkdoc':'Surat Perintah Kerja (SPK)','spklamp':'Lampiran SPK','uneg':'Surat Undangan Negosiasi','baakh':'BA Analisis Kewajaran Harga','ban':'BA Negosiasi','kp':'Keputusan Penetapan','input':'Data input','daftar':'Daftar pengambilan dokumen','undangan':'Surat Undangan','':'','paket':'Paket pengadaan','baru':'Buat paket baru','timeline':'Timeline dokumen','dashboard':'Dashboard','monitoring':'Monitoring','mitra':'Mitra','rks':'Surat RKS','format':'Format dokumen','admin':'Admin dan akses'};
+function docOrder(){const p=pkg(cur),o=[];if(!p)return o;gen(p).forEach(r=>{DOCMAP.forEach(([pre,k])=>{if(r.dok.startsWith(pre)&&!o.includes(k)&&(k in TITLES))o.push(k)})});return o}
+function docNav(key){const old=document.getElementById('docnav');if(old)old.remove();let o=[];try{o=docOrder()}catch(_){}const i=o.indexOf(key);if(i<0)return;
+  const w=document.createElement('div');w.id='docnav';
+  const mk=(c,t,j,tt)=>{if(j<0||j>=o.length)return;const b=document.createElement('button');b.className='docnav '+c;b.textContent=t;b.title=tt+': '+TITLES[o[j]];b.dataset.go2=o[j];b.setAttribute('aria-label',b.title);w.appendChild(b)};
+  mk('l','‹',i-1,'Berkas sebelumnya');mk('r','›',i+1,'Berkas berikutnya');document.body.appendChild(w)}
+function docStep(d){const w=document.getElementById('docnav');if(!w)return;const b=w.querySelector(d>0?'.r':'.l');if(b)docGo(b.dataset.go2)}
+function docGo(k){window._keepPv=document.body.classList.contains('pv');location.hash=k}
+document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const t=e.target;if(t&&t.matches&&t.matches('input,textarea,select,[contenteditable]'))return;if(e.key==='ArrowRight')docStep(1);else if(e.key==='ArrowLeft')docStep(-1)});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-go2]');if(b)docGo(b.dataset.go2)});
 function render(keep){P.forEach(p=>{p.ppn=12});MON.forEach(r=>{r.tarif=12});
   let h=(location.hash||'').replace('#','');if(!(h in TITLES))h='';
   if(h==='mitra'){inTab='mitra';h='input';lastHash='input';try{history.replaceState(null,'','#input')}catch(_){}}
   const key=h===''?'home':h;if(h!=='input')mSel=null;
   document.getElementById('app').innerHTML=V[key]();
-  document.body.classList.remove('pv');
+  const kpv=window._keepPv;window._keepPv=false;document.body.classList.remove('pv');
+  docNav(key);if(kpv&&document.getElementById('docnav'))document.body.classList.add('pv');
   if(key==='baru'){if(editId===null)fillFromMon(document.getElementById('f_no').value);else{angUI();updSpkDate()}}
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
   document.getElementById('crumb').textContent=h?'/ '+TITLES[h]:'';
