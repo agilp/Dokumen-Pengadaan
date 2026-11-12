@@ -176,7 +176,7 @@ table.uni tr.stagehd td{height:auto}
 table.uni .rowbar{display:flex;align-items:center;gap:8px;min-width:130px}
 table.uni .rowbar .bar-t{flex:1;min-width:60px}
 .paperwrap{background:var(--soft);padding:20px;overflow-x:auto}
-.rkspad{height:0}.rkstab{width:100%;border-collapse:collapse}.paper .rkstab>thead>tr>td,.paper .rkstab>tfoot>tr>td,.paper .rkstab>tbody>tr>td{padding:0}
+.paper#rksdoc{font-size:14.5px;padding-left:40px;padding-right:40px}.rkspad{height:0}.rkstab{width:100%;border-collapse:collapse}.paper .rkstab>thead>tr>td,.paper .rkstab>tfoot>tr>td,.paper .rkstab>tbody>tr>td{padding:0}
 .paper{background:#fff;color:#000;font-family:'Times New Roman',Times,serif;font-size:15px;line-height:1.45;max-width:860px;margin:0 auto;padding:84px 80px;border:1px solid var(--line);box-shadow:var(--shadow);text-align:left}
 .paper p{margin:0 0 5px}
 .paper table,.paper table td{font:inherit;color:inherit}
@@ -273,7 +273,7 @@ table.tl select.sel{padding:4px 8px}
 .twin{min-width:170px}
 .paper.land{max-width:1140px}
 .pg.land{min-height:0;padding:30px 36px}
-@media print{.rkspad{height:24mm!important}.paper:not(.flat){padding:0 27mm!important}@page land{size:A4 landscape;margin:0}.pg.land{page:land;height:210mm!important;min-height:210mm!important;padding:12mm 20mm!important}}
+@media print{.rkspad{height:24mm!important}.paper:not(.flat){padding:0 27mm!important}.paper#rksdoc{padding:0 15mm!important;font-size:14.5px!important}@page land{size:A4 landscape;margin:0}.pg.land{page:land;height:210mm!important;min-height:210mm!important;padding:12mm 20mm!important}}
 .dtw{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .dtw .dn{min-width:48px;font-weight:600}
 table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
