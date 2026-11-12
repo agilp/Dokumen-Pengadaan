@@ -1465,7 +1465,7 @@ function render(keep){P.forEach(p=>{p.ppn=12});MON.forEach(r=>{r.tarif=12});
   if(key==='baru'){if(editId===null)fillFromMon(document.getElementById('f_no').value);else{angUI();updSpkDate()}}
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
   document.getElementById('crumb').textContent=h?'/ '+TITLES[h]:'';
-  document.body.classList.toggle('homev',key==='home');const MW=key==='home'?'1360px':key==='monitoring'?'1500px':key==='timeline'?'1240px':(key==='input'&&inTab==='mitra')||key==='paket'?'1240px':key==='input'?'900px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
+  document.body.classList.toggle('homev',key==='home');{let ps=document.getElementById('pgs');if(!ps){ps=document.createElement('style');ps.id='pgs';document.head.appendChild(ps)}ps.textContent=key==='rks'?'@media print{@page{size:A4;margin:22mm 0}.paper:not(.flat){padding:0 22mm!important}}':''}const MW=key==='home'?'1360px':key==='monitoring'?'1500px':key==='timeline'?'1240px':(key==='input'&&inTab==='mitra')||key==='paket'?'1240px':key==='input'?'900px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
   if(!keep)window.scrollTo(0,0);
 }
 let lastHash=(location.hash||'').slice(1),navStack=[],goingBack=false;
