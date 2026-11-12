@@ -93,8 +93,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* ===== Beranda penuh layar ===== */
 .head p{display:none}
 #frm .head p{display:block}
-body.homev .bar-in{max-width:none}
-body.homev .wrap{max-width:none;padding-inline:clamp(4px,1.2vw,28px)}
+body.homev .bar-in{max-width:1360px}
+body.homev .wrap{max-width:1360px;padding-inline:20px}
 @media (min-width:1000px){
  body.homev .wrap{display:grid;grid-template-rows:auto auto;gap:18px;padding-bottom:22px;align-content:start}
  body.homev .menu{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -230,6 +230,7 @@ body.pv .paperwrap{background:#E9EDF3}
  .paper.flat{padding:0!important}
  .pg{min-height:297mm!important;height:297mm;overflow:hidden;page-break-after:always;border:0!important;padding:15mm 20mm 40mm!important}
  .pg.nf{height:297mm;padding:20mm!important}
+ .pg.fit{font-size:11.2px!important;line-height:1.28!important;padding:10mm 20mm 36mm!important}.pg.fit p{margin-bottom:2px!important}.pg.fit img:not(.kopfoot){height:28mm!important;max-width:110mm!important}.pg.fit [style*=min-height]{min-height:0!important}
  .pg:last-child{page-break-after:auto}
  .kopaddr{left:20mm!important;bottom:9mm!important}.kopfoot{right:6mm!important;bottom:5mm!important}
 }
@@ -1388,7 +1389,7 @@ function undDoc(p){
   const yth=[0,1,2].map(n=>`<p style="margin:0">${n+1}. Direktur${k.peserta[n]?' '+esc(k.peserta[n]):''}</p>`).join('');
   const kv=(a,b,c)=>`<tr><td style="width:24px">${a}</td><td style="width:236px">${b}</td><td style="width:14px">:</td><td>${c}</td></tr>`;
   const hd=(a,b)=>`<tr><td style="width:100px">${a}</td><td style="width:14px">:</td><td>${b}</td></tr>`;
-  return `<div class="pg"><div style="min-height:135px">${logo}</div>
+  return `<div class="pg fit"><div style="min-height:135px">${logo}</div>
 <table style="width:100%;margin-top:4px"><tr><td><table>${hd('Nomor',esc(d.no))}${hd('Sifat','Terbatas')}${hd('Lampiran',esc(k.lampiran||'-'))}</table></td><td style="text-align:right;vertical-align:top">${fmtL(d.tgl)}</td></tr></table>
 <p style="margin:14px 0 0">Yth.</p>${yth}<p style="margin:0">di</p><p style="margin:0 0 14px">Tempat</p>
 <table>${hd('Perihal','Undangan Pemilihan Langsung')}</table>
@@ -1464,7 +1465,7 @@ function render(keep){P.forEach(p=>{p.ppn=12});MON.forEach(r=>{r.tarif=12});
   if(key==='baru'){if(editId===null)fillFromMon(document.getElementById('f_no').value);else{angUI();updSpkDate()}}
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
   document.getElementById('crumb').textContent=h?'/ '+TITLES[h]:'';
-  document.body.classList.toggle('homev',key==='home');const MW=key==='home'?'none':key==='monitoring'?'1500px':key==='timeline'?'1240px':(key==='input'&&inTab==='mitra')||key==='paket'?'1240px':key==='input'?'900px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
+  document.body.classList.toggle('homev',key==='home');const MW=key==='home'?'1360px':key==='monitoring'?'1500px':key==='timeline'?'1240px':(key==='input'&&inTab==='mitra')||key==='paket'?'1240px':key==='input'?'900px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
   if(!keep)window.scrollTo(0,0);
 }
 let lastHash=(location.hash||'').slice(1),navStack=[],goingBack=false;
