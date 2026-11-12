@@ -231,7 +231,7 @@ body.pv .paperwrap{background:#E9EDF3}
  .paper.flat{padding:0!important}
  .pg{min-height:297mm!important;height:297mm;overflow:hidden;page-break-after:always;border:0!important;padding:15mm 26mm 40mm!important}
  .pg.nf{height:297mm;padding:20mm 26mm!important}
- .pg.fit{font-size:12px!important;line-height:1.27!important;padding:10mm 26mm 36mm!important}.pg.fit p{margin-bottom:2px!important}.pg.fit img:not(.kopfoot){height:28mm!important;max-width:110mm!important}.pg.fit [style*=min-height]{min-height:0!important}
+ .pg.fit{font-size:12px!important;line-height:1.27!important;padding:10mm 16mm 36mm!important}.pg.fit p{margin-bottom:2px!important}.pg.fit img:not(.kopfoot){height:28mm!important;max-width:110mm!important}.pg.fit [style*=min-height]{min-height:0!important}
  .pg:last-child{page-break-after:auto}
  .kopaddr{left:26mm!important;bottom:9mm!important}.kopfoot{right:6mm!important;bottom:5mm!important}
 }
@@ -272,7 +272,7 @@ table.tl select.sel{padding:4px 8px}
 .nmin{min-width:210px}
 .twin{min-width:170px}
 .paper.land{max-width:1140px}
-.pg.land{min-height:0;padding:30px 36px}
+.pg.land{min-height:0;padding:30px 36px}.pg.fit{padding-left:48px;padding-right:48px}
 @media print{.rkspad{height:24mm!important}.paper:not(.flat){padding:0 27mm!important}.paper#rksdoc{padding:0 15mm!important;font-size:14px!important}@page land{size:A4 landscape;margin:0}.pg.land{page:land;height:210mm!important;min-height:210mm!important;padding:12mm 20mm!important}}
 .dtw{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .dtw .dn{min-width:48px;font-weight:600}
@@ -919,7 +919,7 @@ function docView(tag,start,body,miss,cls=''){
     <a class="btn" href="#timeline">Timeline</a><button class="btn" data-act="pk-edit">Ubah identitas surat</button><button class="btn" data-act="doc-copy">Salin ke Word</button><button class="btn pri" data-act="pv-on">Pratinjau layar penuh</button></div>
    <div class="note">Isian surat diambil dari form paket, jadi di sini tinggal diperiksa lalu dicetak. Untuk mencetak, buka menu cetak peramban (Ctrl+P, atau Cmd+P di Mac): yang tercetak hanya isi surat. Bila menu cetak tidak terbuka dari halaman ini, pakai Salin ke Word lalu cetak dari Word.${miss.length?`<br><b style="color:var(--warn)">Belum terisi: ${miss.join(', ')}.</b> Klik Ubah identitas surat untuk melengkapi.`:''}</div></div>
   <div class="pvbar"><button class="btn pri sm" data-act="pv-off">Keluar pratinjau</button><span>Cetak dengan Ctrl+P (Cmd+P di Mac). Hanya isi surat yang tercetak.</span></div>
-  <div class="paperwrap"><div class="paper ${cls}" id="rksdoc">${start.startsWith('Rencana Kerja dan Syarat')?`<table class="rkstab"><thead><tr><td><div class="rkspad"></div></td></tr></thead><tfoot><tr><td><div class="rkspad"></div></td></tr></tfoot><tbody><tr><td>${body}</td></tr></tbody></table>`:body}</div></div>`}
+  <div class="paperwrap"><div class="paper ${cls}" id="rksdoc">${(start.startsWith('Rencana Kerja dan Syarat')||start==='Daftar Pengambilan Dokumen')?`<table class="rkstab"><thead><tr><td><div class="rkspad"></div></td></tr></thead><tfoot><tr><td><div class="rkspad"></div></td></tr></tfoot><tbody><tr><td>${body}</td></tr></tbody></table>`:body}</div></div>`}
 V.rks=()=>{const p=pkg(cur),k=rks(p),miss=[];
   if(!k.peserta.some(Boolean))miss.push('peserta');
   return docView('Surat RKS','Rencana Kerja dan Syarat',rksDoc(p),miss)};
