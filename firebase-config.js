@@ -1,11 +1,12 @@
-// Isi dengan konfigurasi Firebase Anda (Project settings > Your apps > Web app > Config)
-// dan dua email admin yang dibuat di Authentication > Users.
+// Konfigurasi Firebase untuk project dokumen-pengadaan.
+// Nilai ini bukan rahasia; data dilindungi oleh login dan aturan Firestore.
 window.FIREBASE_CONFIG = {
-  apiKey: "ISI_API_KEY",
-  authDomain: "ISI_PROJECT_ID.firebaseapp.com",
-  projectId: "ISI_PROJECT_ID",
-  storageBucket: "ISI_PROJECT_ID.appspot.com",
-  messagingSenderId: "ISI",
-  appId: "ISI"
+  apiKey: "AIzaSyBDRvilD4qnrPehwMQESQvEldRJCji8XFM",
+  authDomain: "dokumen-pengadaan.firebaseapp.com",
+  projectId: "dokumen-pengadaan",
+  storageBucket: "dokumen-pengadaan.firebasestorage.app",
+  messagingSenderId: "193908273344",
+  appId: "1:193908273344:web:b0930c86b3bae5cc337d25"
 };
-window.FIREBASE_ADMINS = ["admin1@email.com", "admin2@email.com"];
+// Email admin yang boleh masuk. Tambahkan email admin kedua di sini dan di aturan Firestore.
+window.FIREBASE_ADMINS = ["agilp07@gmail.com"];
