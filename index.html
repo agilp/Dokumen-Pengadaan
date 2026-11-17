@@ -475,7 +475,7 @@ function parseRAB(sheets){
   return o}
 
 const NORM=t=>cl(t).toLowerCase().replace(/\s+/g,'');
-const HMAP={'no':'no','pekerjaan':'pekerjaan','ci':'ci','tipe':'tipe','pr/pd/g.63':'pr','tanggalpr/pd/g.63':'tglpr','nilairab(nonppn)':'rab','nilairab(ppn)':'rabppn','nilaispk':'spk','tanggalspk':'tglspk','mppl':'mppl','sisamppl':'sisa','column17':'end','mitra':'mitra','nilaises':'nses','ses':'noses','invoice/keterangan':'inv','keterangan':'ket'};
+const HMAP={'no':'no','pekerjaan':'pekerjaan','ci':'ci','tipe':'tipe','pr/pd/g.63':'pr','tanggalpr/pd/g.63':'tglpr','pr':'pr','tanggalpr':'tglpr','pd':'pd','tanggalpd':'tglpd','g.63':'pr','tanggalg.63':'tglpr','nilairab(nonppn)':'rab','nilairab(ppn)':'rabppn','nilaispk':'spk','tanggalspk':'tglspk','mppl':'mppl','sisamppl':'sisa','column17':'end','mitra':'mitra','nilaises':'nses','ses':'noses','invoice/keterangan':'inv','keterangan':'ket'};
 const BLN={jan:1,januari:1,feb:2,februari:2,pebruari:2,mar:3,maret:3,apr:4,april:4,mei:5,jun:6,juni:6,jul:7,juli:7,agu:8,agt:8,agus:8,agustus:8,sep:9,sept:9,september:9,okt:10,oktober:10,nop:11,nov:11,nopember:11,november:11,des:12,desember:12};
 const p2=n=>String(n).padStart(2,'0');
 const bln=w=>BLN[w]||BLN[w.slice(0,3)]||(w.slice(0,3)==='noc'?11:0);
@@ -505,7 +505,7 @@ function parseMonitoring(sheets){
       const rab=toNum(g('rab')),rpp=toNum(g('rabppn'));let tarif=12;
       if(rab&&rpp){const t=Math.round((rpp/rab-1)*100);}
       const mp=toNum(g('mppl'))||Number((String(g('mppl')).match(/\d+/)||[0])[0])||'';
-      out.push({no:cl(g('no')),pekerjaan:pk,ci:cl(g('ci')),tipe:cl(g('tipe')),pr:cl(g('pr')),tglpr:toISO(g('tglpr')),rab:rab,tarif:tarif,spk:toNum(g('spk')),tglspk:toISO(g('tglspk')),mppl:mp,mitra:cl(g('mitra')),nses:toNum(g('nses')),ses:cl(g('noses')),inv:cl(g('inv')),ket:cl(g('ket'))})}}
+      out.push({no:cl(g('no')),pekerjaan:pk,ci:cl(g('ci')),tipe:cl(g('tipe')),pr:cl(g('pr')),tglpr:toISO(g('tglpr')),pd:cl(g('pd')),tglpd:toISO(g('tglpd')),rab:rab,tarif:tarif,spk:toNum(g('spk')),tglspk:toISO(g('tglspk')),mppl:mp,mitra:cl(g('mitra')),nses:toNum(g('nses')),ses:cl(g('noses')),inv:cl(g('inv')),ket:cl(g('ket'))})}}
   return out}
 
 const MKEYS=['nama','direktur','aktaNo','aktaTgl','aktaUbah','aktaUbahT','email','alamat','notaris','lokasi','kpmP','kpmPT','kpmU','kpmUT','nib','nibT','pkp','pkpT','npwp','siup','siupT','aktif','refBank','refBankT','noRek','bank','anRek'];
@@ -757,7 +757,7 @@ const tipeAuto=r=>Number(r.rab)>0&&Number(r.rab)<=UMDS_MAX?'UMDS':'SPK';
 const tipeOf=r=>/umds/i.test(r.tipe||'')?'UMDS':/spk/i.test(r.tipe||'')?'SPK':tipeAuto(r);
 const SCOPES=['OPEX|','OPEX|SPK','OPEX|UMDS','CAPEX|'];
 const inScope=(r,sc)=>{const[a,t]=sc.split('|');return angOf(r)===a&&(!t||tipeOf(r)===t)};const angOf=r=>r&&r.ang==='CAPEX'?'CAPEX':'OPEX';
-const blankRow=()=>({ang:'OPEX',no:'',pekerjaan:'',ci:'',tipe:'',pr:'',tglpr:'',rab:null,tarif:12,spk:null,tglspk:'',mppl:'',mitra:'',nses:null,ses:'',inv:'',ket:''});
+const blankRow=()=>({ang:'OPEX',no:'',pekerjaan:'',ci:'',tipe:'',pr:'',tglpr:'',pd:'',tglpd:'',rab:null,tarif:12,spk:null,tglspk:'',mppl:'',mitra:'',nses:null,ses:'',inv:'',ket:''});
 V.monitoring=()=>{
   const st=rabState,p=st&&st.p,fld=(l,id,v,src,extra='')=>`<div class="fld"><label for="${id}">${l}</label><input id="${id}" ${extra} value="${esc(v??'')}"><small class="src">${src?'Terbaca dari '+esc(src):'Tidak ditemukan, isi manual'}</small></div>`;
   let res='';
@@ -777,20 +777,20 @@ V.monitoring=()=>{
   const sc0=monTab.ang==='OPEX'?'OPEX|'+monTab.sub:'CAPEX|';
   const asel=(i,v)=>`<select class="cell" data-f="ang" data-i="${i}" aria-label="Anggaran baris ${i+1}">${ANG.map(o=>`<option ${o===v?'selected':''}>${o}</option>`).join('')}</select>`;
   const tsel=(i,r)=>{const v=/^(UMDS|SPK)$/i.test(r.tipe||'')?String(r.tipe).toUpperCase():'';return `<select class="cell" data-f="tipe" data-i="${i}" aria-label="Tipe baris ${i+1}"><option value="" ${v===''?'selected':''}>Otomatis · ${tipeAuto(r)}</option><option ${v==='UMDS'?'selected':''}>UMDS</option><option ${v==='SPK'?'selected':''}>SPK</option></select>`};
-  const tFull=sc=>{const ix=MON.map((r,i)=>i).filter(i=>inScope(MON[i],sc)),R=ix.map(i=>MON[i]);
-    const H=[['No',64],['Pekerjaan',mw(R.map(r=>r.pekerjaan),280)],['CI',mw(R.map(r=>r.ci),110)],['Tipe',150],['PR / PD / G.63',mw(R.map(r=>r.pr),130)],['Tanggal PR / PD / G.63',150],['Nilai RAB (Non PPN)',150],['Nilai RAB (PPN)',140],['Nilai SPK',140],['Tanggal SPK',150],['MPPL (hari)',90],['Column 17',130],['Sisa MPPL',150],['Mitra',mw(R.map(r=>r.mitra),150)],['Nilai SES',140],['SES',mw(R.map(r=>r.ses),110)],['Invoice / Keterangan',mw(R.map(r=>r.inv),180)],['Keterangan',mw(R.map(r=>r.ket),210)],['Anggaran',110],['',150]];
+  const tFull=sc=>{const UM=sc==='OPEX|UMDS';const ix=MON.map((r,i)=>i).filter(i=>inScope(MON[i],sc)),R=ix.map(i=>MON[i]);
+    const H=[['No',64],['Pekerjaan',mw(R.map(r=>r.pekerjaan),280)],['CI',mw(R.map(r=>r.ci),110)],['Tipe',150],...(UM?[['G.63',mw(R.map(r=>r.pr),130)],['Tanggal G.63',150]]:[['PR',mw(R.map(r=>r.pr),120)],['Tanggal PR',140],['PD',mw(R.map(r=>r.pd),120)],['Tanggal PD',140]]),['Nilai RAB (Non PPN)',150],['Nilai RAB (PPN)',140],['Nilai SPK',140],['Tanggal SPK',150],['MPPL (hari)',90],['Column 17',130],['Sisa MPPL',150],['Mitra',mw(R.map(r=>r.mitra),150)],['Nilai SES',140],['SES',mw(R.map(r=>r.ses),110)],['Invoice / Keterangan',mw(R.map(r=>r.inv),180)],['Keterangan',mw(R.map(r=>r.ket),210)],['Anggaran',110],['',150]];
     const rows=ix.map(i=>{const r=MON[i],c=calcRow(r),[sv,sk]=sisaView(c);
       return `<tr data-t="${esc([r.pekerjaan,r.ci,r.pr,r.mitra,r.ses,r.inv,r.ket].join(' ').toLowerCase())}"><td class="stk0">${inp('no',i,r.no,'c','placeholder="'+(i+1)+'" inputmode="numeric" title="Nomor paket"')}</td><td class="stk1">${area('pekerjaan',i,r.pekerjaan)}</td><td>${inp('ci',i,r.ci)}</td><td>${tsel(i,r)}</td>
-      <td>${inp('pr',i,r.pr,'mono')}</td><td>${dat('tglpr',i,r.tglpr)}</td><td>${num('rab',i,r.rab)}</td>
+      <td>${inp('pr',i,r.pr,'mono')}</td><td>${dat('tglpr',i,r.tglpr)}</td>${UM?'':`<td>${inp('pd',i,r.pd,'mono')}</td><td>${dat('tglpd',i,r.tglpd)}</td>`}<td>${num('rab',i,r.rab)}</td>
       <td class="r calc"><span data-calc="ppn" data-i="${i}">${fmtN(c.ppn)||'-'}</span></td><td>${num('spk',i,r.spk)}</td><td>${dat('tglspk',i,r.tglspk)}</td>
       <td>${inp('mppl',i,r.mppl,'r','inputmode="numeric"')}</td><td class="calc"><span data-calc="end" data-i="${i}">${c.end?fmt(c.end):'-'}</span></td>
       <td><span class="chip ${sk}" data-calc="sisa" data-i="${i}">${sv}</span></td><td>${inp('mitra',i,r.mitra,'','list="mitralist"')}</td><td>${num('nses',i,r.nses)}</td><td>${inp('ses',i,r.ses,'mono')}</td>
       <td>${area('inv',i,r.inv)}</td><td>${area('ket',i,r.ket)}</td><td>${asel(i,angOf(r))}</td>
       <td><button class="btn sm" data-act="rab-pkg-i" data-i="${i}" title="Buat paket dari baris ini">Paket</button> <button class="btn sm" data-act="mon-del" data-i="${i}">Hapus</button></td></tr>`}).join('');
     const tot=k=>`<td class="r"><b data-tot="${k}" data-scope="${sc}">${fmtN(R.reduce((x,r)=>x+(k==='ppn'?(calcRow(r).ppn||0):(Number(r[k])||0)),0))}</b></td>`;
-    const none=`<tr data-t=""><td colspan="20" style="padding:18px;color:var(--muted)">Belum ada pekerjaan di menu ini. Tambah baris, atau ubah kolom Tipe dan Anggaran pada pekerjaan yang ada.</td></tr>`;
+    const none=`<tr data-t=""><td colspan="22" style="padding:18px;color:var(--muted)">Belum ada pekerjaan di menu ini. Tambah baris, atau ubah kolom Tipe dan Anggaran pada pekerjaan yang ada.</td></tr>`;
     return `<table class="wide montbl"><thead><tr>${H.map(([h,w],k)=>`<th class="${k===0?'stk0':k===1?'stk1':''}" style="min-width:${w}px">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows||none}</tbody>
-     <tfoot><tr><td class="stk0"></td><td class="stk1"><b>Total</b></td><td colspan="4"></td>${tot('rab')}${tot('ppn')}${tot('spk')}<td colspan="5"></td>${tot('nses')}<td colspan="5"></td></tr></tfoot></table>`};
+     <tfoot><tr><td class="stk0"></td><td class="stk1"><b>Total</b></td><td colspan="${UM?4:6}"></td>${tot('rab')}${tot('ppn')}${tot('spk')}<td colspan="5"></td>${tot('nses')}<td colspan="5"></td></tr></tfoot></table>`};
   const cnt=sc=>MON.filter(r=>inScope(r,sc)).length;
   const MK=monStats(),KD=(c,ic,k,l,sub)=>`<div class="dk ${c}"><i class="dki">${ic}</i><div><b data-k="${k}">${k==='rab'?rpc(MK.rab):MK[k]}</b><span>${l}</span><em>${sub}</em></div></div>`;
   const kpis=`<div class="dks mk">${KD('k1','▤','n','Pekerjaan','total dalam tabel')}${KD('k4','Rp','rab','Nilai RAB','sebelum PPN')}${KD('k2','✓','done','Selesai','SPK sudah tuntas')}${KD('k5','↻','prog','On progress','SPK berjalan')}${KD('k6','◧','nUmds','UMDS','pekerjaan UMDS')}${KD('k7','▣','nSpk','SPK','pekerjaan SPK')}</div>`;
@@ -1697,8 +1697,8 @@ document.addEventListener('click',e=>{
     if(act==='mon-tab'){monTab.ang=a.dataset.ang==='CAPEX'?'CAPEX':'OPEX';if(a.dataset.sub)monTab.sub=a.dataset.sub;render(true);return}
     if(act==='mon-add'){MON.push({...blankRow(),ang:a.dataset.ang==='CAPEX'?'CAPEX':'OPEX',tipe:a.dataset.ang==='CAPEX'?'':monTab.sub});render(true);return}
     if(act==='mon-del'){const i=Number(a.dataset.i);if(a.dataset.armed){MON.splice(i,1);render(true)}else{a.dataset.armed='1';a.textContent='Yakin?'}return}
-    if(act==='mon-copy'){const H=['No','Pekerjaan','CI','Tipe','PR / PD / G.63','Tanggal PR / PD / G.63','Nilai RAB (Non PPN)','Nilai RAB (PPN)','Nilai SPK','Tanggal SPK','MPPL','Column 17','Sisa MPPL','Mitra','Nilai SES','SES','Invoice / Keterangan','Keterangan','Anggaran'];
-      const T=[H.join('\t')].concat(MON.map((r,i)=>{const c=calcRow(r);return[monNo(r,i),r.pekerjaan,r.ci,r.tipe,r.pr,r.tglpr,r.rab??'',c.ppn??'',r.spk??'',r.tglspk,r.mppl,c.end?iso(c.end):'',c.sisa??'',r.mitra,r.nses??'',r.ses,r.inv,r.ket,angOf(r)].map(x=>String(x).replace(/[\t\n]+/g,' ')).join('\t')})).join('\n');
+    if(act==='mon-copy'){const H=['No','Pekerjaan','CI','Tipe','PR / G.63','Tanggal PR / G.63','PD','Tanggal PD','Nilai RAB (Non PPN)','Nilai RAB (PPN)','Nilai SPK','Tanggal SPK','MPPL','Column 17','Sisa MPPL','Mitra','Nilai SES','SES','Invoice / Keterangan','Keterangan','Anggaran'];
+      const T=[H.join('\t')].concat(MON.map((r,i)=>{const c=calcRow(r);return[monNo(r,i),r.pekerjaan,r.ci,r.tipe,r.pr,r.tglpr,r.pd||'',r.tglpd||'',r.rab??'',c.ppn??'',r.spk??'',r.tglspk,r.mppl,c.end?iso(c.end):'',c.sisa??'',r.mitra,r.nses??'',r.ses,r.inv,r.ket,angOf(r)].map(x=>String(x).replace(/[\t\n]+/g,' ')).join('\t')})).join('\n');
       const msg=document.getElementById('cpmsg');
       (navigator.clipboard?navigator.clipboard.writeText(T):Promise.reject()).then(()=>{msg.textContent='Tabel tersalin. Tempel di Excel dengan Ctrl+V.'}).catch(()=>{msg.textContent='Penyalinan otomatis ditolak browser. Pilih isi tabel secara manual lalu salin.'});return}}
   const g=e.target.closest('[data-go]');if(g){if(g.dataset.clear)prefill=null;location.hash=g.dataset.go;if(!g.dataset.go)render();return}
@@ -1781,7 +1781,7 @@ document.addEventListener('submit',e=>{
   const common={lokasi:(E&&E.lokasi)||'Daop 2 Bandung',ppn:12,pen:Number(v('f_pen')),ret:180,ang:angv,rks:K};K.jaminan=common.ret;
   const push=r=>{if(!r)return;r.ang=angv;r.spk=Number(v('f_spk'))||null;const um=angv==='OPEX'&&tipeOf(r)==='UMDS';r.nses=um?Number(v('f_nses'))||null:r.nses;r.ses=um?v('f_ses').trim():r.ses;r.mppl=common.pen};
   if(E){Object.assign(E,common);push(E.mon);if(E.dt){const G=gen(E,true),ks=G.findIndex(x=>x.dok.startsWith('Selesai pekerjaan')),sp=G.findIndex(x=>x.dok.startsWith('Surat Perintah Kerja'));E.dt[ks]=iso(snap(add(d0(E.dt[sp]),E.pen-1)))}cur=E.id;const back=(prefill&&prefill.back)||'timeline';prefill=null;location.hash=back;return}
-  const mi=Number(v('f_no')),r=MON[mi],p={id:nextId++,no:monNo(r,mi),nama:v('f_nama').trim(),rab:Number(v('f_rab')),pr:v('f_pr').trim(),done:0,proc:0,contoh:false,st:{},mon:r,...common,tglRab:iso(snap(TODAY)),tglPD:iso(snap(r&&r.tglpr?d0(r.tglpr):add(TODAY,7))),tglUji:iso(snap(add(TODAY,45))),tglBayar:iso(snap(add(TODAY,53)))};
+  const mi=Number(v('f_no')),r=MON[mi],p={id:nextId++,no:monNo(r,mi),nama:v('f_nama').trim(),rab:Number(v('f_rab')),pr:v('f_pr').trim(),done:0,proc:0,contoh:false,st:{},mon:r,...common,tglRab:iso(snap(TODAY)),tglPD:iso(snap(r&&(r.tglpd||r.tglpr)?d0(r.tglpd||r.tglpr):add(TODAY,7))),tglUji:iso(snap(add(TODAY,45))),tglBayar:iso(snap(add(TODAY,53)))};
   ensureDt(p);push(r);P.push(p);cur=p.id;prefill=null;location.hash='timeline';
 });
 /* ===== Penyimpanan database dan login 2 admin ===== */
