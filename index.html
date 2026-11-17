@@ -1235,7 +1235,7 @@ function bastDoc(p){
   const d=rowOf(p,'BA Serah Terima'),bp=rowOf(p,'BA Pengujian Barang/Jasa'),sp=rowOf(p,'Surat Perintah Kerja (SPK)'),t=d.tgl;
   const row=(n,tx)=>`<div style="display:flex;gap:10px;margin:0 0 8px;text-align:justify"><span style="width:20px;flex:none">${n}</span><span>${tx}</span></div>`;
   const blk=(a,b)=>`<table style="margin:0 0 8px"><tr><td style="width:150px;vertical-align:top"><b>${a}</b></td><td style="width:14px;vertical-align:top">:</td><td style="text-align:justify">${b}</td></tr></table>`;
-  return `<div class="pg nf"><div style="padding:8px 16px;line-height:1.5;font-size:13px;min-height:1010px">
+  return `<div class="pg nf"><div style="padding:44px 16px 8px;line-height:1.5;font-size:13px;min-height:970px">
 <p style="text-align:center;margin:0"><b>BERITA ACARA SERAH TERIMA BARANG / JASA PEKERJAAN</b></p><p style="text-align:center;margin:0 0 12px">NOMOR : ${esc(d.no)}</p>
 <p style="text-align:justify;margin:0 0 8px">Pada hari ini ${hariL(t).replace(' Tahun ',' tahun ')} (${tglN(t)}) kami yang bertanda tangan di bawah ini :</p>
 ${row('1',HL(esc(SIGN.terima))+' : Assistant Manager Bangunan Dinas Non Stasiun selaku Pejabat Penerima hasil Pengadaan Barang / Jasa Pekerjaan Prasarana Kereta Api Dinas Unit Bangunan Daop 2 PT. KERETA API INDONESIA (Persero) jalan Stasiun Selatan N0.25 Bandung yang dibentuk berdasarkan Surat Tugas Executive Vice President Daerah Operasi 2 Bandung Nomor : KH.204/XII/3/DO.2-2022 tanggal 22 Desember 2022 Selanjutnya disebut '+HL('PIHAK PERTAMA')+'.')}
