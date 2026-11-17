@@ -1221,15 +1221,23 @@ function bappLampDoc(p){
 </div></div>`}
 V.paktapeng=()=>{const p=pkg(cur);return docView('Pakta Integritas Penguji','Pakta Integritas Penguji',paktaPengDoc(p),[],'flat')};
 function paktaPengDoc(p){
-  const d=rowOf(p,'Pakta Integritas Penguji'),t=d.tgl;
-  const li=(n,x)=>`<div style="display:flex;gap:6px;margin:0 0 8px;text-align:justify"><span style="width:20px;flex:none">${n}</span><span>${x}</span></div>`;
-  return `<div class="pg nf"><div style="padding:10px 20px;line-height:1.5">
-<p style="text-align:center;margin:0"><b><u>PAKTA INTEGRITAS</u></b></p><p style="text-align:center;margin:0 0 18px">${esc(d.no)}</p>
-<p style="margin:0 0 10px">Kami yang bertandatangan di bawah ini, Unit Pelaksana (User ), Panitia Penguji Barang / Jasa, dengan ini menyatakan bahwa :</p>
+  const d=rowOf(p,'Pakta Integritas Penguji'),t=d.tgl,nm=mitraNm(p);
+  const li=(n,x)=>`<div style="display:flex;gap:6px;margin:0 0 6px;text-align:justify"><span style="width:20px;flex:none">${n}</span><span>${x}</span></div>`;
+  const bx='border:1px solid #000;';
+  const cell=(a,b,c,h)=>`<td style="width:33.33%;text-align:center;vertical-align:top;padding:0 6px;border:0!important">${a}<div style="height:${h}px"></div>${b?`<b><u>${b}</u></b><br>${c}`:''}</td>`;
+  const sg=(lbl,n,nip)=>cell(lbl,esc(n||'')||'&nbsp;','NIPP. '+esc(nip||''),52);
+  return `<div class="pg nf"><div style="padding:6px 10px;line-height:1.5"><div style="${bx}">
+<div style="text-align:center;padding:14px 8px;border-bottom:1px solid #000"><b style="font-size:17px">PAKTA INTEGRITAS</b></div>
+<div style="text-align:center;padding:3px 8px;border-bottom:1px solid #000">${esc(d.no)}</div>
+<div style="padding:14px 16px 26px">
+<p style="margin:0 0 22px">Kami yang bertandatangan di bawah ini, Unit Pelaksana (<i>User</i> ), Panitia Penguji Barang / Jasa, dengan ini menyatakan bahwa :</p>
 ${li('1.','Tidak akan melakukan praktek KKN.')}${li('2.','Melaporkan kepada pihak berwajib / berwenang apabila mengetahui ada indikasi KKN di dalam proses Pengujian Barang / Jasa ini.')}${li('3.','Berjanji akan melaksanakan tugas secara bersih, transparan dan profesional dalam arti akan mengerahkan segala kemampuan dan sumber daya secara optimal untuk memberikan hasil kerja terbaik dalam pelaksanaan dan penyelesaian pekerjaan / kegiatan ini.')}${li('4.','Apabila melanggar hal - hal yang telah dinyatakan dalam PAKTA INTEGRITAS ini, bersedia dikenakan sanksi moral, sanksi administrasi serta dituntut ganti rugi pidana sesuai dengan peraturan perundang - undangan yang berlaku.')}
-<p style="text-align:center;margin:24px 0 2px">Bandung, ${fmtL(t)}</p><p style="text-align:center;margin:0 0 2px"><b>YANG MENYATAKAN<br>PANITIA PENGUJI BARANG / JASA</b></p>
-${ttdPeng(t,60)}${ttdMit(p,60)}
-</div></div>`}
+</div>
+<div style="text-align:center;padding:3px 8px;border-top:1px solid #000;border-bottom:1px solid #000">Bandung, ${fmtL(t)}</div>
+<div style="padding:12px 10px 18px;text-align:center"><div style="margin-bottom:12px">YANG MENYATAKAN<br>PANITIA PENGUJI BARANG / JASA</div>
+<table style="width:100%;table-layout:fixed"><tr>${sg('Ketua',SIGN.kPeng,SIGN.kPengNipp)}${sg('Anggota',SIGN.aPeng,SIGN.aPengNipp)}${sg('Anggota',SIGN.aPeng2,SIGN.aPeng2Nipp)}</tr>
+<tr>${cell('<div style="height:14px"></div>PENYEDIA JASA<br>'+esc(nm),esc(dirOf(nm))||'&nbsp;','DIREKTUR',52)}<td style="border:0!important"></td><td style="border:0!important"></td></tr></table></div>
+</div></div></div>`}
 V.bast=()=>{const p=pkg(cur);return docView('BA Serah Terima (BAST)','BA Serah Terima',bastDoc(p),[],'flat')};
 function bastDoc(p){
   const d=rowOf(p,'BA Serah Terima'),bp=rowOf(p,'BA Pengujian Barang/Jasa'),sp=rowOf(p,'Surat Perintah Kerja (SPK)'),t=d.tgl;
