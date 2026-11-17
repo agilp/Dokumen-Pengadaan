@@ -219,7 +219,7 @@ table.uni .rowbar .bar-t{flex:1;min-width:60px}
 table.wide [data-mir]{font-size:13px;font-weight:400}
 .sub .grid2{padding:16px 18px}
 .docnav{position:fixed;top:50%;transform:translateY(-50%);z-index:20;width:46px;height:70px;border:0;border-radius:12px;background:var(--navy);color:#fff;font-size:28px;line-height:1;cursor:pointer;opacity:.88;box-shadow:0 6px 18px rgba(20,40,75,.35)}.docnav:hover{opacity:1;background:var(--orange,#E8751A)}.docnav.l{left:10px}.docnav.r{right:10px}@media (max-width:900px){.docnav{width:34px;height:54px;font-size:22px;opacity:.7}.docnav.l{left:2px}.docnav.r{right:2px}}@media print{.docnav{display:none!important}}
-.hl{font-weight:bold}@media print{.pg:not(.land){padding-left:15mm!important;padding-right:15mm!important}.pg.nf.lp{padding:10mm 8mm!important}.lpz{zoom:.84}.pg.land:not(.akw){padding:12mm 10mm!important}.paper[data-k=pakta] .pg{padding-left:9mm!important;padding-right:9mm!important}.paper[data-k=bapph] .pg{padding-left:8mm!important;padding-right:8mm!important}.paper[data-k=baakh] .pg{padding-left:12mm!important;padding-right:12mm!important}.paper[data-k=ban] .pg{padding-left:8mm!important;padding-right:8mm!important}.paper[data-k=kp] .pg{padding-left:11mm!important;padding-right:11mm!important}.paper[data-k=paktapbj] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=suratpern] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=bapp] .pg{padding-left:11mm!important;padding-right:11mm!important}.paper[data-k=paktapeng] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=bast] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=fpph] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=spph] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=uneg] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=rdsppp] .pg{padding-left:15mm!important;padding-right:15mm!important}}
+.hl{font-weight:bold}.fld.umds[hidden]{display:none!important}@media print{.pg:not(.land){padding-left:15mm!important;padding-right:15mm!important}.pg.nf.lp{padding:10mm 8mm!important}.lpz{zoom:.84}.pg.land:not(.akw){padding:12mm 10mm!important}.paper[data-k=pakta] .pg{padding-left:9mm!important;padding-right:9mm!important}.paper[data-k=bapph] .pg{padding-left:8mm!important;padding-right:8mm!important}.paper[data-k=baakh] .pg{padding-left:12mm!important;padding-right:12mm!important}.paper[data-k=ban] .pg{padding-left:8mm!important;padding-right:8mm!important}.paper[data-k=kp] .pg{padding-left:11mm!important;padding-right:11mm!important}.paper[data-k=paktapbj] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=suratpern] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=bapp] .pg{padding-left:11mm!important;padding-right:11mm!important}.paper[data-k=paktapeng] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=bast] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=fpph] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=spph] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=uneg] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=rdsppp] .pg{padding-left:15mm!important;padding-right:15mm!important}}
 @media screen{.paper .pg:not(.land):not(.fit):not(.aw){padding-left:57px;padding-right:57px}}
 .pvbar{display:none;position:sticky;top:0;z-index:6;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:var(--navy);color:#fff;font-size:13px}
 body.pv .pvbar{display:flex}
@@ -573,27 +573,19 @@ V.baru=()=>{
   const ps=n=>`<div class="fld"><label for="rk_p${n}">Peserta ${n+1}</label><select id="rk_p${n}" data-rk="peserta" data-k="${n}"><option value="">(belum dipilih)</option>${names.map(x=>`<option ${k.peserta[n]===x?'selected':''}>${esc(x)}</option>`).join('')}</select></div>`;
   const G=(title,body)=>`<div class="panel-h" style="border-top:1px solid var(--line)"><h2 style="font-size:14px">${title}</h2></div><div class="grid2">${body}</div>`;
   return `<div class="head"><span class="tag">${E?'Ubah paket':'Buat paket baru'}</span><h1>${E?'Paket '+esc(E.no):'Data paket'}</h1><p>Isi sekali di sini: data paket, anggaran, tanggal kunci, dan identitas surat. Berkas dokumen tinggal dipratinjau dan dicetak.</p></div>
-  <form id="frm"><div class="panel"><div class="panel-h"><h2>Identitas paket</h2></div><div class="grid2">
+  <form id="frm"><div class="panel"><div class="panel-h"><h2>Identitas paket</h2><span class="sp"></span><span class="chip acc" id="tipebadge"></span></div><div class="grid2">
    ${E?f('No. paket','f_no_ro','text',E.no,'readonly'):`<div class="fld w2"><label for="f_no">No. paket</label><select id="f_no" required><option value="">${MON.length?'Pilih nomor dari Monitoring':'Belum ada pekerjaan di Monitoring'}</option>${MON.map((r,i)=>`<option value="${i}" ${mi0===i?'selected':''}>${esc(monNo(r,i))} · ${esc((r.pekerjaan||'(tanpa judul)').slice(0,70))}</option>`).join('')}</select>
     <small>Daftar diambil dari tabel <a href="#monitoring">Monitoring</a>. Pilih satu nomor, data pekerjaan terisi otomatis.</small><small id="f_warn" style="color:var(--warn)"></small></div>`}
    ${f('Nama pekerjaan','f_nama','text',E?E.nama:(m?m.pekerjaan:''),'readonly','w2')}
-   ${f('Lokasi pekerjaan','f_lok','text',g('lokasi','Daop 2 Bandung'),'required')}
    ${f('No. PR / Persetujuan Dana','f_pr','text',E?E.pr:(m?m.pr:''),'readonly')}
    <div class="fld"><label for="f_rab">Nilai RAB sebelum PPN (Rp)</label><input id="f_rab" type="number" value="${esc(E?E.rab:(m&&m.rab?m.rab:''))}" readonly><small id="f_rabfmt">${E?esc(rp(E.rab)):''}</small></div>
-   <div class="fld"><label for="f_ppn">Tarif PPN</label><select id="f_ppn" disabled><option value="12" selected>12% (DPP 11/12)</option></select></div>
+   <input type="hidden" id="angv" value="${ang}">
+   ${f('Nilai SPK (Rp)','f_spk','number',m&&m.spk?m.spk:'','min="0"')}
+   ${f('Masa pelaksanaan MPPL (hari kalender)','f_pen','number',E?E.pen:(m&&Number(m.mppl)>0?m.mppl:30),'required min="1"')}
+   ${rk('rk_pem','Masa pemeliharaan (hari kalender)','pem','number','min="0"')}
+   <div class="fld umds" hidden><label for="f_nses">Nilai SES (Rp)</label><input id="f_nses" type="number" value="${esc(m&&m.nses?m.nses:'')}" min="0"></div>
+   <div class="fld umds" hidden><label for="f_ses">No. SES</label><input id="f_ses" type="text" value="${esc(m?m.ses:'')}"></div>
   </div></div>
-  <div class="panel"><div class="panel-h"><h2>Anggaran</h2><span class="sp"></span><div class="seg" role="radiogroup" aria-label="Jenis anggaran">${ANG.map(a=>`<label><input type="radio" name="ang" value="${a}" ${a===ang?'checked':''}><span>${a}</span></label>`).join('')}</div></div>
-   <div style="padding:18px"><div class="grp g-${ang.toLowerCase()}" id="angbox" style="margin:0"><div class="grp-h" style="display:flex;align-items:center;gap:10px;padding:14px 18px"><span class="gdot"></span><h2 id="angtitle" style="margin:0;font-family:var(--f-display);font-size:19px;color:var(--navy)">${ang}</h2><span class="chip acc" id="tipebadge"></span></div>
-    <div class="sub"><div class="sub-h"><h3>SPK</h3></div><div class="grid2">
-     ${f('Nilai SPK (Rp)','f_spk','number',m&&m.spk?m.spk:'','min="0"')}
-     ${f('Masa pelaksanaan MPPL (hari kalender)','f_pen','number',E?E.pen:(m&&Number(m.mppl)>0?m.mppl:30),'required min="1"')}
-     ${rk('rk_pem','Masa pemeliharaan (hari kalender)','pem','number','min="0"')}
-    </div></div>
-    <div class="sub" id="umdsbox" hidden><div class="sub-h"><h3>UMDS</h3></div><div class="grid2">
-     ${f('Nilai SES (Rp)','f_nses','number',m&&m.nses?m.nses:'','min="0"')}
-     ${f('No. SES','f_ses','text',m?m.ses:'')}
-    </div></div></div></div>
-   <datalist id="mitralist">${names.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></div>
   <div class="panel"><div class="panel-h"><h2>Identitas surat</h2><span class="chip">dipakai RKS dan berkas lain</span></div>
    ${G('Ketentuan',`${rk('rk_spt','Tahun SPT tahunan terakhir','sptTahun')}${rk('rk_sptb','Bulan SPT masa (minimal)','sptBulan')}${rk('rk_skf','SKF minimal terbit di','skf')}`)}
    <div class="note">Peserta diambil dari pilihan mitra di timeline, mitra pelaksana dari penawar terendah, dan jam penawaran diatur otomatis. Nomor surat, tanggal surat, waktu pelaksanaan, dan tarif PPN diambil dari data di atas.</div>
@@ -1557,12 +1549,11 @@ document.addEventListener('dragleave',e=>{const d=e.target.closest('#drop,#mdrop
 document.addEventListener('drop',e=>{const d=e.target.closest('#drop,#mdrop');if(d){e.preventDefault();d.classList.remove('over');const f=e.dataTransfer.files[0];if(f)(d.id==='mdrop'?readMitra:readRAB)(f)}});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('tr[data-mopen]')){mSel=Number(e.target.dataset.mopen);render(true);window.scrollTo(0,0);return}
   if(e.key==='Enter'&&e.target.matches('tr[data-open]')){cur=Number(e.target.dataset.open);location.hash='timeline'}});
-function angUI(){const c=document.querySelector('input[name=ang]:checked'),b=document.getElementById('angbox'),t=document.getElementById('angtitle');if(!c||!b)return;
-  t.textContent=c.value;b.classList.remove('g-opex','g-capex');b.classList.add('g-'+c.value.toLowerCase());
+function angUI(){const av=document.getElementById('angv');if(!av)return;const ang=av.value;
   const sel=document.getElementById('f_no'),row=editId!==null?(P.find(x=>x.id===editId)||{}).mon:(sel&&sel.value!==''?MON[Number(sel.value)]:null);
   const rab=Number((document.getElementById('f_rab')||{}).value)||0,tp=row?tipeOf(row):tipeAuto({rab});
-  const u=document.getElementById('umdsbox');if(u)u.hidden=!(c.value==='OPEX'&&tp==='UMDS');
-  const bd=document.getElementById('tipebadge');if(bd)bd.textContent=c.value==='OPEX'?'Tipe '+tp+(row&&/^(UMDS|SPK)$/i.test(row.tipe||'')?'':' (otomatis dari nilai RAB, batas Rp 50 juta)'):'';
+  document.querySelectorAll('.umds').forEach(u=>{u.hidden=!(ang==='OPEX'&&tp==='UMDS')});
+  const bd=document.getElementById('tipebadge');if(bd)bd.textContent=(row||rab)?ang+(ang==='OPEX'?' · '+tp:''):'';
 }
 function updSpkDate(){}
 function fillFromMon(val){
@@ -1573,7 +1564,7 @@ function fillFromMon(val){
   set('f_spk',r.spk||'');set('f_nses',r.nses||'');set('f_ses',r.ses);
   if(Number(r.mppl)>0)set('f_pen',r.mppl);
   if(r.tglpr)set('f_b',r.tglpr);
-  const rd=document.querySelector(`input[name=ang][value="${angOf(r)}"]`);if(rd){rd.checked=true;angUI()}
+  const av=document.getElementById('angv');if(av){av.value=angOf(r);angUI()}
   updSpkDate();
   if(fm)fm.textContent=r.rab?rp(r.rab)+' · dengan PPN '+rp(withPPN(r.rab)):'Nilai RAB belum diisi di Monitoring';
   const n=monNo(r,i);if(warn)warn.textContent=P.some(p=>String(p.no)===n)?'Paket dengan nomor ini sudah ada. Menyimpan akan membuat paket kedua.':''}
@@ -1597,7 +1588,6 @@ document.addEventListener('change',e=>{
   if(e.target.dataset&&e.target.dataset.sg!==undefined){SIGN[e.target.dataset.sg]=e.target.value;const m=document.getElementById('sgmsg');if(m)m.textContent='Tersimpan. Berlaku untuk paket yang dibuat berikutnya.';return}
   if(e.target.dataset&&e.target.dataset.sgl!==undefined){SGL[Number(e.target.dataset.sgl)][e.target.dataset.k]=e.target.value;syncSign();const m=document.getElementById('sgmsg');if(m)m.textContent='Tersimpan. Berlaku untuk paket yang dibuat berikutnya.';return}
   if(e.target.id==='f_no'){fillFromMon(e.target.value);return}
-  if(e.target.name==='ang'){angUI();return}
   if(e.target.id==='f_b'||e.target.id==='f_c'||e.target.id==='f_pen'){updSpkDate();return}
   if(e.target.id==='logofile'&&e.target.files[0]){const f=e.target.files[0];if(!/^image\//.test(f.type))return;
     const r=new FileReader();r.onload=()=>{setLogo(r.result);try{if(r.result.length<1500000)localStorage.setItem('logo.unit',r.result)}catch(_){}};r.readAsDataURL(f);return}
@@ -1621,11 +1611,11 @@ document.addEventListener('submit',e=>{
   if(e.target.id!=='frm')return;e.preventDefault();
   const v=id=>document.getElementById(id).value;
   if(!Number(v('f_rab'))){const w=document.getElementById('f_warn');if(w)w.textContent='Nilai RAB pekerjaan ini belum diisi di Monitoring. Lengkapi dulu di tabel Monitoring.';return}
-  const angv=(document.querySelector('input[name=ang]:checked')||{}).value==='CAPEX'?'CAPEX':'OPEX';
+  const angv=(document.getElementById('angv')||{}).value==='CAPEX'?'CAPEX':'OPEX';
   const E=editId!==null?P.find(x=>x.id===editId):null;
   const K=E?rks(E):{...RKSDEF,...SIGN,tawar:['','',''],peserta:['','','']};
   document.querySelectorAll('#frm [data-rk]').forEach(el=>{const key=el.dataset.rk;if(key==='peserta')K.peserta[Number(el.dataset.k)]=el.value;else if(key==='tawar'){K.tawar=K.tawar||['','',''];K.tawar[Number(el.dataset.k)]=el.value}else if(key==='pem'||key==='jaminan')K[key]=Math.max(0,Number(el.value)||0);else K[key]=el.value});
-  const common={lokasi:v('f_lok').trim(),ppn:Number(v('f_ppn')),pen:Number(v('f_pen')),ret:180,ang:angv,rks:K};K.jaminan=common.ret;
+  const common={lokasi:(E&&E.lokasi)||'Daop 2 Bandung',ppn:12,pen:Number(v('f_pen')),ret:180,ang:angv,rks:K};K.jaminan=common.ret;
   const push=r=>{if(!r)return;r.ang=angv;r.spk=Number(v('f_spk'))||null;const um=angv==='OPEX'&&tipeOf(r)==='UMDS';r.nses=um?Number(v('f_nses'))||null:r.nses;r.ses=um?v('f_ses').trim():r.ses;r.mppl=common.pen};
   if(E){Object.assign(E,common);push(E.mon);if(E.dt){const G=gen(E,true),ks=G.findIndex(x=>x.dok.startsWith('Selesai pekerjaan')),sp=G.findIndex(x=>x.dok.startsWith('Surat Perintah Kerja'));E.dt[ks]=iso(snap(add(d0(E.dt[sp]),E.pen-1)))}cur=E.id;const back=(prefill&&prefill.back)||'timeline';prefill=null;location.hash=back;return}
   const mi=Number(v('f_no')),r=MON[mi],p={id:nextId++,no:monNo(r,mi),nama:v('f_nama').trim(),rab:Number(v('f_rab')),pr:v('f_pr').trim(),done:0,proc:0,contoh:false,st:{},mon:r,...common,tglRab:iso(snap(TODAY)),tglPD:iso(snap(r&&r.tglpr?d0(r.tglpr):add(TODAY,7))),tglUji:iso(snap(add(TODAY,45))),tglBayar:iso(snap(add(TODAY,53)))};
@@ -1713,7 +1703,6 @@ async function boot(){
 render();
 boot();
 </script>
-
 <script type="module">
 const cfg=window.FIREBASE_CONFIG;
 if(!cfg||!cfg.apiKey||String(cfg.apiKey).startsWith('ISI')){window.__fbDone(false)}
