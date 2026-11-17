@@ -274,7 +274,7 @@ body.pv .paperwrap{background:#E9EDF3}
  .paper.flat{padding:0!important}
  .pg{min-height:297mm!important;height:297mm;overflow:hidden;page-break-after:always;border:0!important;padding:15mm 26mm 40mm!important}
  .pg.nf{height:297mm;padding:20mm 26mm!important}
- .pg.fit{font-size:12px!important;line-height:1.27!important;padding:20mm 15mm 36mm!important}.pg.fit p{margin-bottom:2px!important}.pg.fit img:not(.kopfoot){height:28mm!important;max-width:110mm!important}.pg.fit [style*=min-height]{min-height:0!important}
+ .pg.fit{font-size:12px!important;line-height:1.27!important;padding:20mm 15mm 36mm!important}.pg.fit p{margin-bottom:2px!important}.pg.fit img:not(.kopfoot){height:28mm!important;width:auto!important;max-width:110mm!important;object-fit:contain!important}.pg.fit [style*=min-height]{min-height:0!important}
  .pg:last-child{page-break-after:auto}
  .kopaddr{left:26mm!important;bottom:9mm!important}.pg.fit .kopaddr{left:15mm!important;text-align:left!important}.pg.fit .kopfoot{right:15mm!important}.kopfoot{right:6mm!important;bottom:5mm!important}
 }
@@ -979,7 +979,7 @@ function daftarDoc(p){
 <p style="text-align:center;margin:20px 0 8px"><b>TIM PENGADAAN BARANG DAN JASA UNIT BANGUNAN</b></p>
 <table class="bd" style="width:85%"><tr><td style="width:34px;text-align:center"><b>NO</b></td><td style="text-align:center"><b>NAMA</b></td><td style="text-align:center"><b>JABATAN</b></td><td style="text-align:center"><b>TANDA TANGAN</b></td></tr>${tim(1,k.ketua,'KETUA')}${tim(2,SIGN.tim2,'ANGGOTA')}${tim(3,SIGN.tim3,'ANGGOTA')}</table>`;
 }
-const kopTop=(H=90,W=300)=>{const im=document.getElementById('logoimg'),ts=KOP.top||(im&&!im.hidden&&im.getAttribute('src')?im.getAttribute('src'):'');return ts?`<img src="${esc(ts)}" alt="" style="height:${H}px;max-width:${W}px;object-fit:contain;float:right">`:''};
+const kopTop=(H=90,W=300)=>{const im=document.getElementById('logoimg'),ts=KOP.top||(im&&!im.hidden&&im.getAttribute('src')?im.getAttribute('src'):'');return ts?`<img src="${esc(ts)}" alt="" style="height:${H}px;width:auto;max-width:${W}px;object-fit:contain;object-position:right top;float:right">`:''};
 const kopBot=()=>`<p class="kopaddr">PT. KERETA API INDONESIA (PERSERO) DAERAH OPERASI 2 BANDUNG<br>Jl. STASIUN SELATAN No. 25 BANDUNG Telp. (022) 4230147 Fax. (022) 4230150</p>${KOP.bot?`<img class="kopfoot" src="${esc(KOP.bot)}" alt="">`:''}`;
 V.fpph=()=>{const p=pkg(cur),k=rks(p),miss=[];if(!k.peserta.some(Boolean))miss.push('peserta');
   return docView('Formulir Permintaan Penawaran Harga','Formulir Permintaan Penawaran Harga',fpphDoc(p),miss,'flat')};
@@ -1249,7 +1249,7 @@ function bastDoc(p){
   const row=(n,a,tx)=>`<table style="width:100%;margin:0 0 12px"><tr><td style="width:26px;vertical-align:top">${n}</td><td style="width:158px;vertical-align:top">${a}</td><td style="width:14px;vertical-align:top">:</td><td style="text-align:justify;vertical-align:top">${tx}</td></tr></table>`;
   const blk=(a,b)=>`<table style="width:100%;margin:0 0 12px"><tr><td style="width:184px;vertical-align:top"><u>${a}</u></td><td style="width:14px;vertical-align:top">:</td><td style="text-align:justify;vertical-align:top">${b}</td></tr></table>`;
   return `<div class="pg nf"><div style="padding:6px 16px 8px;line-height:1.5;font-size:13px;min-height:990px">
-<div style="height:88px">${kopTop(84,250)}</div>
+<div style="height:76px">${kopTop(70,210)}</div>
 <p style="text-align:center;margin:10px 0 0">BERITA ACARA SERAH TERIMA BARANG / JASA PEKERJAAN</p><p style="text-align:center;margin:0 0 14px">NOMOR : ${esc(d.no)}</p>
 <p style="text-align:justify;margin:0 0 12px">Pada hari ini ${hariL(t).replace(' Tahun ',' tahun ')} (${tglN(t)}), kami yang bertanda tangan di bawah ini :</p>
 ${row('1',HL(esc(SIGN.terima)),'Assistant Manager Bangunan Dinas Non Stasiun selaku Pejabat Penerima hasil Pengadaan Barang / Jasa Pekerjaan Prasarana Kereta Api Dinas Unit Bangunan Daop 2 PT. KERETA API INDONESIA (Persero) jalan Stasiun Selatan N0.25 Bandung yang dibentuk berdasarkan Surat Tugas Executive Vice President Daerah Operasi 2 Bandung Nomor : KH.204/XII/3/DO.2-2022 tanggal 22 Desember 2022 Selanjutnya disebut '+HL('PIHAK PERTAMA')+'.')}
