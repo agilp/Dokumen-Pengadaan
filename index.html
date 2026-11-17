@@ -219,7 +219,9 @@ table.uni .rowbar .bar-t{flex:1;min-width:60px}
 table.wide [data-mir]{font-size:13px;font-weight:400}
 .sub .grid2{padding:16px 18px}
 .docnav{position:fixed;top:50%;transform:translateY(-50%);z-index:20;width:46px;height:70px;border:0;border-radius:12px;background:var(--navy);color:#fff;font-size:28px;line-height:1;cursor:pointer;opacity:.88;box-shadow:0 6px 18px rgba(20,40,75,.35)}.docnav:hover{opacity:1;background:var(--orange,#E8751A)}.docnav.l{left:10px}.docnav.r{right:10px}@media (max-width:900px){.docnav{width:34px;height:54px;font-size:22px;opacity:.7}.docnav.l{left:2px}.docnav.r{right:2px}}@media print{.docnav{display:none!important}}
-.hl{font-weight:bold}.pvbar{display:none;position:sticky;top:0;z-index:6;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:var(--navy);color:#fff;font-size:13px}
+.hl{font-weight:bold}@media print{.pg:not(.land){padding-left:15mm!important;padding-right:15mm!important}.pg.nf.lp{padding:10mm 8mm!important}.lpz{zoom:.84}.pg.land:not(.akw){padding:12mm 10mm!important}.paper[data-k=pakta] .pg{padding-left:9mm!important;padding-right:9mm!important}.paper[data-k=bapph] .pg{padding-left:8mm!important;padding-right:8mm!important}.paper[data-k=baakh] .pg{padding-left:12mm!important;padding-right:12mm!important}.paper[data-k=ban] .pg{padding-left:8mm!important;padding-right:8mm!important}.paper[data-k=kp] .pg{padding-left:11mm!important;padding-right:11mm!important}.paper[data-k=paktapbj] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=suratpern] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=bapp] .pg{padding-left:11mm!important;padding-right:11mm!important}.paper[data-k=paktapeng] .pg{padding-left:10mm!important;padding-right:10mm!important}.paper[data-k=bast] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=fpph] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=spph] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=uneg] .pg{padding-left:15mm!important;padding-right:15mm!important}.paper[data-k=rdsppp] .pg{padding-left:15mm!important;padding-right:15mm!important}}
+@media screen{.paper .pg:not(.land):not(.fit):not(.aw){padding-left:57px;padding-right:57px}}
+.pvbar{display:none;position:sticky;top:0;z-index:6;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:var(--navy);color:#fff;font-size:13px}
 body.pv .pvbar{display:flex}
 body.pv .bar,body.pv .notpv{display:none}
 body.pv .paperwrap{background:#E9EDF3}
@@ -273,7 +275,7 @@ table.tl select.sel{padding:4px 8px}
 .nmin{min-width:210px}
 .twin{min-width:170px}
 .paper.land{max-width:1140px}
-.pg.land{min-height:0;padding:30px 36px}.pg.akw{padding:6px!important;height:auto!important;min-height:0!important}.pg.aw{padding-left:40px;padding-right:40px}.pg.fit{padding-left:40px;padding-right:40px}.pg.fit .kopaddr{left:40px}.pg.fit .kopfoot{right:40px}
+.pg.land{min-height:0;padding:30px 36px}.pg.lp{min-height:0;padding:30px 36px}.pg.akw{padding:6px!important;height:auto!important;min-height:0!important}.pg.aw{padding-left:40px;padding-right:40px}.pg.fit{padding-left:40px;padding-right:40px}.pg.fit .kopaddr{left:40px}.pg.fit .kopfoot{right:40px}
 @media print{.pg.land.akw{padding:7mm 8mm!important;height:auto!important;min-height:0!important}.pg.nf.aw{padding:20mm 15mm!important}.rkspad{height:24mm!important}.paper:not(.flat){padding:0 27mm!important}.paper.rksp{padding:0 15mm!important;font-size:14px!important}.paper.dfp .rkspad{height:16mm!important}@page land{size:A4 landscape;margin:0}.pg.land{page:land;height:210mm!important;min-height:210mm!important;padding:12mm 20mm!important}}
 .dtw{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .dtw .dn{min-width:48px;font-weight:600}
@@ -980,7 +982,7 @@ const hariL=t=>DAYS[t.getUTCDay()]+' tanggal '+Terb(t.getUTCDate())+' bulan '+BL
 const kopLine=()=>`<div style="text-align:center;line-height:1.5">PT KERETA API INDONESIA (PERSERO)<br>KANTOR DAOP 2 BANDUNG<br>JALAN STASIUN SELATAN NO. 25<br>Telepon no (022) 4230150</div><div style="border-top:3px double #000;margin:12px 0 14px"></div>`;
 const sgn=(r,nm,ni,h=62)=>`<td style="text-align:center;vertical-align:bottom;border:0!important">${r}<div style="height:${h}px"></div><b><u>${esc(nm)}</u></b><br><b>NIPP. ${esc(ni)}</b></td>`;
 const kpmiss=p=>rank(p).length?[]:['nilai penawaran dan peserta'];
-V.uneg=()=>{const p=pkg(cur);return docView('Surat Undangan Negosiasi','Surat Undangan Negosiasi',undNegDoc(p),kpmiss(p))};
+V.uneg=()=>{const p=pkg(cur);return docView('Surat Undangan Negosiasi','Surat Undangan Negosiasi',undNegDoc(p),kpmiss(p),'flat')};
 function undNegDoc(p){
   const k=rks(p),d=rowOf(p,'Surat Undangan Negosiasi'),a=rowOf(p,'BA Pembukaan Penawaran Harga'),b=rowOf(p,'BA Analisis Kewajaran Harga'),n=rowOf(p,'BA Negosiasi');
   const kv=(x,y)=>`<tr><td style="width:110px">${x}</td><td style="width:14px">:</td><td>${y}</td></tr>`;
@@ -1138,7 +1140,7 @@ function coverSpkDoc(p){const d=rowOf(p,'Surat Perintah Kerja (SPK)');
 <p style="margin:0 0 60px"><b>${esc(mitraNm(p))}</b></p>
 <p style="margin:0 0 10px">UNTUK PEKERJAAN</p><p style="margin:0;border:2px solid #000;padding:10px 14px"><b>${esc(nmK(p)).toUpperCase()}</b></p>
 </div></div>`}
-V.rdsppp=()=>{const p=pkg(cur);return docView('Surat Permohonan Pengujian','RDS Permohonan Pengujian',pppDoc(p),[])};
+V.rdsppp=()=>{const p=pkg(cur);return docView('Surat Permohonan Pengujian','RDS Permohonan Pengujian',pppDoc(p),[],'flat')};
 function pppDoc(p){
   const k=rks(p),d=rowOf(p,'RDS Permohonan Pengujian'),mt=rowOf(p,'Surat Permohonan Pengujian Mitra'),sp=rowOf(p,'Surat Perintah Kerja (SPK)');
   return `<div class="pg"><div style="min-height:90px">${kopTop()}</div>
@@ -1176,7 +1178,7 @@ V.bapplamp=()=>{const p=pkg(cur);return docView('Lampiran BA Pengujian','Lampira
 function bappLampDoc(p){
   const d=rowOf(p,'Lampiran BA Pengujian'),t=d.tgl,c='border:1px solid #000;padding:4px 6px;text-align:center',th=x=>`<td style="${c}"><b>${x}</b></td>`;
   const blank=Array.from({length:8},()=>`<tr>${('<td style="'+c+';height:24px"></td>').repeat(9)}</tr>`).join('');
-  return `<div class="pg land nf"><div style="padding:6px 12px;line-height:1.45;font-size:13px">
+  return `<div class="pg lp nf"><div style="padding:6px 12px;line-height:1.45;font-size:13px">
 <p style="text-align:center;margin:0"><b>PT. KERETA API INDONESIA (PERSERO)</b></p><p style="text-align:center;margin:0 0 8px"><b>LAMPIRAN BERITA ACARA PENGUJIAN BARANG/JASA</b></p>
 <table style="margin-left:55%"><tr><td style="width:130px">Nomor Dokumen</td><td>: ${esc(d.no)}</td></tr><tr><td>Tanggal</td><td>: ${fmtL(t)}</td></tr></table>
 <p style="margin:8px 0">PEKERJAAN : <b>${esc(nmK(p))}</b></p>
@@ -1215,7 +1217,7 @@ ${kopBot()}
 </div></div>`}
 V.lembar=()=>{const p=pkg(cur);return docView('Lembar Pemeriksaan Dokumen','Lembar Pemeriksaan Dokumen',lembarDoc(p),kpmiss(p),'flat')};
 function lembarDoc(p){
-  const k=rks(p),sg=rowOf(p,'Surat Perintah Kerja (SPK)'),c='border:1px solid #000;padding:2px 5px;font-size:9.5px;padding:1px 4px',ck='&#8730;';
+  const k=rks(p),sg=rowOf(p,'Surat Perintah Kerja (SPK)'),c='border:1px solid #000;font-size:9px;line-height:1.08;padding:0 4px',ck='&#8730;';
   const rr=nm=>rowOf(p,nm);
   const rpb=v=>v>0?'Rp '+Number(v).toLocaleString('id-ID')+'<span style="font-size:10px"> (Belum Termasuk PPN)</span>':'';
   const line=(no,nm,st,nomor,tgl,ket,sub)=>`<tr><td style="${c};text-align:center;width:28px">${no}</td><td style="${c}${sub?';padding-left:14px':''};white-space:nowrap">${nm}</td><td style="${c};text-align:center;width:44px">${st===1?ck:''}</td><td style="${c};text-align:center;width:44px">${st===2?ck:''}</td><td style="${c};text-align:center;width:44px">${st===3?ck:''}</td><td style="${c};white-space:nowrap">${nomor||''}</td><td style="${c};white-space:nowrap">${tgl?fmtL(tgl):''}</td><td style="${c}">${ket||''}</td></tr>`;
@@ -1263,7 +1265,7 @@ function lembarDoc(p){
   D.push(line(14,'Pakta Integritas Pejabat PBJ',1,'',rr('Pakta Integritas PBJ').tgl));
   D.push(line(15,'Pernyataan Gratifikasi',1,'',rr('Surat Pernyataan').tgl));
   D.push(line(16,'SPK',1,esc(sg.no),sg.tgl,rpb(spkv)));
-  return `<div class="pg land nf"><div style="padding:4px 8px">
+  return `<div class="pg lp nf"><div class="lpz" style="padding:4px 8px">
 <p style="text-align:center;margin:0 0 6px"><b>LEMBAR PEMERIKSAAN DOKUMEN PENGADAAN LANGSUNG</b></p>
 <table style="margin-bottom:6px;font-size:12px"><tr><td style="width:80px">UNIT</td><td>: BANGUNAN DAOP 2 BANDUNG</td></tr><tr><td>PEKERJAAN</td><td>: <b>${esc(nmK(p))}</b></td></tr></table>
 <table style="width:100%;border-collapse:collapse"><tr><td rowspan="2" style="${c};text-align:center"><b>NO</b></td><td rowspan="2" style="${c};text-align:center"><b>KELENGKAPAN DOKUMEN</b></td><td colspan="2" style="${c};text-align:center"><b>ADA</b></td><td rowspan="2" style="${c};text-align:center"><b>TIDAK ADA</b></td><td rowspan="2" style="${c};text-align:center"><b>NOMOR</b></td><td rowspan="2" style="${c};text-align:center"><b>TANGGAL</b></td><td rowspan="2" style="${c};text-align:center"><b>KETERANGAN</b></td></tr>
@@ -1509,6 +1511,7 @@ function render(keep){P.forEach(p=>{p.ppn=12});MON.forEach(r=>{r.tarif=12});
   document.getElementById('app').innerHTML=V[key]();
   const kpv=window._keepPv;window._keepPv=false;document.body.classList.remove('pv');
   {let st=document.getElementById('pgsize');const L=!!document.querySelector('.pg.land');if(L&&!st){st=document.createElement('style');st.id='pgsize';st.textContent='@page{size:A4 landscape;margin:0}';document.head.appendChild(st)}else if(!L&&st)st.remove()}
+  {const pp=document.querySelector('.paper');if(pp)pp.dataset.k=key}
   docNav(key);if(kpv&&document.getElementById('docnav'))document.body.classList.add('pv');
   if(key==='baru'){if(editId===null)fillFromMon(document.getElementById('f_no').value);else{angUI();updSpkDate()}}
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
