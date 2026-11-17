@@ -99,7 +99,7 @@ body.homev .wrap{max-width:none;padding-inline:22px;padding-top:16px}
 .bar{padding-inline:22px}
 @media (min-width:1000px){
  body.homev .wrap{display:grid;grid-template-rows:auto auto;gap:18px;padding-bottom:22px;align-content:start}
- body.homev .menu{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+ body.homev .menu{grid-template-columns:repeat(4,minmax(0,250px));justify-content:start;gap:14px}
  body.homev .hero{padding:24px 32px;grid-template-columns:minmax(0,.7fr) minmax(0,2.3fr)}
  body.homev .hero h1{font-size:32px}
  body.homev .hero-s{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
@@ -140,7 +140,7 @@ body.homev .tb{position:relative;padding:8px 46px 10px 16px}
 body.homev .tile h3{font-size:17px}
 body.homev .tb::after{content:"\2192";position:absolute;right:14px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:var(--tint);color:var(--hue);display:grid;place-items:center;font-weight:800;transition:.18s}
 body.homev .tile:hover .tb::after{background:var(--hue);color:#fff;right:10px}
-body.homev .tile .meta{align-self:flex-start;padding:3px 10px;border-radius:99px;background:var(--tint);margin-top:4px}
+body.homev .tile .meta{align-self:flex-start;padding:3px 10px;font-size:10.5px;border-radius:99px;background:var(--tint);margin-top:4px}
 body.homev .tile:hover{box-shadow:0 4px 10px rgba(20,40,75,.10),0 22px 40px -14px rgba(20,40,75,.34);transform:translateY(-3px)}
 body.homev .tile .meta{display:inline-flex;align-self:flex-start;margin-top:2px;padding:3px 10px;border-radius:99px;background:var(--tint);color:var(--hue);font-weight:600}
 body.homev .hero-art{opacity:.3}
