@@ -93,9 +93,10 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* ===== Beranda penuh layar ===== */
 .head p{display:none}
 #frm .head p{display:block}
-body.homev .bar-in{max-width:1360px}
-body.homev .wrap{max-width:1360px;padding-inline:20px}
-.wrap{padding-inline:20px}
+body.homev .bar-in{max-width:none}
+body.homev .wrap{max-width:none;padding-inline:22px;padding-top:16px}
+.wrap{padding-inline:22px;padding-top:16px}
+.bar{padding-inline:22px}
 @media (min-width:1000px){
  body.homev .wrap{display:grid;grid-template-rows:auto auto;gap:18px;padding-bottom:22px;align-content:start}
  body.homev .menu{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -1546,7 +1547,7 @@ function render(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.jam
   if(key==='baru'){if(editId===null)fillFromMon(document.getElementById('f_no').value);else{angUI();updSpkDate()}}
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
   document.getElementById('crumb').textContent=h?'/ '+TITLES[h]:'';
-  document.body.classList.toggle('homev',key==='home');const MW=key==='monitoring'?'1500px':['home','paket','baru','timeline','dashboard','input','admin','format','mitra'].includes(key)?'1360px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
+  document.body.classList.toggle('homev',key==='home');const MW=['monitoring','home','paket','baru','timeline','dashboard','input','admin','format','mitra'].includes(key)?'none':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
   if(!keep)window.scrollTo(0,0);
 }
 let lastHash=(location.hash||'').slice(1),navStack=[],goingBack=false;
