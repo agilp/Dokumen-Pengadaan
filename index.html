@@ -586,8 +586,8 @@ V.baru=()=>{
    <div style="padding:18px"><div class="grp g-${ang.toLowerCase()}" id="angbox" style="margin:0"><div class="grp-h" style="display:flex;align-items:center;gap:10px;padding:14px 18px"><span class="gdot"></span><h2 id="angtitle" style="margin:0;font-family:var(--f-display);font-size:19px;color:var(--navy)">${ang}</h2><span class="chip acc" id="tipebadge"></span></div>
     <div class="sub"><div class="sub-h"><h3>SPK</h3></div><div class="grid2">
      ${f('Nilai SPK (Rp)','f_spk','number',m&&m.spk?m.spk:'','min="0"')}
-     <div class="fld"><label for="f_mitra">Mitra pelaksana</label><input id="f_mitra" list="mitralist" value="${esc(m?m.mitra:'')}"></div>
      ${f('Masa pelaksanaan MPPL (hari kalender)','f_pen','number',E?E.pen:(m&&Number(m.mppl)>0?m.mppl:30),'required min="1"')}
+     ${rk('rk_pem','Masa pemeliharaan (hari kalender)','pem','number','min="0"')}
     </div></div>
     <div class="sub" id="umdsbox" hidden><div class="sub-h"><h3>UMDS</h3></div><div class="grid2">
      ${f('Nilai SES (Rp)','f_nses','number',m&&m.nses?m.nses:'','min="0"')}
@@ -595,11 +595,8 @@ V.baru=()=>{
     </div></div></div></div>
    <datalist id="mitralist">${names.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></div>
   <div class="panel"><div class="panel-h"><h2>Identitas surat</h2><span class="chip">dipakai RKS dan berkas lain</span></div>
-   ${G('Peserta dan jam penawaran',`${ps(0)}${ps(1)}${ps(2)}
-    ${rk('rk_bukaj','Pukul penawaran dibuka','bukaJam','text','placeholder="09.00"')}${rk('rk_tutupj','Pukul penawaran ditutup','tutupJam','text','placeholder="15.00"')}`)}
-   ${G('Ketentuan',`${rk('rk_pem','Masa pemeliharaan (hari kalender)','pem','number','min="0"')}
-    ${rk('rk_spt','Tahun SPT tahunan terakhir','sptTahun')}${rk('rk_sptb','Bulan SPT masa (minimal)','sptBulan')}${rk('rk_skf','SKF minimal terbit di','skf')}`)}
-   <div class="note">${names.length?'':'Daftar mitra masih kosong. <a href="#mitra">Impor data mitra</a> dulu supaya peserta bisa dipilih. '}Nomor surat, tanggal surat, waktu pelaksanaan, dan tarif PPN diambil dari data di atas.</div>
+   ${G('Ketentuan',`${rk('rk_spt','Tahun SPT tahunan terakhir','sptTahun')}${rk('rk_sptb','Bulan SPT masa (minimal)','sptBulan')}${rk('rk_skf','SKF minimal terbit di','skf')}`)}
+   <div class="note">Peserta diambil dari pilihan mitra di timeline, mitra pelaksana dari penawar terendah, dan jam penawaran diatur otomatis. Nomor surat, tanggal surat, waktu pelaksanaan, dan tarif PPN diambil dari data di atas.</div>
    <div class="note" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn pri" type="submit">${E?'Simpan perubahan':'Simpan dan lihat timeline'}</button><a class="btn" href="#" data-go="${E&&prefill.back?prefill.back:''}" data-clear="1">Batal</a></div></div></form>`;
 };
 V.dashboard=()=>{
@@ -1503,7 +1500,7 @@ function docStep(d){const w=document.getElementById('docnav');if(!w)return;const
 function docGo(k){window._keepPv=document.body.classList.contains('pv');location.hash=k}
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const t=e.target;if(t&&t.matches&&t.matches('input,textarea,select,[contenteditable]'))return;if(e.key==='ArrowRight')docStep(1);else if(e.key==='ArrowLeft')docStep(-1)});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-go2]');if(b)docGo(b.dataset.go2)});
-function render(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.jaminan=180});MON.forEach(r=>{r.tarif=12});
+function render(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.jaminan=180;try{const w=lowNm(p);if(w&&p.mon)p.mon.mitra=w}catch(_){}});MON.forEach(r=>{r.tarif=12});
   let h=(location.hash||'').replace('#','');if(!(h in TITLES))h='';
   if(h==='mitra'){inTab='mitra';h='input';lastHash='input';try{history.replaceState(null,'','#input')}catch(_){}}
   const key=h===''?'home':h;if(h!=='input')mSel=null;
@@ -1571,9 +1568,9 @@ function updSpkDate(){}
 function fillFromMon(val){
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v==null?'':v};
   const warn=document.getElementById('f_warn'),fm=document.getElementById('f_rabfmt'),i=Number(val),r=val===''?null:MON[i];
-  if(!r){['f_nama','f_pr','f_rab','f_spk','f_mitra','f_nses','f_ses'].forEach(id=>set(id,''));if(fm)fm.textContent='';if(warn)warn.textContent='';updSpkDate();return}
+  if(!r){['f_nama','f_pr','f_rab','f_spk','f_nses','f_ses'].forEach(id=>set(id,''));if(fm)fm.textContent='';if(warn)warn.textContent='';updSpkDate();return}
   set('f_nama',r.pekerjaan);set('f_pr',r.pr);set('f_rab',r.rab||'');set('f_ppn','12');
-  set('f_spk',r.spk||'');set('f_mitra',r.mitra);set('f_nses',r.nses||'');set('f_ses',r.ses);
+  set('f_spk',r.spk||'');set('f_nses',r.nses||'');set('f_ses',r.ses);
   if(Number(r.mppl)>0)set('f_pen',r.mppl);
   if(r.tglpr)set('f_b',r.tglpr);
   const rd=document.querySelector(`input[name=ang][value="${angOf(r)}"]`);if(rd){rd.checked=true;angUI()}
@@ -1629,7 +1626,7 @@ document.addEventListener('submit',e=>{
   const K=E?rks(E):{...RKSDEF,...SIGN,tawar:['','',''],peserta:['','','']};
   document.querySelectorAll('#frm [data-rk]').forEach(el=>{const key=el.dataset.rk;if(key==='peserta')K.peserta[Number(el.dataset.k)]=el.value;else if(key==='tawar'){K.tawar=K.tawar||['','',''];K.tawar[Number(el.dataset.k)]=el.value}else if(key==='pem'||key==='jaminan')K[key]=Math.max(0,Number(el.value)||0);else K[key]=el.value});
   const common={lokasi:v('f_lok').trim(),ppn:Number(v('f_ppn')),pen:Number(v('f_pen')),ret:180,ang:angv,rks:K};K.jaminan=common.ret;
-  const push=r=>{if(!r)return;r.ang=angv;r.spk=Number(v('f_spk'))||null;r.mitra=v('f_mitra').trim();const um=angv==='OPEX'&&tipeOf(r)==='UMDS';r.nses=um?Number(v('f_nses'))||null:r.nses;r.ses=um?v('f_ses').trim():r.ses;r.mppl=common.pen};
+  const push=r=>{if(!r)return;r.ang=angv;r.spk=Number(v('f_spk'))||null;const um=angv==='OPEX'&&tipeOf(r)==='UMDS';r.nses=um?Number(v('f_nses'))||null:r.nses;r.ses=um?v('f_ses').trim():r.ses;r.mppl=common.pen};
   if(E){Object.assign(E,common);push(E.mon);if(E.dt){const G=gen(E,true),ks=G.findIndex(x=>x.dok.startsWith('Selesai pekerjaan')),sp=G.findIndex(x=>x.dok.startsWith('Surat Perintah Kerja'));E.dt[ks]=iso(snap(add(d0(E.dt[sp]),E.pen-1)))}cur=E.id;const back=(prefill&&prefill.back)||'timeline';prefill=null;location.hash=back;return}
   const mi=Number(v('f_no')),r=MON[mi],p={id:nextId++,no:monNo(r,mi),nama:v('f_nama').trim(),rab:Number(v('f_rab')),pr:v('f_pr').trim(),done:0,proc:0,contoh:false,st:{},mon:r,...common,tglRab:iso(snap(TODAY)),tglPD:iso(snap(r&&r.tglpr?d0(r.tglpr):add(TODAY,7))),tglUji:iso(snap(add(TODAY,45))),tglBayar:iso(snap(add(TODAY,53)))};
   ensureDt(p);push(r);P.push(p);cur=p.id;prefill=null;location.hash='timeline';
