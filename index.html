@@ -581,7 +581,6 @@ V.baru=()=>{
    ${f('No. PR / Persetujuan Dana','f_pr','text',E?E.pr:(m?m.pr:''),'readonly')}
    <div class="fld"><label for="f_rab">Nilai RAB sebelum PPN (Rp)</label><input id="f_rab" type="number" value="${esc(E?E.rab:(m&&m.rab?m.rab:''))}" readonly><small id="f_rabfmt">${E?esc(rp(E.rab)):''}</small></div>
    <div class="fld"><label for="f_ppn">Tarif PPN</label><select id="f_ppn" disabled><option value="12" selected>12% (DPP 11/12)</option></select></div>
-   ${f('Masa retensi / jaminan mutu (hari)','f_ret','number',g('ret',180),'required min="0"')}
   </div></div>
   <div class="panel"><div class="panel-h"><h2>Anggaran</h2><span class="sp"></span><div class="seg" role="radiogroup" aria-label="Jenis anggaran">${ANG.map(a=>`<label><input type="radio" name="ang" value="${a}" ${a===ang?'checked':''}><span>${a}</span></label>`).join('')}</div></div>
    <div style="padding:18px"><div class="grp g-${ang.toLowerCase()}" id="angbox" style="margin:0"><div class="grp-h" style="display:flex;align-items:center;gap:10px;padding:14px 18px"><span class="gdot"></span><h2 id="angtitle" style="margin:0;font-family:var(--f-display);font-size:19px;color:var(--navy)">${ang}</h2><span class="chip acc" id="tipebadge"></span></div>
@@ -1504,7 +1503,7 @@ function docStep(d){const w=document.getElementById('docnav');if(!w)return;const
 function docGo(k){window._keepPv=document.body.classList.contains('pv');location.hash=k}
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const t=e.target;if(t&&t.matches&&t.matches('input,textarea,select,[contenteditable]'))return;if(e.key==='ArrowRight')docStep(1);else if(e.key==='ArrowLeft')docStep(-1)});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-go2]');if(b)docGo(b.dataset.go2)});
-function render(keep){P.forEach(p=>{p.ppn=12});MON.forEach(r=>{r.tarif=12});
+function render(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.jaminan=180});MON.forEach(r=>{r.tarif=12});
   let h=(location.hash||'').replace('#','');if(!(h in TITLES))h='';
   if(h==='mitra'){inTab='mitra';h='input';lastHash='input';try{history.replaceState(null,'','#input')}catch(_){}}
   const key=h===''?'home':h;if(h!=='input')mSel=null;
@@ -1629,7 +1628,7 @@ document.addEventListener('submit',e=>{
   const E=editId!==null?P.find(x=>x.id===editId):null;
   const K=E?rks(E):{...RKSDEF,...SIGN,tawar:['','',''],peserta:['','','']};
   document.querySelectorAll('#frm [data-rk]').forEach(el=>{const key=el.dataset.rk;if(key==='peserta')K.peserta[Number(el.dataset.k)]=el.value;else if(key==='tawar'){K.tawar=K.tawar||['','',''];K.tawar[Number(el.dataset.k)]=el.value}else if(key==='pem'||key==='jaminan')K[key]=Math.max(0,Number(el.value)||0);else K[key]=el.value});
-  const common={lokasi:v('f_lok').trim(),ppn:Number(v('f_ppn')),pen:Number(v('f_pen')),ret:Number(v('f_ret')),ang:angv,rks:K};K.jaminan=common.ret;
+  const common={lokasi:v('f_lok').trim(),ppn:Number(v('f_ppn')),pen:Number(v('f_pen')),ret:180,ang:angv,rks:K};K.jaminan=common.ret;
   const push=r=>{if(!r)return;r.ang=angv;r.spk=Number(v('f_spk'))||null;r.mitra=v('f_mitra').trim();const um=angv==='OPEX'&&tipeOf(r)==='UMDS';r.nses=um?Number(v('f_nses'))||null:r.nses;r.ses=um?v('f_ses').trim():r.ses;r.mppl=common.pen};
   if(E){Object.assign(E,common);push(E.mon);if(E.dt){const G=gen(E,true),ks=G.findIndex(x=>x.dok.startsWith('Selesai pekerjaan')),sp=G.findIndex(x=>x.dok.startsWith('Surat Perintah Kerja'));E.dt[ks]=iso(snap(add(d0(E.dt[sp]),E.pen-1)))}cur=E.id;const back=(prefill&&prefill.back)||'timeline';prefill=null;location.hash=back;return}
   const mi=Number(v('f_no')),r=MON[mi],p={id:nextId++,no:monNo(r,mi),nama:v('f_nama').trim(),rab:Number(v('f_rab')),pr:v('f_pr').trim(),done:0,proc:0,contoh:false,st:{},mon:r,...common,tglRab:iso(snap(TODAY)),tglPD:iso(snap(r&&r.tglpr?d0(r.tglpr):add(TODAY,7))),tglUji:iso(snap(add(TODAY,45))),tglBayar:iso(snap(add(TODAY,53)))};
