@@ -95,6 +95,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 #frm .head p{display:block}
 body.homev .bar-in{max-width:1360px}
 body.homev .wrap{max-width:1360px;padding-inline:20px}
+.wrap{padding-inline:20px}
 @media (min-width:1000px){
  body.homev .wrap{display:grid;grid-template-rows:auto auto;gap:18px;padding-bottom:22px;align-content:start}
  body.homev .menu{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -190,6 +191,17 @@ table.uni .rowbar .bar-t{flex:1;min-width:60px}
 .sel{padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .sel:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(31,64,121,.14)}
 .note{padding:12px 18px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line)}
+.dhero{display:flex;align-items:center;justify-content:space-between;gap:24px;background:linear-gradient(135deg,var(--navy),#27508F);color:#fff;border-radius:20px;padding:26px 32px;box-shadow:0 14px 30px -14px rgba(20,40,75,.45);border-bottom:4px solid #E8751A}
+.dhero .tag{color:#FFB070}.dhero h1{color:#fff;margin:4px 0 6px}.dhero p{display:block!important;margin:0;color:rgba(255,255,255,.8)}
+.ring{--p:0;flex:0 0 auto;width:112px;height:112px;border-radius:50%;background:conic-gradient(#E8751A calc(var(--p)*1%),rgba(255,255,255,.18) 0);display:grid;place-items:center}
+.ring>div{width:88px;height:88px;border-radius:50%;background:#1d3d70;display:flex;flex-direction:column;align-items:center;justify-content:center}.ring b{font-size:22px;font-weight:800}.ring span{font-size:10.5px;opacity:.8}
+.dks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.dk{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:18px;padding:16px 18px;box-shadow:0 2px 6px rgba(20,40,75,.06),0 14px 30px -14px rgba(20,40,75,.22)}
+.dk .dki{font-style:normal;font-weight:800;font-size:18px;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--c);color:#fff;flex:0 0 auto}
+.dk b{display:block;font-size:26px;font-weight:800;line-height:1.1;color:var(--navy);letter-spacing:-.02em}.dk span{display:block;font-size:13px;font-weight:600;color:var(--navy)}.dk em{display:block;font-style:normal;font-size:11.5px;color:var(--muted)}
+.dk.k1{--c:#1F4079}.dk.k2{--c:#2E9E6B}.dk.k3{--c:#D64545}.dk.k4{--c:#E8751A}
+.bar-t{height:10px;border-radius:99px}.bar-t i{background:linear-gradient(90deg,#1F4079,#E8751A);border-radius:99px}
+@media (max-width:600px){.dhero{padding:20px;flex-direction:column;align-items:flex-start}}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
 .stages{display:flex;flex-direction:column;gap:12px;padding:18px}
 .srow{display:grid;grid-template-columns:110px 1fr 56px;gap:10px;align-items:center;font-size:13px}
@@ -592,11 +604,14 @@ V.baru=()=>{
    <div class="note" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn pri" type="submit">${E?'Simpan perubahan':'Simpan dan lihat timeline'}</button><a class="btn" href="#" data-go="${E&&prefill.back?prefill.back:''}" data-clear="1">Batal</a></div></div></form>`;
 };
 V.dashboard=()=>{
-  const S=P.map(stat),tot=S.reduce((a,s)=>a+s.t,0),dn=S.reduce((a,s)=>a+s.s,0),lt=S.reduce((a,s)=>a+s.late,0);
+  const S=P.map(stat),tot=S.reduce((a,s)=>a+s.t,0),dn=S.reduce((a,s)=>a+s.s,0),lt=S.reduce((a,s)=>a+s.late,0),pct=tot?Math.round(dn/tot*100):0;
   const all=P.flatMap(p=>gen(p).filter(x=>x.st!=='Selesai').map(x=>({p,x}))).sort((a,b)=>a.x.tgl-b.x.tgl).slice(0,8);
   const byStage=STAGES.map(t=>{const d=P.flatMap(p=>gen(p)).filter(x=>x.tahap===t);const s=d.filter(x=>x.st==='Selesai').length;return[t,s,d.length]});
-  return `<div class="head"><span class="tag">Dashboard</span><h1>Posisi semua paket</h1><p>Per ${fmt(TODAY)}. Dokumen yang jadwalnya terlewat dan belum selesai ditandai merah.</p></div>
-  <div class="kpis"><div class="kpi"><b>${P.length}</b><span>Paket</span></div><div class="kpi"><b>${dn}/${tot}</b><span>Dokumen selesai</span></div><div class="kpi"><b>${rp(P.reduce((a,p)=>a+withPPN(p.rab),0)).replace('Rp ','')}</b><span>Total nilai + PPN (Rp)</span></div></div>
+  const nilai=rp(P.reduce((a,p)=>a+withPPN(p.rab),0)).replace('Rp ','');
+  const K=(c,ic,v,l,sub)=>`<div class="dk ${c}"><i class="dki">${ic}</i><div><b>${v}</b><span>${l}</span>${sub?`<em>${sub}</em>`:''}</div></div>`;
+  return `<div class="dhero"><div><span class="tag">Dashboard</span><h1>Posisi semua paket</h1><p>Per ${fmt(TODAY)}. Dokumen yang jadwalnya terlewat dan belum selesai ditandai merah.</p></div>
+   <div class="ring" style="--p:${pct}"><div><b>${pct}%</b><span>progres total</span></div></div></div>
+  <div class="dks">${K('k1','▤',P.length,'Paket','sedang dikelola')}${K('k2','✓',dn+'/'+tot,'Dokumen selesai',pct+'% dari seluruh dokumen')}${K('k3','!',lt,'Terlambat',lt?'perlu ditindaklanjuti':'semua sesuai jadwal')}${K('k4','Rp',nilai,'Total nilai + PPN','Rupiah')}</div>
   <div class="two"><div class="panel"><div class="panel-h"><h2>Progres per tahap</h2></div><div class="stages">${byStage.map(([t,s,n])=>`<div class="srow"><span>${t}</span><div class="bar-t"><i style="width:${n?s/n*100:0}%"></i></div><span class="mono">${s}/${n}</span></div>`).join('')}</div></div>
   <div class="panel"><div class="panel-h"><h2>Jatuh tempo terdekat</h2></div><div class="scroll"><table class="uni"><tbody>
    ${all.map(({p,x})=>`<tr class="${late(x)?'late':''}"><td class="mono">${p.no}</td><td title="${esc(x.dok)}">${esc(x.dok)}</td><td class="dt">${fmt(x.tgl)}</td><td>${late(x)?'<span class="chip bad">terlambat</span>':''}</td></tr>`).join('')}
@@ -1504,7 +1519,7 @@ function render(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.jam
   if(key==='baru'){if(editId===null)fillFromMon(document.getElementById('f_no').value);else{angUI();updSpkDate()}}
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
   document.getElementById('crumb').textContent=h?'/ '+TITLES[h]:'';
-  document.body.classList.toggle('homev',key==='home');const MW=key==='home'?'1360px':key==='monitoring'?'1500px':key==='timeline'?'1240px':(key==='input'&&inTab==='mitra')||key==='paket'?'1240px':key==='input'?'900px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
+  document.body.classList.toggle('homev',key==='home');const MW=key==='monitoring'?'1500px':['home','paket','baru','timeline','dashboard','input','admin','format','mitra'].includes(key)?'1360px':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
   if(!keep)window.scrollTo(0,0);
 }
 let lastHash=(location.hash||'').slice(1),navStack=[],goingBack=false;
