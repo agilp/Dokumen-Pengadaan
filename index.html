@@ -1188,37 +1188,40 @@ ${RK_L(0,'3.','Demikian kami sampaikan, atas perhatiannya diucapkan terima kasih
 V.bapp=()=>{const p=pkg(cur);return docView('BA Pengujian Barang/Jasa','BA Pengujian Barang/Jasa',bappDoc(p),[],'flat')};
 function bappDoc(p){
   const k=rks(p),d=rowOf(p,'BA Pengujian Barang/Jasa'),t=d.tgl,nm=mitraNm(p),m=mitM(nm),mt=rowOf(p,'Surat Permohonan Pengujian Mitra'),pp=rowOf(p,'RDS Permohonan Pengujian'),sp=rowOf(p,'Surat Perintah Kerja (SPK)'),pd=rowOf(p,'Persetujuan Dana');
-  const kv=(a,b,c)=>`<tr><td style="width:190px;white-space:nowrap">${a}</td><td style="width:14px">:</td><td style="width:300px">${b}</td>${c?`<td style="width:80px">Tanggal</td><td style="width:14px">:</td><td>${c}</td>`:''}</tr>`;
-  return `<div class="pg nf"><div style="padding:6px 16px;line-height:1.5;font-size:13px">
-<p style="text-align:center;margin:0"><b>PT KERETA API INDONESIA (PERSERO)</b></p>
-<p style="text-align:center;margin:12px 0 4px"><b>BERITA ACARA PENGUJIAN BARANG / JASA</b></p>
-<p style="text-align:center;margin:0 0 12px">Nomor Dokumen : ${esc(d.no)}</p>
-<p style="text-align:justify;margin:0 0 6px">1. Pada hari ini, ${hariL(t)}, kami Panitia penguji barang / jasa yang dibentuk berdasarkan Surat Tugas Executive Vice President Daerah Operasi 2 Bandung Nomor : ${esc(surtugN(k))} (Disesuaikan jika ada perubahan) dengan ini menyatakan hal - hal sebagai berikut :</p>
+  const kv=(a,b,c)=>`<tr><td style="width:150px;white-space:nowrap">${a}</td><td style="width:14px">:</td><td style="width:235px">${b}</td>${c?`<td style="width:70px">Tanggal</td><td style="width:14px">:</td><td style="white-space:nowrap">${c}</td>`:''}</tr>`;
+  const bd='border-bottom:1px solid #000;';
+  return `<div class="pg nf"><div style="padding:6px 10px;line-height:1.5;font-size:13px"><div style="border:1px solid #000;min-height:1000px;position:relative">
+<div style="text-align:center;padding:5px;${bd}"><b>PT KERETA API INDONESIA (PERSERO)</b></div>
+<div style="text-align:center;padding:12px 5px;${bd}"><b>BERITA ACARA PENGUJIAN BARANG / JASA</b></div>
+<div style="text-align:center;padding:3px 5px;${bd}">Nomor Dokumen : ${esc(d.no)}</div>
+<div style="padding:8px 8px 14px;${bd}">
+<p style="text-align:justify;margin:0 0 6px">1. Pada hari ini, ${hariL(t)}, kami Panitia penguji barang / jasa yang dibentuk berdasarkan Surat Tugas Surat Tugas Executive Vice President Daerah Operasi 2 Bandung Nomor : ${esc(surtugN(k))} (Disesuaikan jika ada perubahan)dengan ini menyatakan hal - hal sebagai berikut :"</p>
 <p style="margin:0 0 4px 16px">a. Bertempat di Bandung telah menguji barang/pekerjaan yang diserahkan oleh :</p>
-<table style="margin-left:34px">${kv('Nama Rekanan',esc(nm))}${kv('Alamat',esc(m.alamat||''))}${kv('Permintaan Pengujian','No. '+esc(mt.no),fmtL(mt.tgl))}${kv('Permintaan Pengujian',esc(pp.no),fmtL(pp.tgl))}<tr><td colspan="6">Berkaitan dengan Kontrak Surat Perintah Kerja / Perjanjian Kerja :</td></tr>${kv('Nomor',esc(sp.no),fmtL(sp.tgl))}</table>
-<p style="margin:8px 0 4px 16px">b. Pengadaan Barang / Jasa tersebut sesuai dengan :</p>
-<table style="margin-left:34px"><tr><td colspan="6">Nota Permintaan Persetujuan Dana (NPD Acc)/ Ijin Prinsip :</td></tr>${kv('Nomor',esc(p.pr||''),fmtL(pd.tgl))}<tr><td>Untuk</td><td>:</td><td colspan="4">${esc(nmK(p))}</td></tr></table>
-<p style="margin:10px 0 6px">2. Berdasarkan hasil pengujian barang / jasa sebagaimana tertera dalam daftar terlampir, panitia berkesimpulan bahwa :</p>
-<p style="text-align:center;margin:10px 0"><b>${esc(nmK(p))}</b></p>
-<p style="text-align:justify;margin:0 0 12px">Seluruh / sebagian*) barang / jasa yang diuji baik mutu / maupun jumlah barang telah / belum*) memenuhi persyaratan teknis sebagaimana yang ditetapkan di dalam Surat Perintah Kerja / Surat Perjanjian sebagaimana butir 1 huruf a.</p>
-<p style="text-align:center;margin:0 0 6px">Bandung, ${fmtL(t)}</p><p style="text-align:center;margin:0 0 4px"><b>Panitia Penguji Barang / Jasa</b></p>
-${ttdPeng(t,60)}
-<p style="margin:12px 0 0">*) Coret yang tidak perlu.</p><p style="text-align:right;margin:20px 0 0;font-size:11px">Formulir PG. 751a</p>
-</div></div>`}
+<table style="margin-left:34px">${kv('Nama Rekanan',esc(nm))}${kv('Alamat',esc(m.alamat||''))}${kv('Permintaan Pengujian',esc(mt.no),fmtL(mt.tgl))}${kv('Permintaan Pengujian',esc(pp.no),fmtL(pp.tgl))}<tr><td colspan="6">Berkaitan dengan Kontrak Surat Perintah Kerja / Perjanjian Kerja :</td></tr>${kv('Nomor',esc(sp.no),fmtL(sp.tgl))}</table>
+<p style="margin:10px 0 4px 16px">b. Pengadaan Barang / Jasa tersebut sesuai dengan :</p>
+<table style="margin-left:34px"><tr><td colspan="6">Nota Permintaan Persetujuan Dana (NPD Acc)/ Ijin Prinsip :</td></tr>${kv('Nomor',esc(p.pr||''),fmtL(pd.tgl))}<tr><td>Untuk</td><td>:</td><td colspan="4"><b>${esc(nmK(p))}</b></td></tr></table>
+<p style="margin:14px 0 6px">2. Berdasarkan hasil pengujian barang / jasa sebagaimana tertera dalam daftar terlampir, panitia berkesimpulan bahwa :</p>
+<p style="text-align:center;margin:14px 0"><b>${esc(nmK(p))}</b></p>
+<p style="text-align:justify;margin:0 0 4px">Seluruh / <s>sebagian</s>*) barang / jasa yang diuji baik mutu / maupun jumlah barang telah / <s>belum</s>*) memenuhi persyaratan teknis sebagaimana yang ditetapkan di dalam Surat Perintah Kerja / Surat Perjanjian sebagaimana butir 1 huruf a.</p></div>
+<div style="text-align:center;padding:3px 5px;${bd}">Bandung, ${fmtL(t)}</div>
+<div style="padding:8px 8px 10px;text-align:center">Panitia Penguji Barang / Jasa${ttdPeng(t,50)}</div>
+<div style="padding:0 6px">*) Coret yang tidak perlu.</div>
+<div style="position:absolute;left:0;right:0;bottom:0;border-top:1px solid #000;text-align:right;padding:2px 10px;font-size:11px">Formulir PG. 751a</div>
+</div></div></div>`}
 V.bapplamp=()=>{const p=pkg(cur);return docView('Lampiran BA Pengujian','Lampiran BA Pengujian',bappLampDoc(p),[],'flat')};
 function bappLampDoc(p){
   const d=rowOf(p,'Lampiran BA Pengujian'),t=d.tgl,c='border:1px solid #000;padding:4px 6px;text-align:center',th=x=>`<td style="${c}"><b>${x}</b></td>`;
   const blank=Array.from({length:8},()=>`<tr>${('<td style="'+c+';height:24px"></td>').repeat(9)}</tr>`).join('');
   return `<div class="pg lp nf"><div style="padding:6px 12px;line-height:1.45;font-size:13px">
-<p style="text-align:center;margin:0"><b>PT. KERETA API INDONESIA (PERSERO)</b></p><p style="text-align:center;margin:0 0 8px"><b>LAMPIRAN BERITA ACARA PENGUJIAN BARANG/JASA</b></p>
-<table style="margin-left:55%"><tr><td style="width:130px">Nomor Dokumen</td><td>: ${esc(d.no)}</td></tr><tr><td>Tanggal</td><td>: ${fmtL(t)}</td></tr></table>
+<div style="border:1px solid #000;padding:0 0 6px"><div style="text-align:center;padding:4px;border-bottom:1px solid #000"><b>PT. KERETA API INDONESIA (PERSERO)</b></div><div style="text-align:center;padding:5px;border-bottom:1px solid #000"><b>LAMPIRAN BERITA ACARA PENGUJIAN BARANG/JASA</b></div>
+<div style="padding:0 8px"><table style="margin-left:42%;margin-top:4px"><tr><td style="width:130px">Nomor Dokumen</td><td>: ${esc(d.no)}</td></tr><tr><td>Tanggal</td><td>: ${fmtL(t)}</td></tr></table>
 <p style="margin:8px 0">PEKERJAAN : <b>${esc(nmK(p))}</b></p>
 <table style="width:100%;border-collapse:collapse"><tr><td rowspan="2" style="${c};width:40px"><b>NO</b></td><td rowspan="2" style="${c}"><b>URAIAN PEKERJAAN</b></td><td colspan="2" style="${c}"><b>VOLUME KONTRAK</b></td><td colspan="2" style="${c}"><b>VOLUME REALISASI</b></td><td colspan="2" style="${c}"><b>VOLUME SISA</b></td><td rowspan="2" style="${c};width:110px"><b>KETERANGAN</b></td></tr>
 <tr>${['VOLUME','SATUAN','VOLUME','SATUAN','VOLUME','SATUAN'].map(th).join('')}</tr>${blank.replace(/(<td[^>]*><\/td>){9}/g,m=>m)}</table>
 <table style="width:100%;margin-top:10px"><tr><td style="width:150px;vertical-align:top">Kesimpulan Penguji :</td><td style="text-align:justify">Seluruh / sebagian*) barang / jasa yang diuji baik mutu / maupun jumlah barang telah / belum*) memenuhi persyaratan teknis sebagaimana yang ditetapkan di dalam Surat Perintah Kerja / Surat Perjanjian sebagaimana butir 1 huruf a.</td></tr></table>
 <p style="text-align:center;margin:8px 0 2px">Bandung, ${fmtL(t)}</p><p style="text-align:center;margin:0 0 2px"><b>Panitia Penguji Barang / Jasa</b></p>
 <table style="width:100%"><tr><td style="width:75%">${ttdPeng(t,40)}</td><td style="vertical-align:top">${ttdMit(p,40)}</td></tr></table>
-</div></div>`}
+</div></div></div></div>`}
 V.paktapeng=()=>{const p=pkg(cur);return docView('Pakta Integritas Penguji','Pakta Integritas Penguji',paktaPengDoc(p),[],'flat')};
 function paktaPengDoc(p){
   const d=rowOf(p,'Pakta Integritas Penguji'),t=d.tgl,nm=mitraNm(p);
@@ -1230,7 +1233,8 @@ function paktaPengDoc(p){
 <div style="text-align:center;padding:14px 8px;border-bottom:1px solid #000"><b style="font-size:17px">PAKTA INTEGRITAS</b></div>
 <div style="text-align:center;padding:3px 8px;border-bottom:1px solid #000">${esc(d.no)}</div>
 <div style="padding:14px 16px 26px">
-<p style="margin:0 0 22px">Kami yang bertandatangan di bawah ini, Unit Pelaksana (<i>User</i> ), Panitia Penguji Barang / Jasa, dengan ini menyatakan bahwa :</p>
+<p style="margin:0 0 12px">Kami yang bertandatangan di bawah ini, Unit Pelaksana (<i>User</i> ), Panitia Penguji Barang / Jasa, dengan ini menyatakan</p>
+<p style="text-align:center;margin:0 0 14px"><b>${esc(nmK(p)).toUpperCase()}</b></p>
 ${li('1.','Tidak akan melakukan praktek KKN.')}${li('2.','Melaporkan kepada pihak berwajib / berwenang apabila mengetahui ada indikasi KKN di dalam proses Pengujian Barang / Jasa ini.')}${li('3.','Berjanji akan melaksanakan tugas secara bersih, transparan dan profesional dalam arti akan mengerahkan segala kemampuan dan sumber daya secara optimal untuk memberikan hasil kerja terbaik dalam pelaksanaan dan penyelesaian pekerjaan / kegiatan ini.')}${li('4.','Apabila melanggar hal - hal yang telah dinyatakan dalam PAKTA INTEGRITAS ini, bersedia dikenakan sanksi moral, sanksi administrasi serta dituntut ganti rugi pidana sesuai dengan peraturan perundang - undangan yang berlaku.')}
 </div>
 <div style="text-align:center;padding:3px 8px;border-top:1px solid #000;border-bottom:1px solid #000">Bandung, ${fmtL(t)}</div>
@@ -1241,17 +1245,18 @@ ${li('1.','Tidak akan melakukan praktek KKN.')}${li('2.','Melaporkan kepada piha
 V.bast=()=>{const p=pkg(cur);return docView('BA Serah Terima (BAST)','BA Serah Terima',bastDoc(p),[],'flat')};
 function bastDoc(p){
   const d=rowOf(p,'BA Serah Terima'),bp=rowOf(p,'BA Pengujian Barang/Jasa'),sp=rowOf(p,'Surat Perintah Kerja (SPK)'),t=d.tgl;
-  const row=(n,tx)=>`<div style="display:flex;gap:10px;margin:0 0 8px;text-align:justify"><span style="width:20px;flex:none">${n}</span><span>${tx}</span></div>`;
-  const blk=(a,b)=>`<table style="margin:0 0 8px"><tr><td style="width:150px;vertical-align:top"><b>${a}</b></td><td style="width:14px;vertical-align:top">:</td><td style="text-align:justify">${b}</td></tr></table>`;
-  return `<div class="pg nf"><div style="padding:44px 16px 8px;line-height:1.5;font-size:13px;min-height:970px">
-<p style="text-align:center;margin:0"><b>BERITA ACARA SERAH TERIMA BARANG / JASA PEKERJAAN</b></p><p style="text-align:center;margin:0 0 12px">NOMOR : ${esc(d.no)}</p>
-<p style="text-align:justify;margin:0 0 8px">Pada hari ini ${hariL(t).replace(' Tahun ',' tahun ')} (${tglN(t)}) kami yang bertanda tangan di bawah ini :</p>
-${row('1',HL(esc(SIGN.terima))+' : Assistant Manager Bangunan Dinas Non Stasiun selaku Pejabat Penerima hasil Pengadaan Barang / Jasa Pekerjaan Prasarana Kereta Api Dinas Unit Bangunan Daop 2 PT. KERETA API INDONESIA (Persero) jalan Stasiun Selatan N0.25 Bandung yang dibentuk berdasarkan Surat Tugas Executive Vice President Daerah Operasi 2 Bandung Nomor : KH.204/XII/3/DO.2-2022 tanggal 22 Desember 2022 Selanjutnya disebut '+HL('PIHAK PERTAMA')+'.')}
-${row('2',pihak2(p,true))}
-${blk('PIHAK KEDUA','Telah menyelesaikan Pengiriman / Penyerahan Barang /Jasa / Pekerjaan sesuai dengan Kontrak Perjanjian / Surat Perintah Kerja ( SPK ) Nomor : '+esc(sp.no)+' tanggal : '+fmtL(sp.tgl)+' sebagai berikut :<p style="margin:8px 0"><b>'+esc(nmK(p))+'</b></p><p style="text-align:center;margin:0"><b>MASA PEKERJAAN : TAHUN '+t.getUTCFullYear()+'</b></p>')}
-${blk('PIHAK PERTAMA','Telah menerima Barang / Jasa Pekerjaan tersebut di atas dalam keadaan kuantitas serta kualitas baik dan lengkap sesuai dengan syarat-syarat yang telah ditentukan, sesuai dengan Berita Acara Pengujian Barang / Jasa Pekerjaan :<table style="margin-top:6px"><tr><td style="width:80px">Nomor</td><td>: '+esc(bp.no)+'</td></tr><tr><td>Tanggal</td><td>: '+fmtL(bp.tgl)+'</td></tr></table>')}
-<p style="text-align:right;margin:14px 40px 4px 0">Bandung, ${fmtL(t)}</p>
-<table style="width:100%"><tr><td style="text-align:center;vertical-align:bottom;border:0!important">Yang menerima<br><b>PIHAK PERTAMA</b><div style="height:70px"></div><b><u>${esc(SIGN.terima)}</u></b><br>NIPP. ${esc(SIGN.terimaNipp)}</td><td style="text-align:center;vertical-align:bottom;border:0!important">Yang menyerahkan<br><b>PIHAK KEDUA</b><div style="height:70px"></div><b><u>${esc(dirOf(mitraNm(p)))||'&nbsp;'}</u></b><br>DIREKTUR</td></tr></table>
+  const nm=lowNm(p),m=nm?MIT.find(x=>x.nama===nm):null,dir=nm?dirOf(nm):'';
+  const row=(n,a,tx)=>`<table style="width:100%;margin:0 0 12px"><tr><td style="width:26px;vertical-align:top">${n}</td><td style="width:158px;vertical-align:top">${a}</td><td style="width:14px;vertical-align:top">:</td><td style="text-align:justify;vertical-align:top">${tx}</td></tr></table>`;
+  const blk=(a,b)=>`<table style="width:100%;margin:0 0 12px"><tr><td style="width:184px;vertical-align:top"><u>${a}</u></td><td style="width:14px;vertical-align:top">:</td><td style="text-align:justify;vertical-align:top">${b}</td></tr></table>`;
+  return `<div class="pg nf"><div style="padding:6px 16px 8px;line-height:1.5;font-size:13px;min-height:990px">
+<div style="height:62px">${kopTop(58,170)}</div>
+<p style="text-align:center;margin:18px 0 0">BERITA ACARA SERAH TERIMA BARANG / JASA PEKERJAAN</p><p style="text-align:center;margin:0 0 14px">NOMOR : ${esc(d.no)}</p>
+<p style="text-align:justify;margin:0 0 12px">Pada hari ini ${hariL(t).replace(' Tahun ',' tahun ')} (${tglN(t)}), kami yang bertanda tangan di bawah ini :</p>
+${row('1',HL(esc(SIGN.terima)),'Assistant Manager Bangunan Dinas Non Stasiun selaku Pejabat Penerima hasil Pengadaan Barang / Jasa Pekerjaan Prasarana Kereta Api Dinas Unit Bangunan Daop 2 PT. KERETA API INDONESIA (Persero) jalan Stasiun Selatan N0.25 Bandung yang dibentuk berdasarkan Surat Tugas Executive Vice President Daerah Operasi 2 Bandung Nomor : KH.204/XII/3/DO.2-2022 tanggal 22 Desember 2022 Selanjutnya disebut '+HL('PIHAK PERTAMA')+'.')}
+${row('2',nm?HL(esc(dir)):'',nm?'Direktur '+esc(nm)+' '+esc((m&&m.alamat)||'')+' Sebagai Rekanan Pengadaan Barang / Jasa Pekerjaan untuk kebutuhan Dinas Unit Bangunan Daop 2 Bandung, yang selanjutnya disebut '+HL('PIHAK KEDUA')+'.':'')}
+${blk('PIHAK KEDUA','Telah menyelesaikan Pengiriman / Penyerahan Barang /Jasa / Pekerjaan sesuai dengan Kontrak Perjanjian / Surat Perintah Kerja ( SPK ) Nomor :<p style="margin:10px 0 0">'+esc(sp.no)+'&nbsp;&nbsp;&nbsp;&nbsp; tanggal &nbsp;&nbsp;:&nbsp;&nbsp; '+fmtL(sp.tgl)+'</p><p style="margin:10px 0 0">sebagai berikut :</p><p style="margin:12px 0"><b>'+esc(nmK(p))+'</b></p><p style="text-align:center;margin:0">MASA PEKERJAAN : TAHUN '+t.getUTCFullYear()+'</p>')}
+${blk('PIHAK PERTAMA','Telah menerima Barang / Jasa Pekerjaan tersebut di atas dalam keadaan kuantitas serta kualitas baik dan lengkap sesuai dengan syarat-syarat yang telah ditentukan, sesuai dengan Berita Acara Pengujian Barang / Jasa Pekerjaan :<table style="margin-top:10px"><tr><td style="width:80px">Nomor</td><td>: '+esc(bp.no)+'</td></tr><tr><td>Tanggal</td><td>: '+fmtL(bp.tgl)+'</td></tr></table>')}
+<table style="width:100%;margin-top:6px"><tr><td style="text-align:center;vertical-align:bottom;border:0!important;width:50%"><br>Yang menerima<br>PIHAK PERTAMA<div style="height:78px"></div><b><u>${esc(SIGN.terima)}</u></b><br>NIPP. ${esc(SIGN.terimaNipp)}</td><td style="text-align:center;vertical-align:bottom;border:0!important">Bandung, ${fmtL(t)}<br>Yang menyerahkan<br>PIHAK KEDUA<div style="height:78px"></div><b><u>${esc(dir)||'&nbsp;'}</u></b><br>DIREKTUR</td></tr></table>
 ${kopBot()}
 </div></div>`}
 V.lembar=()=>{const p=pkg(cur);return docView('Lembar Pemeriksaan Dokumen','Lembar Pemeriksaan Dokumen',lembarDoc(p),kpmiss(p),'flat')};
