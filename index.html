@@ -276,6 +276,7 @@ table.uni .rowbar .bar-t{flex:1;min-width:60px}
 .dl .r.late{color:var(--bad)}
 @media (max-width:1200px){.hrow{grid-template-columns:1fr}}
 @media (max-width:900px){.hd{grid-template-columns:1fr}}
+
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
 .stages{display:flex;flex-direction:column;gap:12px;padding:18px}
 .srow{display:grid;grid-template-columns:110px 1fr 56px;gap:10px;align-items:center;font-size:13px}
@@ -376,6 +377,37 @@ table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
 .paper table.bd td.ln{padding:0}
 .paper table.bd .ln div{border-bottom:1px solid #000;min-height:24px;padding:3px 6px;box-sizing:border-box}
 .paper table.bd .ln div:last-child{border-bottom:0}
+/* ===== Percantik monitoring ===== */
+.dk.k5{--c:#7A4FD0}.dk.k6{--c:#D9650F}.dk.k7{--c:#1D7A4D}
+.dks.mk{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.dks.mk .dk{padding:12px 14px;gap:11px;border-radius:16px}.dks.mk .dk b{font-size:20px}.dks.mk .dk .dki{width:38px;height:38px;font-size:15px;border-radius:12px}.dks.mk .dk span{font-size:12.5px}
+@media (max-width:1300px){.dks.mk{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.dks.mk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.drop.sm{flex-direction:row;justify-content:space-between;text-align:left;padding:14px 22px;margin:14px;gap:18px;border-radius:16px;background:linear-gradient(90deg,#F3F7FD,#FFF8F0)}
+.drop.sm b{white-space:nowrap}.drop.sm span:not(.btn){flex:1;font-size:12.5px}
+.sel.srch{min-width:260px;padding:8px 12px 8px 34px;border-radius:12px;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237B879C' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M20 20l-4-4'/></svg>") no-repeat 11px 50%}
+.tabs{gap:8px;padding:0;margin:4px 0 14px}
+.tab{padding:9px 20px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:14px;transition:.15s}
+.tab:hover{background:var(--soft)}
+.tab.on,.tab.t-capex.on{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 8px 16px -8px rgba(19,41,79,.6)}
+.tab.t-capex.on{background:#1D7A4D;border-color:#1D7A4D}
+.tab.on .chip{background:rgba(255,255,255,.2);color:#fff}
+.tabs.sm{padding:12px 18px 0;margin:0;background:#fff}
+.tabs.sm .tab{padding:6px 18px;font-size:13px;border-radius:999px}
+.tabs.sm .tab.on{background:#E8751A;border-color:#E8751A;box-shadow:none}
+.sub-h{background:linear-gradient(90deg,#F3F7FD,#fff);border-bottom:1px solid var(--line)}
+.sub-h h3{font-size:15px}
+.grp{border-top:0;border-radius:20px;box-shadow:0 2px 6px rgba(20,40,75,.06),0 18px 34px -18px rgba(20,40,75,.25)}
+table.montbl{border-collapse:separate;border-spacing:0}
+table.montbl thead th{background:#EAF0FA;color:var(--navy);font-size:11px;padding:12px 10px;border-bottom:2px solid #D2DCEE}
+table.montbl tbody td{border-bottom:1px solid #EEF2F8}
+table.montbl tbody tr:nth-child(even) td:not(.calc){background:#FAFBFE}
+table.montbl tbody tr:nth-child(even) td.calc{background:#F1F4FA}
+table.montbl td.calc{background:#F4F7FC;color:var(--navy);font-weight:600}
+table.montbl .stk0 input{background:#EEF2FA;border-radius:999px;color:var(--navy)}
+table.montbl tfoot td{background:linear-gradient(90deg,#13294F,#1F4079);color:#fff;border-top:0;font-size:13.5px}
+table.montbl tfoot td b{color:#fff}
+.cell:hover{border-color:#C9D5EA;background:#fff}
 </style>
 
 <div class="bar"><div class="bar-in">
@@ -705,6 +737,7 @@ const sisaView=c=>{if(c.sisa===null)return['-',''];if(c.sisa<0)return['terlambat
 const sum=k=>MON.reduce((a,r)=>a+(Number(r[k])||0),0);
 const sumPPN=()=>MON.reduce((a,r)=>a+(calcRow(r).ppn||0),0);
 function refreshComputed(){
+  {const M=monStats();document.querySelectorAll('[data-k]').forEach(e=>{const k=e.dataset.k;e.textContent=k==='rab'?rpc(M.rab):M[k]})}
   MON.forEach((r,i)=>{const c=calcRow(r),q=k=>document.querySelector(`[data-calc="${k}"][data-i="${i}"]`);
     if(q('ppn'))q('ppn').textContent=fmtN(c.ppn)||'-';
     if(q('end'))q('end').textContent=c.end?fmt(c.end):'-';
@@ -759,11 +792,14 @@ V.monitoring=()=>{
     return `<table class="wide montbl"><thead><tr>${H.map(([h,w],k)=>`<th class="${k===0?'stk0':k===1?'stk1':''}" style="min-width:${w}px">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows||none}</tbody>
      <tfoot><tr><td class="stk0"></td><td class="stk1"><b>Total</b></td><td colspan="4"></td>${tot('rab')}${tot('ppn')}${tot('spk')}<td colspan="5"></td>${tot('nses')}<td colspan="5"></td></tr></tfoot></table>`};
   const cnt=sc=>MON.filter(r=>inScope(r,sc)).length;
+  const MK=monStats(),KD=(c,ic,k,l,sub)=>`<div class="dk ${c}"><i class="dki">${ic}</i><div><b data-k="${k}">${k==='rab'?rpc(MK.rab):MK[k]}</b><span>${l}</span><em>${sub}</em></div></div>`;
+  const kpis=`<div class="dks mk">${KD('k1','▤','n','Pekerjaan','total dalam tabel')}${KD('k4','Rp','rab','Nilai RAB','sebelum PPN')}${KD('k2','✓','done','Selesai','SPK sudah tuntas')}${KD('k5','↻','prog','On progress','SPK berjalan')}${KD('k6','◧','nUmds','UMDS','pekerjaan UMDS')}${KD('k7','▣','nSpk','SPK','pekerjaan SPK')}</div>`;
   return `<div class="head"><span class="tag">Monitoring</span><h1>Monitoring pekerjaan</h1><p>Pilih menu OPEX atau CAPEX. Di dalam OPEX ada menu SPK dan UMDS yang ditentukan dari kolom Tipe: UMDS bila nilai RAB non PPN sampai Rp 50 juta, SPK bila di atasnya. CAPEX langsung menampilkan datanya. Kolom abu-abu terhitung otomatis. Unggah Excel RAB atau tabel monitoring lama untuk mengisi baris.</p></div>
+  ${kpis}
   <div class="panel"><label class="drop sm" id="drop" for="rabfile"><b>Unggah file Excel atau tarik ke sini</b><span>Bisa berupa satu file RAB, atau tabel monitoring dengan kolom yang sama. Baris masuk ke OPEX, anggaran bisa diganti di kolom Anggaran. Dibaca di perangkat ini dan tidak dikirim ke mana pun.</span><span class="btn pri">Pilih file</span>
    <input type="file" id="rabfile" accept=".xlsx,.xls,.csv"></label>${res}</div>
   <div class="panel"><div class="panel-h"><h2>Semua pekerjaan</h2><span class="chip" id="t_n">${MON.length} pekerjaan</span><span class="sp"></span>
-    <input class="sel" id="q" type="search" placeholder="Cari pekerjaan, mitra, nomor" aria-label="Cari di tabel" style="min-width:220px">
+    <input class="sel srch" id="q" type="search" placeholder="Cari pekerjaan, mitra, nomor" aria-label="Cari di tabel">
     <button class="btn" data-act="mon-copy">Salin ke Excel</button></div>
    <datalist id="mitralist">${mitOrder().map(i=>MIT[i]).filter(x=>x.nama).map(x=>`<option value="${esc(x.nama)}">`).join('')}</datalist>
    <div class="note"><span id="cpmsg">Nilai dalam Rupiah. Nilai RAB (PPN) dihitung PPN 12% dengan DPP 11/12 (nilai x 1,11). Column 17 dibaca sebagai batas akhir MPPL (tanggal SPK + MPPL, SPK = hari ke-1) dan Sisa MPPL sebagai jumlah hari menuju batas itu. Kolom Tipe diisi otomatis dari Nilai RAB (Non PPN), dan bisa diubah manual.</span></div></div>
