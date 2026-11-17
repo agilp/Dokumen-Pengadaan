@@ -431,6 +431,13 @@ table.montbl tfoot td b{color:#fff}
 table.montbl thead th.gh{text-align:center;border-bottom:1px solid #C5D2E8;background:#DCE6F6}
 table.montbl thead th.sh{background:#EAF0FA;top:auto}
 @media print{body.prs{background:#fff!important}body.prs #app>:not(#resume){display:none!important}body.prs #side,body.prs .bar,body.prs .docnav{display:none!important}body.prs main#app{margin:0!important;padding:0!important;max-width:none!important}body.prs #resume,body.prs #resume *{visibility:visible!important}body.prs #resume{position:absolute;left:0;top:0;width:100%;box-shadow:none!important;border:0!important;background:#fff}body.prs .rsnp,body.prs #rs_hint{visibility:hidden!important}body.prs .rsnp,body.prs #rs_hint{display:none!important}body.prs *{-webkit-print-color-adjust:exact;print-color-adjust:exact}body.prs .rs-secs{grid-template-columns:repeat(4,minmax(0,1fr))!important}body.prs .rs-vals{grid-template-columns:repeat(3,minmax(0,1fr))!important}body.prs .rs-art{display:block!important}}
+
+table.montbl td.urut{text-align:center;font-weight:700;color:var(--navy);width:48px}
+table.montbl thead th{text-align:center!important;vertical-align:middle}
+table.montbl thead th{background:#EAF0FA!important;height:36px;border-bottom:1px solid #D2DCEE}
+table.montbl thead th.gh{border-left:1px solid #C5D2E8;border-bottom:1px solid #C5D2E8;color:#13294F;letter-spacing:.1em}
+table.montbl thead th.sh{border-left:1px solid #D9E2F1;font-weight:700;color:var(--accent)}
+table.montbl thead th.sh:nth-of-type(2n+1){border-left:1px solid #C5D2E8}
 </style>
 
 <div class="bar"><div class="bar-in">
@@ -751,7 +758,7 @@ V.dashboard=()=>{
   ${P.map((p,i)=>`<tr data-open="${p.id}" tabindex="0"><td class="mono">${p.no}</td><td title="${esc(p.nama)}">${esc(p.nama)}</td><td><div class="rowbar"><div class="bar-t"><i style="width:${S[i].pct}%"></i></div><span class="mono">${S[i].pct}%</span></div></td><td class="num">${S[i].late}</td></tr>`).join('')}
   </tbody></table></div></div>`;
 };
-const monNo=(r,i)=>String((r&&r.no)||i+1);
+const monNo=(r,i)=>String(i+1);
 const fmtN=n=>n===null||n===undefined||n===''?'':Math.round(n).toLocaleString('id-ID');
 const PPNT=12,PPNDPP=11/12,ppnOf=v=>(Number(v)||0)*PPNT/100*PPNDPP,withPPN=v=>(Number(v)||0)+ppnOf(v);
 const calcRow=r=>{const end=r.tglspk&&Number(r.mppl)?add(d0(r.tglspk),Number(r.mppl)-1):null;
@@ -803,7 +810,7 @@ V.monitoring=()=>{
   const tFull=sc=>{const UM=sc==='OPEX|UMDS';const ix=MON.map((r,i)=>i).filter(i=>inScope(MON[i],sc)),R=ix.map(i=>MON[i]);
     const H=[['No',56],['Pekerjaan',mw(R.map(r=>r.pekerjaan),300,7.4,470)],['Nilai RAB (Non PPN)',125],['Nilai RAB (PPN)',120],['CI',mw(R.map(r=>r.ci),112,8.5,150)],['Tipe',150],...(UM?[['G.63',mw(R.map(r=>r.pr),118,8.5,150)],['Tanggal G.63',135]]:[['PR',mw(R.map(r=>r.pr),118,8.5,150)],['Tanggal PR',135],['PD',mw(R.map(r=>r.pd),118,8.5,150)],['Tanggal PD',135]]),['Nilai SPK',120],['Tanggal SPK',135],['MPPL (hari)',75],['Sisa MPPL',130],['Mitra',mw(R.map(r=>r.mitra),130,7,240)],['@SES',0],['@KET',0],['',125]];
     const rows=ix.map(i=>{const r=MON[i],c=calcRow(r),[sv,sk]=sisaView(c);
-      return `<tr data-t="${esc([r.pekerjaan,r.ci,r.pr,r.mitra,r.ses,r.inv,r.ket].join(' ').toLowerCase())}"><td class="stk0">${inp('no',i,r.no,'c','placeholder="'+(i+1)+'" inputmode="numeric" title="Nomor paket"')}</td><td class="stk1">${area('pekerjaan',i,r.pekerjaan)}</td><td>${num('rab',i,r.rab)}</td>
+      return `<tr data-t="${esc([r.pekerjaan,r.ci,r.pr,r.mitra,r.ses,r.inv,r.ket].join(' ').toLowerCase())}"><td class="stk0 urut">${i+1}</td><td class="stk1">${area('pekerjaan',i,r.pekerjaan)}</td><td>${num('rab',i,r.rab)}</td>
       <td class="r calc"><span data-calc="ppn" data-i="${i}">${fmtN(c.ppn)||'-'}</span></td><td>${inp('ci',i,r.ci)}</td><td>${tsel(i,r)}</td>
       <td>${inp('pr',i,r.pr,'mono')}</td><td>${dat('tglpr',i,r.tglpr)}</td>${UM?'':`<td>${inp('pd',i,r.pd,'mono')}</td><td>${dat('tglpd',i,r.tglpd)}</td>`}<td>${num('spk',i,r.spk)}</td><td>${dat('tglspk',i,r.tglspk)}</td>
       <td>${inp('mppl',i,r.mppl,'r','inputmode="numeric"')}</td>
