@@ -230,6 +230,50 @@ table.uni .rowbar .bar-t{flex:1;min-width:60px}
 .dk.k1{--c:#1F4079}.dk.k2{--c:#2E9E6B}.dk.k3{--c:#D64545}.dk.k4{--c:#E8751A}
 .bar-t{height:10px;border-radius:99px}.bar-t i{background:linear-gradient(90deg,#1F4079,#E8751A);border-radius:99px}
 @media (max-width:600px){.dhero{padding:20px;flex-direction:column;align-items:flex-start}}
+
+/* ===== Menu samping ===== */
+#side{display:none}
+@media (min-width:1000px){
+ body.sb #side{display:flex;flex-direction:column;gap:3px;position:fixed;left:0;top:var(--barh,78px);bottom:0;width:232px;background:#fff;border-right:1px solid var(--line);padding:18px 12px 20px;overflow:auto;z-index:4;box-shadow:6px 0 24px -18px rgba(20,40,75,.35)}
+ body.sb main#app{margin-left:224px!important}
+ body.sb .menu{display:none}
+ body.sb table.uni td,body.sb table.uni th{padding-left:10px;padding-right:10px}
+ body.sb table.uni{font-size:13.5px}
+}
+.sdh{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:14px 12px 6px}
+.sdh:first-child{padding-top:2px}
+.sdi{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;position:relative;transition:background .15s,color .15s}
+.sdi svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--muted)}
+.sdi:hover{background:var(--soft)}
+.sdi.on{background:linear-gradient(90deg,#FDEBDA,#FFF6EE);color:#B85A0E}
+.sdi.on svg{color:#E8751A}
+.sdi.on::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:4px;border-radius:0 4px 4px 0;background:#E8751A}
+@media print{#side{display:none!important}}
+/* ===== Grafik beranda ===== */
+.hd{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px;align-items:start}.hcol{display:flex;flex-direction:column;gap:16px;min-width:0}.hrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (min-width:1000px){body.sb.homev .hero{grid-template-columns:200px minmax(0,1fr)}body.sb.homev .hero h1{font-size:28px}body.sb.homev .hstat b{font-size:22px}body.sb.homev .hero-s{gap:10px}body.sb.homev .hstat{padding:10px 12px}}
+.hd .cd{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 2px 6px rgba(20,40,75,.05),0 14px 30px -16px rgba(20,40,75,.2);min-width:0}
+.hd .cd.w2{grid-column:span 2}
+.hd h3{font-size:14.5px;color:var(--navy);margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.hd h3::before{content:"";width:4px;height:16px;border-radius:2px;background:#E8751A}
+.dn{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.dn svg{width:132px;height:132px;flex:none;transform:rotate(-90deg)}
+.dn .ct{position:relative;width:132px;height:132px;flex:none}
+.dn .ct b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:20px;color:var(--navy);line-height:1.1}
+.dn .ct b small{font-size:10.5px;font-weight:600;color:var(--muted)}
+.lg{display:flex;flex-direction:column;gap:9px;font-size:12.5px;min-width:0;flex:1}
+.lg div{display:flex;align-items:center;gap:8px}.lg i{width:10px;height:10px;border-radius:3px;flex:none}.lg span{color:var(--muted);flex:1}.lg b{color:var(--navy);white-space:nowrap}
+.hb{display:flex;flex-direction:column;gap:11px}
+.hb .r{display:grid;grid-template-columns:104px 1fr 54px;gap:10px;align-items:center;font-size:12.5px}
+.hb .r.p{grid-template-columns:minmax(0,1.3fr) 1.2fr 46px}
+.hb .r>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hb .t{height:10px;border-radius:99px;background:var(--soft);overflow:hidden}.hb .t i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1F4079,#E8751A)}
+.hb .r b{text-align:right;color:var(--navy);font-family:var(--f-mono);font-size:11.5px}
+.dl{display:flex;flex-direction:column}
+.dl .r{display:grid;grid-template-columns:44px 1fr auto;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:12.5px;align-items:center}.dl .r:first-child{border-top:0}
+.dl .r.late{color:var(--bad)}
+@media (max-width:1200px){.hrow{grid-template-columns:1fr}}
+@media (max-width:900px){.hd{grid-template-columns:1fr}}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
 .stages{display:flex;flex-direction:column;gap:12px;padding:18px}
 .srow{display:grid;grid-template-columns:110px 1fr 56px;gap:10px;align-items:center;font-size:13px}
@@ -343,6 +387,7 @@ table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
   <div class="who" id="whobox"><span id="who">Admin</span><small id="savest"></small></div>
 </div></div>
 
+<aside id="side" aria-label="Menu utama"></aside>
 <main class="wrap" id="app"></main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -567,6 +612,7 @@ const monStats=()=>{
 V.home=()=>{
   const S=P.map(stat),lt=S.reduce((a,s)=>a+s.late,0),M=monStats();
   return `<section class="hero"><svg class="hero-art" viewBox="0 0 420 220" preserveAspectRatio="xMaxYMax slice" aria-hidden="true"><path d="M79.4 205L335.6 205" stroke-width="2.8" stroke="rgba(255,255,255,.12)"/><path d="M94.5 185L327.1 185" stroke-width="2.6" stroke="rgba(255,255,255,.12)"/><path d="M112.0 162L317.4 162" stroke-width="2.4" stroke="rgba(255,255,255,.12)"/><path d="M130.2 138L307.2 138" stroke-width="2.1" stroke="rgba(255,255,255,.12)"/><path d="M148.4 114L297.0 114" stroke-width="1.9" stroke="rgba(255,255,255,.12)"/><path d="M165.0 92L287.6 92" stroke-width="1.7" stroke="rgba(255,255,255,.12)"/><path d="M180.2 72L279.1 72" stroke-width="1.4" stroke="rgba(255,255,255,.12)"/><path d="M193.8 54L271.5 54" stroke-width="1.3" stroke="rgba(255,255,255,.12)"/><path d="M206.0 38L264.7 38" stroke-width="1.2" stroke="rgba(255,255,255,.12)"/><path d="M216.6 24L258.7 24" stroke-width="1.2" stroke="rgba(255,255,255,.12)"/><path d="M80 220L232 10M330 220L248 10" stroke="rgba(255,255,255,.28)" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="240" cy="14" r="5" fill="#E8751A"/><circle cx="240" cy="14" r="11" fill="none" stroke="rgba(232,117,26,.45)" stroke-width="2"/></svg><div class="hero-t"><span class="tag">Beranda</span><h1>Selamat datang</h1><p class="hdate">${fmtL(TODAY)} · Dokumen pengadaan Daop 2 Bandung</p></div><div class="hero-s"><a class="hstat" href="#monitoring" title="${rp(M.rab)}"><span class="hl"><i>Rp</i>Nilai RAB</span><b>${rpc(M.rab)}</b><span class="hs">${M.n} pekerjaan, sebelum PPN</span></a><a class="hstat" href="#monitoring" title="${rp(M.vSpk)}"><span class="hl"><i>▤</i>SPK</span><b>${M.nSpk} SPK</b><span class="hs">Nilai ${rpc(M.vSpk)}</span></a><a class="hstat" href="#monitoring" title="${rp(M.vUmds)}"><span class="hl"><i>◧</i>UMDS</span><b>${M.nUmds} UMDS</b><span class="hs">Nilai ${rpc(M.vUmds)}</span></a><a class="hstat" href="#monitoring"><span class="hl"><i>✓</i>Selesai</span><b>${M.done}</b><span class="hs">dari ${M.n} pekerjaan</span></a><a class="hstat" href="#monitoring"><span class="hl"><i>↻</i>On Progress</span><b>${M.prog}</b><span class="hs">SPK berjalan</span></a></div></section>
+   ${homeCharts(S,M)}
    <div class="menu">
     <a class="tile t-a" href="#paket"><div class="art"><svg viewBox="0 0 240 118" role="img" aria-label="Tumpukan berkas paket"><rect class="s" x="46" y="30" width="96" height="76" rx="6" transform="rotate(-7 94 68)"/><rect class="s" x="124" y="28" width="96" height="76" rx="6" transform="rotate(6 172 66)"/><rect class="s" x="72" y="14" width="100" height="96" rx="6"/><rect class="h" x="84" y="26" width="34" height="8" rx="4"/><rect class="m" x="84" y="44" width="76" height="6" rx="3"/><rect class="m" x="84" y="58" width="64" height="6" rx="3"/><rect class="m" x="84" y="72" width="70" height="6" rx="3"/><rect class="k" x="84" y="88" width="30" height="12" rx="6"/></svg></div><div class="tb"><h3>Paket pengadaan</h3><span class="meta">${P.length} paket</span></div></a>
     <a class="tile t-o" href="#baru"><div class="art"><svg viewBox="0 0 240 118" role="img" aria-label="Lembar baru dengan tanda tambah"><rect class="s" x="66" y="12" width="96" height="100" rx="6"/><rect class="h" x="78" y="26" width="40" height="8" rx="4"/><rect class="m" x="78" y="44" width="72" height="6" rx="3"/><rect class="m" x="78" y="58" width="60" height="6" rx="3"/><rect class="m" x="78" y="72" width="68" height="6" rx="3"/><circle class="h" cx="168" cy="78" r="26"/><path d="M168 66v24M156 78h24" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" fill="none"/></svg></div><div class="tb"><h3>Buat paket baru</h3><span class="meta">Admin 1</span></div></a>
@@ -1538,6 +1584,29 @@ V.admin=()=>`<div class="head"><span class="tag">Admin dan akses</span><h1>Dua a
   <tr><td class="mono">19 Okt 2026</td><td>Admin 2</td><td>SPK paket 53 ditandai Selesai</td></tr></tbody></table></div></div>`;
 
 /* ---------- router ---------- */
+
+function donutSvg(parts,center,sub){
+  const tot=parts.reduce((a,x)=>a+x.v,0),R=40,C=2*Math.PI*R;let off=0;
+  const segs=tot?parts.filter(x=>x.v>0).map(x=>{const l=x.v/tot*C,o=`<circle cx="50" cy="50" r="${R}" fill="none" stroke="${x.c}" stroke-width="14" stroke-dasharray="${l} ${C-l}" stroke-dashoffset="${-off}"/>`;off+=l;return o}).join(''):'';
+  return `<div class="ct"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="${R}" fill="none" stroke="#E8EDF5" stroke-width="14"/>${segs}</svg><b>${center}<small>${sub}</small></b></div>`}
+function homeCharts(S,M){
+  const nf=n=>(Number(n)||0).toLocaleString('id-ID');
+  const sc=[['OPEX · SPK','OPEX|SPK','#1F4079'],['OPEX · UMDS','OPEX|UMDS','#E8751A'],['CAPEX','CAPEX|','#2E9E6B']];
+  const rabv=sc.map(([n,k,c])=>({n,c,v:MON.filter(r=>inScope(r,k)).reduce((a,r)=>a+(Number(r.rab)||0),0),q:MON.filter(r=>inScope(r,k)).length}));
+  const tot=S.reduce((a,x)=>a+x.t,0),dn=S.reduce((a,x)=>a+x.s,0),lt=S.reduce((a,x)=>a+x.late,0),rest=Math.max(0,tot-dn-lt);
+  const stg=STAGES.map(t=>{const d=P.flatMap(p=>gen(p)).filter(x=>x.tahap===t);return[t,d.filter(x=>x.st==='Selesai').length,d.length]});
+  const due=P.flatMap(p=>gen(p).filter(x=>x.st!=='Selesai').map(x=>({p,x}))).sort((a,b)=>a.x.tgl-b.x.tgl).slice(0,7);
+  const pct=tot?Math.round(dn/tot*100):0;
+  const cRab=`<div class="cd"><h3>Komposisi nilai RAB</h3><div class="dn">${donutSvg(rabv,rpc(M.rab).replace('Rp ',''),'sebelum PPN')}<div class="lg">${rabv.map(x=>`<div><i style="background:${x.c}"></i><span>${x.n} (${x.q})</span><b>${rpc(x.v)}</b></div>`).join('')}</div></div></div>`;
+  const cSt=`<div class="cd"><h3>Status dokumen</h3><div class="dn">${donutSvg([{v:dn,c:'#2E9E6B'},{v:rest,c:'#1F4079'},{v:lt,c:'#D64545'}],pct+'%','selesai')}<div class="lg"><div><i style="background:#2E9E6B"></i><span>Selesai</span><b>${dn}</b></div><div><i style="background:#1F4079"></i><span>Belum</span><b>${rest}</b></div><div><i style="background:#D64545"></i><span>Terlambat</span><b>${lt}</b></div></div></div></div>`;
+  const cTh=`<div class="cd"><h3>Progres per tahap</h3><div class="hb">${stg.map(([t,s,n])=>`<div class="r"><span>${t}</span><div class="t"><i style="width:${n?s/n*100:0}%"></i></div><b>${s}/${n}</b></div>`).join('')}</div></div>`;
+  const cPk=`<div class="cd"><h3>Progres per paket</h3><div class="hb">${P.map((p,i)=>`<div class="r p"><span title="${esc(p.nama)}">${esc(p.no)} · ${esc(p.nama)}</span><div class="t"><i style="width:${S[i].pct}%"></i></div><b>${S[i].pct}%</b></div>`).join('')||'<span style="color:var(--muted)">Belum ada paket.</span>'}</div></div>`;
+  const cDu=`<div class="cd"><h3>Jatuh tempo terdekat</h3><div class="dl">${due.map(({p,x})=>`<div class="r ${late(x)?'late':''}"><span class="mono">${esc(p.no)}</span><span title="${esc(x.dok)}">${esc(x.dok)}</span><span>${fmt(x.tgl)}</span></div>`).join('')||'<span style="color:var(--muted)">Tidak ada.</span>'}</div></div>`;
+  return `<div class="hd"><div class="hcol"><div class="hrow">${cRab}${cSt}</div>${cPk}</div><div class="hcol">${cTh}${cDu}</div></div>`}
+const SIDE=[['Menu utama'],['','Beranda','M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z'],['paket','Paket pengadaan','M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'],['baru','Buat paket baru','M12 5v14M5 12h14'],['timeline','Timeline dokumen','M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z'],['dashboard','Dashboard','M4 20V10M10 20V4M16 20v-7M22 20H2'],['Data'],['monitoring','Monitoring','M3 5h18v14H3zM3 10h18M9 5v14'],['input','Data input','M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM4 21c0-4 4-6 8-6s8 2 8 6'],['format','Format dokumen','M7 3h8l5 5v13H7zM15 3v5h5M10 13h7M10 17h7'],['Pengaturan'],['admin','Admin dan akses','M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z']];
+function buildSide(key){
+  const el=document.getElementById('side');if(!el)return;
+  el.innerHTML=SIDE.map(x=>x.length===1?`<div class="sdh">${x[0]}</div>`:`<a class="sdi ${(x[0]||'home')===key?'on':''}" href="#${x[0]}"><svg viewBox="0 0 24 24"><path d="${x[2]}"/></svg>${x[1]}</a>`).join('')}
 const TITLES={'aanw':'BA Rapat Penjelasan (Aanwijzing)','spph':'Surat Permintaan Penawaran Harga','bapph':'BA Pembukaan Penawaran','ceklist':'Ceklist Kelengkapan','fpph':'Formulir Penawaran Harga','pakta':'Pakta Integritas','paktapbj':'Pakta Integritas PBJ','suratpern':'Surat Pernyataan','coverspk':'Cover SPK','akw1':'Analisis Kewajaran Mitra 1','akw2':'Analisis Kewajaran Mitra 2','akw3':'Analisis Kewajaran Mitra 3','lembar':'Lembar Pemeriksaan Dokumen','rdsppp':'Surat Permohonan Pengujian','bapp':'BA Pengujian Barang/Jasa','bapplamp':'Lampiran BA Pengujian','paktapeng':'Pakta Integritas Penguji','bast':'BA Serah Terima (BAST)','spkdoc':'Surat Perintah Kerja (SPK)','spklamp':'Lampiran SPK','uneg':'Surat Undangan Negosiasi','baakh':'BA Analisis Kewajaran Harga','ban':'BA Negosiasi','kp':'Keputusan Penetapan','input':'Data input','daftar':'Daftar pengambilan dokumen','undangan':'Surat Undangan','':'','paket':'Paket pengadaan','baru':'Buat paket baru','timeline':'Timeline dokumen','dashboard':'Dashboard','monitoring':'Monitoring','mitra':'Mitra','rks':'Surat RKS','format':'Format dokumen','admin':'Admin dan akses'};
 function docOrder(){const p=pkg(cur),o=[];if(!p)return o;gen(p).forEach(r=>{DOCMAP.forEach(([pre,k])=>{if(r.dok.startsWith(pre)&&!o.includes(k)&&(k in TITLES))o.push(k)})});return o}
 function docNav(key){const old=document.getElementById('docnav');if(old)old.remove();let o=[];try{o=docOrder()}catch(_){}const i=o.indexOf(key);if(i<0)return;
@@ -1560,7 +1629,7 @@ function render(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.jam
   if(key==='baru'){if(editId===null)fillFromMon(document.getElementById('f_no').value);else{angUI();updSpkDate()}}
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
   document.getElementById('crumb').textContent=h?'/ '+TITLES[h]:'';
-  document.body.classList.toggle('homev',key==='home');const MW=['monitoring','home','paket','baru','timeline','dashboard','input','admin','format','mitra'].includes(key)?'none':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
+  document.body.classList.toggle('homev',key==='home');{const pgs=['home','paket','baru','timeline','dashboard','input','admin','format','monitoring','mitra'];const on=pgs.includes(key);document.body.classList.toggle('sb',on);const br=document.querySelector('.bar');if(br)document.documentElement.style.setProperty('--barh',br.offsetHeight+'px');if(on)buildSide(key==='mitra'?'input':key)}const MW=['monitoring','home','paket','baru','timeline','dashboard','input','admin','format','mitra'].includes(key)?'none':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
   if(!keep)window.scrollTo(0,0);
 }
 let lastHash=(location.hash||'').slice(1),navStack=[],goingBack=false;
