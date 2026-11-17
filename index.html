@@ -193,10 +193,12 @@ input.cell.c{text-align:center;font-weight:600}
 .fld small a{color:var(--accent);font-weight:600}
 table.wide td{padding:4px 6px;vertical-align:middle;white-space:nowrap}
 table.wide td.calc{background:var(--soft);font-size:13px;white-space:nowrap}
-table.wide .stk0,table.wide .stk1{position:sticky;background:var(--surface);z-index:1}
-table.wide .stk0{left:0;text-align:center;padding-left:6px} table.wide .stk1{left:64px;border-right:1px solid var(--line)}
-table.wide thead th{position:sticky;top:0}
-table.wide thead .stk0,table.wide thead .stk1{z-index:3}
+table.wide .stk0{text-align:center;padding-left:6px} table.wide .stk1{border-right:1px solid var(--line)}
+table.montbl tbody tr{transition:background .12s}
+table.montbl tbody tr:hover td{background:#F7F9FD}
+table.montbl tbody tr.rowsel td{background:#FFE9D2!important}
+table.montbl tbody tr.rowsel td.calc{background:#FFDDB8!important}
+table.montbl tbody tr.rowsel input,table.montbl tbody tr.rowsel select{background:#FFF6EA}
 table.wide tfoot td{border-top:2px solid var(--line);background:var(--soft);padding:9px 10px}
 table.uni{table-layout:auto;width:100%}
 table.uni th,table.uni td{white-space:nowrap}
@@ -1827,6 +1829,8 @@ async function boot(){
 }
 render();
 boot();
+
+document.addEventListener('click',e=>{const tr=e.target.closest('table.montbl tbody tr');if(!tr)return;const tb=tr.closest('tbody');tb.querySelectorAll('tr.rowsel').forEach(x=>x.classList.remove('rowsel'));tr.classList.add('rowsel')});
 </script>
 <script type="module">
 const cfg=window.FIREBASE_CONFIG;
