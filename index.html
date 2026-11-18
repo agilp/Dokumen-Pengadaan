@@ -377,6 +377,29 @@ table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
 .paper table.bd td.ln{padding:0}
 .paper table.bd .ln div{border-bottom:1px solid #000;min-height:24px;padding:3px 6px;box-sizing:border-box}
 .paper table.bd .ln div:last-child{border-bottom:0}
+/* ===== Menu bawah HP ===== */
+#mnav{display:none}
+@media (max-width:900px){#mnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid #DDE3EE;box-shadow:0 -6px 20px rgba(20,40,75,.12);padding:6px 4px calc(6px + env(safe-area-inset-bottom));overflow-x:auto;gap:2px}
+#mnav a{flex:1 0 auto;min-width:58px;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:#5a6a85;font-size:10.5px;font-weight:600;padding:5px 6px;border-radius:10px}
+#mnav a svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#mnav a.on{color:#E8730C;background:#FFF4EA}body{padding-bottom:74px}}
+@media print{#mnav{display:none!important}}
+/* ===== Peta aset ===== */
+.ptsum{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0 0 14px}
+.ptsum span{background:#fff;border:1px solid var(--line,#DDE3EE);border-radius:12px;padding:10px 14px;display:flex;flex-direction:column}
+.ptsum small{color:#5a6a85;font-size:12px}.ptsum b{font-size:20px;color:var(--navy)}
+.ptbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:12px 14px;border-bottom:1px solid #E6EAF2}
+.ptch{display:flex;gap:6px;flex-wrap:wrap}.ptch .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px}.ptch .chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.ptq{flex:1;min-width:180px;border:1px solid #CFD7E6;border-radius:8px;padding:7px 10px;font:inherit}
+.ptwrap{display:grid;grid-template-columns:1fr 330px;height:600px}
+#ptmap{height:100%;min-height:400px;background:#E8EEF8;z-index:0}
+.ptside{border-left:1px solid #E6EAF2;display:flex;flex-direction:column;min-height:0}.pth{padding:10px 14px;font-weight:600;color:var(--navy);border-bottom:1px solid #E6EAF2}
+#ptlist{overflow:auto;flex:1}
+.ptit{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid #EEF1F7;padding:9px 14px;cursor:pointer;font:inherit}
+.ptit:hover,.ptit.on{background:#FFF4EA}.ptit>i{width:10px;height:10px;border-radius:50%;flex:none}.ptit span{flex:1;min-width:0}.ptit b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ptit small{color:#5a6a85;font-size:11.5px}
+.ptit em{font-style:normal;color:#fff;font-size:11px;padding:2px 8px;border-radius:99px}
+@media(max-width:820px){.ptsum{grid-template-columns:repeat(2,1fr)}.ptwrap{grid-template-columns:1fr;height:auto}#ptmap{height:420px}.ptside{border-left:0;border-top:1px solid #E6EAF2;max-height:320px}}
+@media print{.ptbar,.ptside{display:none}}
 /* ===== Percantik monitoring ===== */
 .dk.k5{--c:#7A4FD0}.dk.k6{--c:#D9650F}.dk.k7{--c:#1D7A4D}
 .dks.mk{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
@@ -2022,11 +2045,14 @@ function homeCharts(S,M){
   const cPk=`<div class="cd"><h3>MPPL hampir habis <small style="font-weight:500;color:var(--muted)">sisa 7 hari atau kurang</small></h3><div class="mpt"><table class="uni"><thead><tr><th>No</th><th>Pekerjaan</th><th class="num">MPPL</th><th class="num">Sisa</th></tr></thead><tbody>${mp.map(({r,i,c})=>`<tr><td class="mono">${esc(monNo(r,i))}</td><td title="${esc(r.pekerjaan||'')}">${esc(r.pekerjaan||'-')}</td><td class="num">${esc(r.mppl)} hari</td><td class="num"><span class="chip ${c.sisa<0?'bad':c.sisa<=3?'warn':'ok'}">${c.sisa<0?'terlambat '+(-c.sisa)+' hari':c.sisa===0?'hari ini':c.sisa+' hari'}</span></td></tr>`).join('')||'<tr><td colspan="4" style="color:var(--muted);padding:14px">Tidak ada pekerjaan dengan sisa MPPL 7 hari atau kurang.</td></tr>'}</tbody></table></div></div>`;
   const cDu=`<div class="cd"><h3>Jatuh tempo terdekat</h3><div class="dl">${due.map(({p,x})=>`<div class="r ${late(x)?'late':''}"><span class="mono">${esc(p.no)}</span><span title="${esc(x.dok)}">${esc(x.dok)}</span><span>${fmt(x.tgl)}</span></div>`).join('')||'<span style="color:var(--muted)">Tidak ada.</span>'}</div></div>`;
   return `<div class="hd"><div class="hcol"><div class="hrow">${cRab}${cSt}${cJn}${cMs}</div>${cPk}</div><div class="hcol">${bdChartPanel()}</div></div>`}
-const SIDE=[['Menu utama'],['','Beranda','M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z'],['paket','Paket pengadaan','M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'],['rab','Buat RAB','M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM9 7h6M9 11h2M13 11h2M9 15h2M13 15h2'],['Data'],['monitoring','Monitoring','M3 5h18v14H3zM3 10h18M9 5v14'],['input','Data input','M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM4 21c0-4 4-6 8-6s8 2 8 6'],['Pengaturan'],['admin','Admin dan akses','M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z']];
+const SIDE=[['Menu utama'],['','Beranda','M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z'],['paket','Paket pengadaan','M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'],['rab','Buat RAB','M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM9 7h6M9 11h2M13 11h2M9 15h2M13 15h2'],['Data'],['monitoring','Monitoring','M3 5h18v14H3zM3 10h18M9 5v14'],['peta','Peta aset','M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'],['input','Data input','M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM4 21c0-4 4-6 8-6s8 2 8 6'],['Pengaturan'],['admin','Admin dan akses','M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z']];
+function buildMnav(key){let m=document.getElementById('mnav');if(!m){m=document.createElement('nav');m.id='mnav';m.setAttribute('aria-label','Menu');document.body.appendChild(m)}
+  m.innerHTML=SIDE.filter(x=>x.length>1).map(x=>`<a class="${(x[0]||'home')===key?'on':''}" href="#${x[0]}"><svg viewBox="0 0 24 24"><path d="${x[2]}"/></svg><span>${x[1].replace('Paket pengadaan','Paket').replace('Admin dan akses','Admin')}</span></a>`).join('')}
 function buildSide(key){
+  try{buildMnav(key)}catch(_){}
   const el=document.getElementById('side');if(!el)return;
   el.innerHTML=SIDE.map(x=>x.length===1?`<div class="sdh">${x[0]}</div>`:`<a class="sdi ${(x[0]||'home')===key?'on':''}" href="#${x[0]}"><svg viewBox="0 0 24 24"><path d="${x[2]}"/></svg>${x[1]}</a>`).join('')}
-const TITLES={'rab':'Buat RAB','aanw':'BA Rapat Penjelasan (Aanwijzing)','spph':'Surat Permintaan Penawaran Harga','bapph':'BA Pembukaan Penawaran','ceklist':'Ceklist Kelengkapan','fpph':'Formulir Penawaran Harga','pakta':'Pakta Integritas','paktapbj':'Pakta Integritas PBJ','suratpern':'Surat Pernyataan','coverspk':'Cover SPK','akw1':'Analisis Kewajaran Mitra 1','akw2':'Analisis Kewajaran Mitra 2','akw3':'Analisis Kewajaran Mitra 3','lembar':'Lembar Pemeriksaan Dokumen','rdsppp':'Surat Permohonan Pengujian','bapp':'BA Pengujian Barang/Jasa','bapplamp':'Lampiran BA Pengujian','paktapeng':'Pakta Integritas Penguji','bast':'BA Serah Terima (BAST)','spkdoc':'Surat Perintah Kerja (SPK)','spklamp':'Lampiran SPK','uneg':'Surat Undangan Negosiasi','baakh':'BA Analisis Kewajaran Harga','ban':'BA Negosiasi','kp':'Keputusan Penetapan','input':'Data input','daftar':'Daftar pengambilan dokumen','undangan':'Surat Undangan','':'','paket':'Paket pengadaan','baru':'Buat paket baru','timeline':'Timeline dokumen','dashboard':'Dashboard','monitoring':'Monitoring','mitra':'Mitra','rks':'Surat RKS','kak':'Kerangka Acuan Kerja','spektek':'Spesifikasi Teknis','format':'Format dokumen','admin':'Admin dan akses'};
+const TITLES={'peta':'Peta aset','rab':'Buat RAB','aanw':'BA Rapat Penjelasan (Aanwijzing)','spph':'Surat Permintaan Penawaran Harga','bapph':'BA Pembukaan Penawaran','ceklist':'Ceklist Kelengkapan','fpph':'Formulir Penawaran Harga','pakta':'Pakta Integritas','paktapbj':'Pakta Integritas PBJ','suratpern':'Surat Pernyataan','coverspk':'Cover SPK','akw1':'Analisis Kewajaran Mitra 1','akw2':'Analisis Kewajaran Mitra 2','akw3':'Analisis Kewajaran Mitra 3','lembar':'Lembar Pemeriksaan Dokumen','rdsppp':'Surat Permohonan Pengujian','bapp':'BA Pengujian Barang/Jasa','bapplamp':'Lampiran BA Pengujian','paktapeng':'Pakta Integritas Penguji','bast':'BA Serah Terima (BAST)','spkdoc':'Surat Perintah Kerja (SPK)','spklamp':'Lampiran SPK','uneg':'Surat Undangan Negosiasi','baakh':'BA Analisis Kewajaran Harga','ban':'BA Negosiasi','kp':'Keputusan Penetapan','input':'Data input','daftar':'Daftar pengambilan dokumen','undangan':'Surat Undangan','':'','paket':'Paket pengadaan','baru':'Buat paket baru','timeline':'Timeline dokumen','dashboard':'Dashboard','monitoring':'Monitoring','mitra':'Mitra','rks':'Surat RKS','kak':'Kerangka Acuan Kerja','spektek':'Spesifikasi Teknis','format':'Format dokumen','admin':'Admin dan akses'};
 function docOrder(){const p=pkg(cur),o=[];if(!p)return o;gen(p).forEach(r=>{DOCMAP.forEach(([pre,k])=>{if(r.dok.startsWith(pre)&&!o.includes(k)&&(k in TITLES))o.push(k)})});return o}
 function docNav(key){const old=document.getElementById('docnav');if(old)old.remove();let o=[];try{o=docOrder()}catch(_){}const i=o.indexOf(key);if(i<0)return;
   const w=document.createElement('div');w.id='docnav';
@@ -2042,6 +2068,7 @@ function render0(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.ja
   if(h==='mitra'){inTab='mitra';h='input';lastHash='input';try{history.replaceState(null,'','#input')}catch(_){}}
   const key=h===''?'home':h;if(h!=='input')mSel=null;
   document.getElementById('app').innerHTML=V[key]();
+  if(key==='peta')setTimeout(ptInit,0);
   const kpv=window._keepPv;window._keepPv=false;document.body.classList.remove('pv');
   {let st=document.getElementById('pgsize');const L=!!document.querySelector('.pg.land,.pg.rbp');if(L&&!st){st=document.createElement('style');st.id='pgsize';st.textContent=document.querySelector('.pg.rbp')?'@page{size:A4 portrait;margin:14mm 19mm}':'@page{size:A4 landscape;margin:0}';document.head.appendChild(st)}else if(!L&&st)st.remove()}
   {const pp=document.querySelector('.paper');if(pp)pp.dataset.k=key}
@@ -2050,9 +2077,60 @@ function render0(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.ja
   const bb=document.getElementById('backbtn');if(bb)bb.hidden=(h==='');
   try{monStick()}catch(_){}
   document.getElementById('crumb').textContent=h?'/ '+(TITLES[h]||h):'';try{const hs=document.getElementById('hstat'),M=monStats();if(hs)hs.innerHTML=`<span><i>◷</i><b>${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</b><em>${['Min','Sen','Sel','Rab','Kam','Jum','Sab'][new Date().getDay()]}</em></span><span><i>▤</i><b>${MON.length}</b><em>pekerjaan</em></span><span><i>▣</i><b>${P.filter(x=>x.mon&&MON.includes(x.mon)).length}</b><em>paket SPK</em></span>`;document.querySelectorAll('.bar .hq a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+key))}catch(_){}
-  document.body.classList.toggle('homev',key==='home');{const pgs=['home','paket','baru','rab','timeline','dashboard','input','admin','format','monitoring','mitra'];const on=pgs.includes(key);document.body.classList.toggle('sb',on);const br=document.querySelector('.bar');if(br)document.documentElement.style.setProperty('--barh',br.offsetHeight+'px');if(on)buildSide(key==='mitra'?'input':key)}const MW=['monitoring','home','paket','baru','rab','timeline','dashboard','input','admin','format','mitra'].includes(key)?'none':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
+  document.body.classList.toggle('homev',key==='home');{const pgs=['home','paket','baru','rab','timeline','dashboard','input','admin','format','monitoring','mitra','peta'];const on=pgs.includes(key);document.body.classList.toggle('sb',on);const br=document.querySelector('.bar');if(br)document.documentElement.style.setProperty('--barh',br.offsetHeight+'px');if(on)buildSide(key==='mitra'?'input':key)}const MW=['monitoring','home','paket','baru','rab','timeline','dashboard','input','admin','format','mitra'].includes(key)?'none':'';document.getElementById('app').style.maxWidth=MW;document.querySelector('.bar-in').style.maxWidth=MW;
   if(!keep)window.scrollTo(0,0);
 }
+/* ===== Peta Aset Daop 2 (simulasi) ===== */
+const PT_ST=[['Purwakarta',-6.5558,107.4391],['Cipeundeuy',-6.7081,107.3181],['Cipatat',-6.8353,107.3956],['Padalarang',-6.8437,107.4837],['Cimahi',-6.8946,107.5372],['Bandung',-6.9147,107.6020],['Kiaracondong',-6.9238,107.6485],['Gedebage',-6.9426,107.6928],['Rancaekek',-6.9686,107.7787],['Cicalengka',-6.9856,107.8330],['Nagreg',-7.0125,107.9120],['Cibatu',-7.1137,107.9888],['Garut',-7.2165,107.9060],['Cikajang',-7.3556,107.8003],['Cianjur',-6.8167,107.1428],['Tasikmalaya',-7.3186,108.2233],['Ciamis',-7.3294,108.3504],['Banjar',-7.3703,108.5372]];
+const PT_JN={'Stasiun':'#14284B','Kantor':'#1F4079','Rumah dinas':'#E8730C','Gudang':'#7A5AC8','Lahan':'#2E8B57','Resor/Dipo':'#C0392B'};
+const PT_KD={'Baik':'#2E8B57','Sedang':'#E8A10C','Rusak':'#C0392B'};
+function ptSeed(){let s=7;const R=()=>(s=(s*16807)%2147483647)/2147483647;const out=[];let id=1;
+  PT_ST.forEach(([n,la,ln])=>{const kd=()=>['Baik','Baik','Sedang','Rusak'][Math.floor(R()*4)];
+    out.push({id:id++,nama:'Stasiun '+n,jenis:'Stasiun',lok:n,lat:la,lng:ln,kondisi:kd(),luas:Math.round(300+R()*1700),thn:1900+Math.round(R()*100)});
+    if(R()<.7)out.push({id:id++,nama:'Rumah Dinas '+n,jenis:'Rumah dinas',lok:n,lat:la+(R()-.5)*.006,lng:ln+(R()-.5)*.006,kondisi:kd(),luas:Math.round(60+R()*140),thn:1920+Math.round(R()*90)});
+    if(R()<.4)out.push({id:id++,nama:'Gudang '+n,jenis:'Gudang',lok:n,lat:la+(R()-.5)*.008,lng:ln+(R()-.5)*.008,kondisi:kd(),luas:Math.round(100+R()*500),thn:1930+Math.round(R()*85)});
+    if(R()<.5)out.push({id:id++,nama:'Lahan Aset '+n,jenis:'Lahan',lok:n,lat:la+(R()-.5)*.01,lng:ln+(R()-.5)*.01,kondisi:'Baik',luas:Math.round(500+R()*5000),thn:0})});
+  out.push({id:id++,nama:'Kantor Daop 2 Bandung',jenis:'Kantor',lok:'Bandung',lat:-6.9128,lng:107.6055,kondisi:'Baik',luas:4200,thn:1920});
+  out.push({id:id++,nama:'Resor Jalan Rel 2.8 Kiaracondong',jenis:'Resor/Dipo',lok:'Kiaracondong',lat:-6.9265,lng:107.6520,kondisi:'Sedang',luas:350,thn:1985});
+  out.push({id:id++,nama:'Kantor UPT Sintelis 2.8 Cibatu',jenis:'Kantor',lok:'Cibatu',lat:-7.1160,lng:107.9965,kondisi:'Sedang',luas:280,thn:1990});
+  out.push({id:id++,nama:'Dipo Lokomotif Bandung',jenis:'Resor/Dipo',lok:'Bandung',lat:-6.9180,lng:107.5930,kondisi:'Baik',luas:2600,thn:1918});
+  return out}
+let PTA=(()=>{try{const v=JSON.parse(localStorage.getItem('petaAset'));if(Array.isArray(v)&&v.length)return v}catch(_){}return ptSeed()})();
+let ptF={jenis:'',kondisi:'',q:''},ptMap=null,ptLayer=null,ptAdd=false,ptSel=null;
+const ptSave=()=>{try{localStorage.setItem('petaAset',JSON.stringify(PTA))}catch(_){}};
+const ptList=()=>PTA.filter(a=>(!ptF.jenis||a.jenis===ptF.jenis)&&(!ptF.kondisi||a.kondisi===ptF.kondisi)&&(!ptF.q||(a.nama+' '+a.lok).toLowerCase().includes(ptF.q.toLowerCase())));
+V.peta=()=>{const L=ptList(),cnt=k=>PTA.filter(a=>a.kondisi===k).length;
+  return `<div class="head"><span class="tag">Peta aset</span><h1>Peta aset Daop 2 Bandung</h1><p>Data simulasi untuk mencoba pemetaan. Koordinat stasiun diperkirakan, aset lain disebar di sekitar stasiun. Klik peta saat mode tambah aktif untuk menaruh aset baru.</p></div>
+  <div class="ptsum"><span><small>Total aset</small><b>${PTA.length}</b></span><span><small>Kondisi baik</small><b style="color:#2E8B57">${cnt('Baik')}</b></span><span><small>Sedang</small><b style="color:#B27800">${cnt('Sedang')}</b></span><span><small>Rusak</small><b style="color:#C0392B">${cnt('Rusak')}</b></span><span><small>Luas total (m²)</small><b>${fmtN(PTA.reduce((s,a)=>s+(+a.luas||0),0))}</b></span></div>
+  <div class="panel"><div class="ptbar"><div class="ptch">${['', ...Object.keys(PT_JN)].map(j=>`<button type="button" class="chip ${ptF.jenis===j?'ok':''}" data-act="pt-j" data-v="${j}">${j?`<i style="background:${PT_JN[j]}"></i>`:''}${j||'Semua jenis'}</button>`).join('')}</div>
+   <div class="ptch">${['','Baik','Sedang','Rusak'].map(k=>`<button type="button" class="chip ${ptF.kondisi===k?'ok':''}" data-act="pt-k" data-v="${k}">${k||'Semua kondisi'}</button>`).join('')}</div>
+   <input id="ptq" class="ptq" placeholder="Cari nama atau lokasi aset" value="${esc(ptF.q)}"><button type="button" class="btn ${ptAdd?'pri':''} sm" data-act="pt-add">${ptAdd?'Klik peta untuk menaruh aset…':'Tambah aset di peta'}</button><button type="button" class="btn sm" data-act="pt-reset">Reset simulasi</button></div>
+   <div class="ptwrap"><div id="ptmap"></div><div class="ptside"><div class="pth">${L.length} aset ditampilkan</div><div id="ptlist">${ptListHtml(L)}</div></div></div></div>`};
+const ptListHtml=L=>L.slice(0,300).map(a=>`<button type="button" class="ptit ${ptSel===a.id?'on':''}" data-act="pt-pick" data-id="${a.id}"><i style="background:${PT_JN[a.jenis]||'#666'}"></i><span><b>${esc(a.nama)}</b><small>${esc(a.jenis)} · ${esc(a.lok)} · ${fmtN(a.luas)} m²</small></span><em style="background:${PT_KD[a.kondisi]||'#999'}">${esc(a.kondisi)}</em></button>`).join('')||'<div class="note">Tidak ada aset yang cocok.</div>';
+const ptPop=a=>`<b>${esc(a.nama)}</b><br>${esc(a.jenis)} · ${esc(a.lok)}<br>Kondisi: <b style="color:${PT_KD[a.kondisi]}">${esc(a.kondisi)}</b><br>Luas: ${fmtN(a.luas)} m²${a.thn?'<br>Tahun: '+a.thn:''}<br><small>${a.lat.toFixed(5)}, ${a.lng.toFixed(5)}</small><br><button type="button" class="btn sm" data-act="pt-del" data-id="${a.id}" style="margin-top:6px">Hapus</button>`;
+function ptDraw(){if(!ptMap||!window.L)return;if(ptLayer)ptLayer.remove();ptLayer=L.layerGroup().addTo(ptMap);const M={};
+  ptList().forEach(a=>{const m=L.circleMarker([a.lat,a.lng],{radius:a.jenis==='Stasiun'?8:6,color:'#fff',weight:2,fillColor:PT_JN[a.jenis]||'#666',fillOpacity:.95}).bindPopup(ptPop(a)).addTo(ptLayer);m.on('click',()=>{ptSel=a.id;ptListUpd()});M[a.id]=m});window._ptM=M;
+  const l=document.getElementById('ptlist');if(l)l.innerHTML=ptListHtml(ptList());const h=document.querySelector('.pth');if(h)h.textContent=ptList().length+' aset ditampilkan'}
+function ptListUpd(){const l=document.getElementById('ptlist');if(l)l.innerHTML=ptListHtml(ptList())}
+function ptInit(){const el=document.getElementById('ptmap');if(!el)return;
+  const go=()=>{if(!window.L){el.innerHTML='<div class="note" style="margin:20px">Peta tidak dapat dimuat. Periksa koneksi internet.</div>';return}
+    if(ptMap){ptMap.remove();ptMap=null}
+    ptMap=L.map(el,{zoomControl:true}).setView([-7.0,107.75],9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(ptMap);
+    ptMap.on('click',e=>{if(!ptAdd)return;const n=prompt('Nama aset baru');if(!n){return}const j=prompt('Jenis ('+Object.keys(PT_JN).join(', ')+')','Lahan');
+      PTA.push({id:Math.max(0,...PTA.map(a=>a.id))+1,nama:n,jenis:PT_JN[j]?j:'Lahan',lok:'-',lat:e.latlng.lat,lng:e.latlng.lng,kondisi:'Baik',luas:0,thn:0});ptAdd=false;ptSave();render(true)});
+    ptDraw()};
+  if(window.L)return go();
+  if(!document.getElementById('lfcss')){const c=document.createElement('link');c.id='lfcss';c.rel='stylesheet';c.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css';document.head.appendChild(c)}
+  const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';s.onload=go;s.onerror=go;document.head.appendChild(s)}
+document.addEventListener('input',e=>{if(e.target.id==='ptq'){ptF.q=e.target.value;ptDraw()}});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-act^="pt-"]');if(!b)return;const a=b.dataset.act;
+  if(a==='pt-j'){ptF.jenis=b.dataset.v;render(true)}
+  else if(a==='pt-k'){ptF.kondisi=b.dataset.v;render(true)}
+  else if(a==='pt-add'){ptAdd=!ptAdd;render(true)}
+  else if(a==='pt-reset'){if(confirm('Kembalikan ke data simulasi awal? Aset yang Anda tambah akan hilang.')){PTA=ptSeed();ptSave();render(true)}}
+  else if(a==='pt-del'){PTA=PTA.filter(x=>x.id!==+b.dataset.id);ptSave();if(ptMap)ptMap.closePopup();ptDraw()}
+  else if(a==='pt-pick'){const id=+b.dataset.id,x=PTA.find(y=>y.id===id);if(x&&ptMap){ptSel=id;ptMap.setView([x.lat,x.lng],14);const m=window._ptM&&window._ptM[id];if(m)m.openPopup();ptListUpd()}}});
 /* ===== Buat RAB (RAB + Analisa Harga Satuan + Database Harga Satuan) ===== */
 let rabSel=(()=>{try{return Number(localStorage.getItem('rabSel'))||0}catch(_){return 0}})(),rabTab='rab',rbDocSel='rab',rbAhsSel=null,rbDbLim=120,rbSugI=0;
 let DHS={};let CAHS=[],AHSBASE=0,caSel=null;let POSA={pos:[...new Set(BUD.filter(b=>b.fc).map(b=>`${b.fc} (${b.ci})`))],sub:['4211130010 (Beban Jasa Dibeli Pemel Pras - B Lainnya)','4211170010 (Beban Mat Pemel Pras - B Lainnya - Gedung Dinas)']};
@@ -2586,7 +2664,7 @@ async function boot(){
   if(r==='ok'){SAVE.ready=true;pgate('');showWho();render(true);setSt('Tersimpan');setInterval(tick,2000);tick()}
   else{pgate('');SAVE.db=null;const w=document.getElementById('who');if(w)w.textContent='Mode lokal';setSt(r==='local'?'Data tidak tersimpan':'Database tidak terjangkau')}
 }
-render();
+setTimeout(render,0);
 boot();
 
 document.addEventListener('click',e=>{const tr=e.target.closest('table.montbl tbody tr');if(!tr)return;const tb=tr.closest('tbody');tb.querySelectorAll('tr.rowsel').forEach(x=>x.classList.remove('rowsel'));tr.classList.add('rowsel')});
