@@ -452,6 +452,35 @@ table.montbl thead th.sh{border-left:1px solid #D9E2F1;font-weight:700;color:var
 .cpg{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;padding:0 12px}.cpf{display:flex;flex-direction:column;gap:3px}.cpf>span{font-size:11px;font-weight:600;color:var(--muted)}.cpf .cell{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:#fff}
 @media(max-width:700px){.cpsum{grid-template-columns:1fr 1fr}}
 .scroll.monsc table.compact{table-layout:fixed;width:100%;min-width:0}.compact td{overflow:hidden;text-overflow:ellipsis}.compact tr.cpdet>td{white-space:normal}.cph{flex-wrap:wrap}.cpt{min-width:240px}.compact tr.cprow{cursor:pointer}.compact tr.cprow:hover td{background:#F7F9FD}.compact tr.cprow.op td{background:#FFF6EA}.cpchev{border:0;background:#EAF0FA;color:var(--navy);border-radius:8px;width:26px;height:26px;cursor:pointer;font-size:13px}.compact tr.cpdet>td{padding:0;background:#FAFBFE;border-bottom:3px solid #E8751A}.cpcard.flat{border:0;border-radius:0;box-shadow:none;margin:0}.cpro{padding:7px 9px;border-radius:8px;background:#F1F4FA;font-size:13px;min-height:33px}.compact .cpb{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.cph .cell.stt{width:auto;min-width:130px;border-radius:10px;padding:7px 10px}
+.cph .cpt input.cell{background:rgba(255,255,255,.12)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important;-webkit-text-fill-color:#fff;font-weight:700;font-size:15px;border-radius:10px;padding:8px 12px;width:100%}.cph .cpt input.cell::placeholder{color:rgba(255,255,255,.55)}.cph select.cell.stt{background:#fff!important;color:var(--navy)!important;font-weight:600;border:0!important}
+
+/* timeline baru */
+.tlk{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 16px}.tk{border-radius:16px;padding:14px 16px;color:#fff;position:relative;overflow:hidden;box-shadow:0 6px 16px rgba(20,40,75,.14)}.tk::after{content:"";position:absolute;right:-24px;top:-24px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.14)}.tk small{display:block;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}.tk b{display:block;font-size:20px;margin:4px 0 2px}.tk em{font-style:normal;font-size:12px;opacity:.85}.tk.a{background:linear-gradient(135deg,#1E3F75,#14294F)}.tk.b{background:linear-gradient(135deg,#F08A3C,#E8751A)}.tk.c{background:linear-gradient(135deg,#2FA98A,#1F8A70)}.tk.d{background:linear-gradient(135deg,#8C62D1,#7B4FBF)}.tkbar{height:7px;border-radius:9px;background:rgba(255,255,255,.28);margin:8px 0 6px}.tkbar i{display:block;height:100%;border-radius:9px;background:#fff}
+@media(max-width:900px){.tlk{grid-template-columns:1fr 1fr}}
+@media(min-width:901px){
+table.tl thead th{background:linear-gradient(180deg,#1E3F75,#14294F);color:#fff;letter-spacing:.07em;font-size:11px;padding:12px 10px;box-shadow:inset 0 -3px 0 #E8751A;border:0}
+table.tl tr.stagehd td{padding:0;border:0;background:none}
+table.tl tr.stagehd td{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#fff;padding:9px 16px;background:linear-gradient(90deg,var(--sg),color-mix(in srgb,var(--sg) 70%,#fff))}
+table.tl tr.stagehd td i{font-style:normal;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.28);display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-right:10px;vertical-align:middle;letter-spacing:0}
+table.tl tr.sg0{--sg:#1E3F75}table.tl tr.sg1{--sg:#E8751A}table.tl tr.sg2{--sg:#1F8A70}table.tl tr.sg3{--sg:#7B4FBF}table.tl tr.sg4{--sg:#2F6FBF}table.tl tr.sg5{--sg:#C2457A}table.tl tr.sg6{--sg:#B07A12}table.tl tr.sg7{--sg:#4A5B78}
+table.tl tbody tr:not(.stagehd) td:first-child{position:relative;padding-left:38px!important}
+table.tl tbody tr:not(.stagehd) td:first-child::before{content:"";position:absolute;left:19px;top:0;bottom:0;width:2px;background:#DCE4F2}
+table.tl tbody tr:not(.stagehd) td:first-child::after{content:"";position:absolute;left:12px;top:50%;margin-top:-8px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #B9C5DB;box-sizing:border-box}
+table.tl tbody tr.done td:first-child::after{background:#1F8A70;border-color:#1F8A70;content:"✓";color:#fff;font-size:10px;line-height:10px;text-align:center}
+table.tl tbody tr.next td:first-child::after{border-color:#E8751A;box-shadow:0 0 0 5px rgba(232,117,26,.22)}
+table.tl tbody tr.late td:first-child::after{border-color:#C0392B}
+table.tl tbody tr.next td{background:#FFF6EA}
+table.tl tbody tr:not(.stagehd):hover td{background:#F7F9FD}table.tl tbody tr.next:hover td{background:#FFF0DE}
+table.tl tbody tr.done td:nth-child(1){color:#5C6B85}
+table.tl .twlink{display:inline-block;padding:5px 12px;border-radius:99px;background:#F1F4FA;color:#5C6B85;font-size:12.5px;text-decoration:none;border:1px dashed #B9C5DB}table.tl .twlink.on{background:#DDF3EA;color:#1F8A70;border:1px solid #BFE5D5;font-weight:700}table.tl .twlink:hover{background:#EAF0FA}table.tl .dlock{margin-left:6px;font-size:13px}table.tl input.dtin:disabled{background:#F1F4FA;color:#5C6B85;cursor:not-allowed}table.tl td.dt .dn{display:inline-block;min-width:54px;text-align:center;padding:3px 8px;border-radius:99px;background:#EAF0FA;color:var(--navy);font-size:12px;font-weight:700;margin-right:6px}
+table.tl tr.done td.dt .dn{background:#DDF3EA;color:#1F8A70}table.tl tr.next td.dt .dn{background:#FCE3CF;color:#C25E0E}
+}
+#tlprint{display:none}
+@media print{body.ptl #tlprint,body.ptl #tlprint *{visibility:visible!important}body.ptl>*:not(#tlprint):not(script):not(style){display:none!important}body.ptl #tlprint{display:block!important;font-family:Inter,Arial,sans-serif;color:#111;font-size:11.5px}
+#tlprint .tpk{display:block;width:100%;max-height:30mm;object-fit:contain;margin-bottom:6mm}#tlprint h1{margin:0;font-size:19px;letter-spacing:.04em;color:#14294F}#tlprint h2{margin:3px 0 10px;font-size:13px;font-weight:600;color:#444;border-bottom:3px solid #E8751A;padding-bottom:7px}
+#tlprint .tpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}#tlprint .tpi span{border:1px solid #D2DCEE;border-radius:8px;padding:6px 9px;background:#F5F8FD}#tlprint .tpi small{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:#667}#tlprint .tpi b{font-size:11.5px;color:#14294F}
+#tlprint table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:10.5px}#tlprint th:nth-child(1){width:30px}#tlprint th:nth-child(3){width:30%}#tlprint th:nth-child(4){width:24%}#tlprint th:nth-child(5){width:56px}#tlprint td{word-wrap:break-word}#tlprint th{background:#14294F!important;color:#fff!important;text-align:left;padding:6px 8px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;-webkit-print-color-adjust:exact;print-color-adjust:exact}#tlprint td{padding:5px 8px;border-bottom:1px solid #E1E7F1;vertical-align:top}#tlprint tr{page-break-inside:avoid}
+#tlprint td.c{text-align:center;width:42px}#tlprint td.m{font-family:ui-monospace,Menlo,monospace;font-size:10.5px}#tlprint td.ok{color:#1F8A70;font-weight:700}#tlprint tr.tph td{background:#E8751A!important;color:#fff;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:10.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}#tlprint .tpf{margin-top:8px;font-size:9.5px;color:#667;text-align:right}}
 /* judul monitoring berwarna */
 table.montbl thead th{background:linear-gradient(180deg,#1E3F75,#14294F)!important;color:#fff!important;border:0!important;border-right:1px solid rgba(255,255,255,.14)!important;letter-spacing:.07em;font-size:11px;box-shadow:inset 0 -3px 0 #E8751A}
 table.montbl thead th.gh{box-shadow:none;letter-spacing:.14em;font-size:11.5px;color:#fff!important}
@@ -740,30 +769,30 @@ function gen(p,raw){
    ['Penawaran','BA Pembukaan Penawaran Harga',n('BAPPH',bp),bp],
    ['Penawaran','Ceklist Kelengkapan Administrasi dan Teknis','-',bp],
    ['Penawaran','BA Analisis Kewajaran Harga',n('BAAKH',bp),bp],
-   ['Penawaran','Analisis Kewajaran Penawaran Harga Mitra 1','-',bp],['Penawaran','Analisis Kewajaran Penawaran Harga Mitra 2','-',bp],['Penawaran','Analisis Kewajaran Penawaran Harga Mitra 3','-',bp],
+   ['Penawaran','Analisis Kewajaran Penawaran Harga Mitra 1','',bp],['Penawaran','Analisis Kewajaran Penawaran Harga Mitra 2','',bp],['Penawaran','Analisis Kewajaran Penawaran Harga Mitra 3','',bp],
    ['Negosiasi','Surat Undangan Negosiasi',n('NEGO.PBJ',bp),bp],
    ['Negosiasi','BA Negosiasi',n('BAN',ban),ban],
    ['Negosiasi','Keputusan Penetapan Penyedia',n('KPPBJ',ban),ban],
    ['Negosiasi','Pakta Integritas PBJ','-',ban],
-   ['SPK','Surat Pernyataan','-',spk],
-   ['SPK','Cover SPK','-',spk],
    ['SPK','Surat Perintah Kerja (SPK)',n('SPK',spk),spk],
    ['SPK','Lampiran SPK',n('SPK',spk),spk],
+   ['SPK','Surat Pernyataan','-',spk],
+   ['SPK','Cover SPK','-',spk],
    ['SPK','Lembar Pemeriksaan Dokumen','-',spk],
    ['SPK','Selesai pekerjaan (batas akhir)','-',fin],
    ['Serah terima','Surat Permohonan Pengujian Mitra',ex,uj],
-   ['Serah terima','RDS Permohonan Pengujian',n('PPP',uj),uj],
    ['Serah terima','Laporan Penyelesaian Pekerjaan','-',uj],
    ['Serah terima','Daftar Penerimaan Barang dan Jasa','-',uj],
+   ['Serah terima','RDS Permohonan Pengujian',n('PPP',uj),uj],
    ['Serah terima','BA Pengujian Barang/Jasa',n('BAPP',bapp),bapp],
    ['Serah terima','Lampiran BA Pengujian',n('BAPP',bapp),bapp],
    ['Serah terima','Pakta Integritas Penguji',n('BAPP',bapp),bapp],
    ['Serah terima','BA Serah Terima (BAST)',n('BAST',bapp),bapp],
    ['Serah terima','Surat Jaminan Mutu','-',bapp],
    ['Penagihan','Surat Permohonan Pembayaran Mitra',ex,by],
-   ['Penagihan','Invoice','-',by],['Penagihan','Kwitansi','-',by],
+   ['Penagihan','Invoice dan Lampiran','',by],['Penagihan','Kwitansi','-',by],
   ];
-  if(p.rv!==5&&p.rv!==6){const OLD7=['Pakta Integritas PBJ','Surat Pernyataan','Cover SPK','Lampiran SPK','Lembar Pemeriksaan Dokumen','Lampiran BA Pengujian','Pakta Integritas Penguji'],NEW=['Analisis Kewajaran Penawaran Harga Mitra 1','Analisis Kewajaran Penawaran Harga Mitra 2','Analisis Kewajaran Penawaran Harga Mitra 3','Pakta Integritas PBJ','Surat Pernyataan','Cover SPK','Lampiran SPK','Lembar Pemeriksaan Dokumen','Lampiran BA Pengujian','Pakta Integritas Penguji'],
+  if(![5,6,7,8,9].includes(p.rv)){const OLD7=['Pakta Integritas PBJ','Surat Pernyataan','Cover SPK','Lampiran SPK','Lembar Pemeriksaan Dokumen','Lampiran BA Pengujian','Pakta Integritas Penguji'],NEW=['Analisis Kewajaran Penawaran Harga Mitra 1','Analisis Kewajaran Penawaran Harga Mitra 2','Analisis Kewajaran Penawaran Harga Mitra 3','Pakta Integritas PBJ','Surat Pernyataan','Cover SPK','Lampiran SPK','Lembar Pemeriksaan Dokumen','Lampiran BA Pengujian','Pakta Integritas Penguji'],
       have=p.rv===5?NEW:p.rv===4?OLD7:p.rv===3?['Pakta Integritas PBJ','Surat Pernyataan','Lampiran SPK']:p.rv===2?['Pakta Integritas PBJ']:[],todo=NEW.filter(x=>!have.includes(x));
     todo.forEach((nm,ti)=>{const ix=R.findIndex(r=>r[1]===nm);
       if(p.dt&&p.dt.length===R.length-(todo.length-ti))p.dt.splice(ix,0,(nm==='Surat Pernyataan'||nm==='Cover SPK')?p.dt[ix]:p.dt[ix-1]);
@@ -773,8 +802,24 @@ function gen(p,raw){
     if(p.rv===5){if(p.dt&&p.dt.length===R.length)p.dt.splice(ix,0,p.dt[ix-1],p.dt[ix-1]);
       for(const f of ['nov','st']){const o=p[f];if(o&&typeof o==='object'){const q={};for(const k in o){const n=Number(k);q[Number.isInteger(n)&&n>=ix?n+2:k]=o[k]}p[f]=q}}p.rv=6}
     R.splice(ix,0,['Persiapan','Kerangka Acuan Kerja (KAK)','-',pd],['Persiapan','Spesifikasi Teknis (Cover dan Spektek)','-',pd])}
-  return R.map((r,i)=>{let tg=r[3],no=r[2];if(!raw&&p.dt&&p.dt[i]){tg=d0(p.dt[i]);no=String(no).replace(/\/[IVX]+\/DO\.2-\d{4}$/,'/'+ROMAN[tg.getUTCMonth()+1]+'/DO.2-'+tg.getUTCFullYear())}const mit=r[2]===ex;if(mit&&p.nov&&p.nov[i])no=p.nov[i];return {i,mit,tahap:r[0],dok:r[1],no,tgl:tg,st:(()=>{const nv=(p.nov&&p.nov[i])||'';const mm=/^Surat Penawaran Mitra (\d)/.exec(r[1]);if(mit){if(!nv)return 'Belum';if(mm){const tw=(p.rks&&p.rks.tawar||[])[Number(mm[1])-1];return Number(tw)>0?'Selesai':'Proses'}return 'Selesai'}return tg<=TODAY?'Selesai':'Belum'})()};});
+  if(p.rv===6){const a=R.findIndex(r=>r[1]==='Laporan Penyelesaian Pekerjaan');
+    if(a>=0){const mp=k=>{k=Number(k);return k===a?a+2:k===a+1?a:k===a+2?a+1:k};
+      if(p.dt&&p.dt.length===R.length){const o=p.dt.slice(a,a+3);p.dt.splice(a,3,o[1],o[2],o[0])}
+      for(const f of ['nov','st']){const o=p[f];if(o&&typeof o==='object'){const q={};for(const k in o){q[Number.isInteger(Number(k))?mp(k):k]=o[k]}p[f]=q}}}
+    p.rv=7}
+  if(p.rv===7){const a=R.findIndex(r=>r[1]==='Surat Perintah Kerja (SPK)');
+    if(a>=0){const mp=k=>{k=Number(k);return k===a+2?a:k===a+3?a+1:k===a?a+2:k===a+1?a+3:k};
+      if(p.dt&&p.dt.length===R.length){const o=p.dt.slice(a,a+4);p.dt.splice(a,4,o[2],o[3],o[0],o[1])}
+      for(const f of ['nov','st']){const o=p[f];if(o&&typeof o==='object'){const q={};for(const k in o){q[Number.isInteger(Number(k))?mp(k):k]=o[k]}p[f]=q}}}
+    p.rv=8}
+  {const ix=R.findIndex(r=>r[1]==='BA Negosiasi')+1;R.splice(ix,0,['Negosiasi','Analisis Kewajaran Negosiasi','',ban]);
+    if(p.rv===8){if(p.dt&&p.dt.length===R.length-1)p.dt.splice(ix,0,p.dt[ix-1]);
+      for(const f of ['nov','st']){const o=p[f];if(o&&typeof o==='object'){const q={};for(const k in o){const n=Number(k);q[Number.isInteger(n)&&n>=ix?n+1:k]=o[k]}p[f]=q}}p.rv=9}}
+  const RES=R.map((r,i)=>{let tg=r[3],no=r[2];if(!raw&&p.dt&&p.dt[i]){tg=d0(p.dt[i]);no=String(no).replace(/\/[IVX]+\/DO\.2-\d{4}$/,'/'+ROMAN[tg.getUTCMonth()+1]+'/DO.2-'+tg.getUTCFullYear())}const mit=r[2]===ex;if(mit&&p.nov&&p.nov[i])no=p.nov[i];const bl=r[1]==='Laporan Penyelesaian Pekerjaan',lk=LOCKMAP[r[1]]||'';return {i,mit,blank:bl,lock:lk,tahap:r[0],dok:r[1],no:bl?'':no,tgl:tg,st:(()=>{const nv=(p.nov&&p.nov[i])||'';const mm=/^Surat Penawaran Mitra (\d)/.exec(r[1]);if(mit){if(!nv)return 'Belum';if(mm){const tw=(p.rks&&p.rks.tawar||[])[Number(mm[1])-1];return Number(tw)>0?'Selesai':'Proses'}return 'Selesai'}return tg<=TODAY?'Selesai':'Belum'})()};});
+  RES.filter(x=>x.lock).forEach(dp=>{const sp=RES.find(x=>x.dok===dp.lock);if(sp){dp.tgl=sp.tgl;dp.st=dp.tgl<=TODAY?'Selesai':'Belum'}});
+  return RES;
 }
+const LOCKMAP={'Daftar Penerimaan Barang dan Jasa':'Surat Permohonan Pengujian Mitra','Surat Jaminan Mutu':'BA Serah Terima (BAST)','Analisis Kewajaran Penawaran Harga Mitra 1':'BA Analisis Kewajaran Harga','Analisis Kewajaran Penawaran Harga Mitra 2':'BA Analisis Kewajaran Harga','Analisis Kewajaran Penawaran Harga Mitra 3':'BA Analisis Kewajaran Harga','Analisis Kewajaran Negosiasi':'BA Negosiasi'};
 const STAGES=['Perencanaan','Persiapan','Penjelasan','Penawaran','Negosiasi','SPK','Serah terima','Penagihan'];
 const late=x=>false;
 const stat=p=>{const d=gen(p);const s=d.filter(x=>x.st==='Selesai').length;return{d,s,t:d.length,pct:Math.round(s/d.length*100),late:d.filter(late).length,next:d.filter(x=>x.st!=='Selesai').sort((a,b)=>a.tgl-b.tgl)[0]}};
@@ -863,14 +908,14 @@ V.paket=()=>`<div class="head"><span class="tag">Paket pengadaan</span><h1>Semua
 V.timeline=()=>{
   const p=pkg(cur),s=stat(p);let last='';
   return `<div class="head"><span class="tag">Timeline dokumen</span><h1>Paket ${p.no}</h1><p>${esc(p.nama)}</p></div>
-  <div class="strip"><span class="chip acc">${rp(p.rab)} sebelum PPN</span><span class="chip acc">${rp(withPPN(p.rab))} termasuk PPN ${p.ppn}%</span><span class="chip">Penyerahan ${p.pen} hari</span><span class="chip">Retensi ${p.ret} hari</span></div>
-  <div class="panel"><div class="panel-h"><h2>Urutan dokumen</h2><span class="sp"></span><span class="src" id="tlmsg">${esc(tlNote)}</span>
+  <div class="tlk"><div class="tk a"><small>Nilai RAB</small><b>${rp(p.rab)}</b><em>sebelum PPN</em></div><div class="tk b"><small>Termasuk PPN ${p.ppn}%</small><b>${rp(withPPN(p.rab))}</b><em>nilai pekerjaan</em></div><div class="tk c"><small>Penyerahan</small><b>${p.pen} hari</b><em>retensi ${p.ret} hari</em></div><div class="tk d"><small>Progres dokumen</small><b>${s.s}/${s.t}</b><div class="tkbar"><i style="width:${s.pct}%"></i></div><em>${s.pct}% selesai${s.next?' · berikut: '+esc(s.next.dok):''}</em></div></div>
+  <div class="panel"><div class="panel-h"><h2>Urutan dokumen</h2><button type="button" class="btn sm pri" data-act="tl-print">⎙ Cetak PDF</button><span class="sp"></span><span class="src" id="tlmsg">${esc(tlNote)}</span>
     <label class="who" for="pk">Paket <select id="pk">${P.map(x=>`<option value="${x.id}" ${x.id===p.id?'selected':''}>${x.no} · ${esc(x.nama.slice(0,34))}…</option>`).join('')}</select></label></div>
   <div class="scroll"><table class="uni tl"><thead><tr><th>Dokumen</th><th>Nomor</th><th>Tanggal</th><th>Surat</th></tr></thead><tbody>
-  ${s.d.map(x=>{let h='';if(x.tahap!==last){h=`<tr class="stagehd"><td colspan="4">${x.tahap}</td></tr>`;last=x.tahap}
-   return h+`<tr class="${x.st==='Selesai'?'done':''} ${late(x)?'late':''}"><td title="${esc(x.dok)}">${/^Surat Penawaran Mitra \d/.test(x.dok)?(()=>{const n=Number(x.dok.slice(-1))-1,cv=(rks(p).peserta||[])[n]||'',nm=mitOrder().map(i=>MIT[i].nama).filter(Boolean);return `<select class="cell" data-ps="${n}" aria-label="${esc(x.dok)}"><option value="">Pilih Mitra</option>${nm.map(y=>`<option ${y===cv?'selected':''}>${esc(y)}</option>`).join('')}${cv&&!nm.includes(cv)?`<option selected>${esc(cv)}</option>`:''}</select>`})():esc(x.dok)}</td><td class="mono" title="${esc(x.no)}">${x.mit?`<input class="cell mono nmin" data-nm="${x.i}" value="${esc(x.no==='(nomor dari mitra)'?'':x.no)}" placeholder="isi nomor dari mitra" aria-label="Nomor ${esc(x.dok)}">`:esc(x.no)}</td>
-   <td class="dt"><div class="dtw"><span class="dn">${DAYS[x.tgl.getUTCDay()]}</span><input class="cell dtin" type="date" data-dt="${x.i}" value="${iso(x.tgl)}" aria-label="Tanggal ${esc(x.dok)}"></div></td>
-   <td>${/^Surat Penawaran Mitra \d/.test(x.dok)?(()=>{const n=Number(x.dok.slice(-1))-1;return `<input class="cell mono twin" type="number" min="0" data-tw="${n}" value="${esc(((rks(p).tawar||[])[n])||'')}" placeholder="nilai penawaran (Rp)" aria-label="Nilai penawaran ${esc(x.dok)}">`})():docBtns(x.dok)}</td></tr>`}).join('')}
+  ${s.d.map(x=>{let h='';if(x.tahap!==last){h=`<tr class="stagehd sg${Math.max(0,STAGES.indexOf(x.tahap))%8}"><td colspan="4"><i>${Math.max(0,STAGES.indexOf(x.tahap))+1}</i>${x.tahap}</td></tr>`;last=x.tahap}
+   return h+`<tr class="${x.st==='Selesai'?'done':''} ${late(x)?'late':''} ${s.next&&s.next.i===x.i?'next':''}"><td title="${esc(x.dok)}">${/^Surat Penawaran Mitra \d/.test(x.dok)?(()=>{const n=Number(x.dok.slice(-1))-1,cv=(rks(p).peserta||[])[n]||'',nm=mitOrder().map(i=>MIT[i].nama).filter(Boolean);return `<select class="cell" data-ps="${n}" aria-label="${esc(x.dok)}"><option value="">Pilih Mitra</option>${nm.map(y=>`<option ${y===cv?'selected':''}>${esc(y)}</option>`).join('')}${cv&&!nm.includes(cv)?`<option selected>${esc(cv)}</option>`:''}</select>`})():esc(x.dok)}</td><td class="mono" title="${esc(x.no)}">${x.blank?'':x.mit?`<input class="cell mono nmin" data-nm="${x.i}" value="${esc(x.no==='(nomor dari mitra)'?'':x.no)}" placeholder="isi nomor dari mitra" aria-label="Nomor ${esc(x.dok)}">`:esc(x.no)}</td>
+   <td class="dt">${x.blank?'':`<div class="dtw"><span class="dn">${DAYS[x.tgl.getUTCDay()]}</span><input class="cell dtin" type="date" data-dt="${x.i}" value="${iso(x.tgl)}" ${x.lock?'disabled title="Dikunci: mengikuti tanggal ${esc(x.lock)}"':''} aria-label="Tanggal ${esc(x.dok)}">${x.lock?'<span class="dlock" title="Dikunci">🔒</span>':''}</div>`}</td>
+   <td>${/^Surat Penawaran Mitra \d/.test(x.dok)?(()=>{const n=Number(x.dok.slice(-1))-1;return `<a class="twlink ${((rks(p).tawar||[])[n])>0?'on':''}" href="#akw${n+1}" title="Nilai diisi di Analisis Kewajaran Penawaran Harga Mitra ${n+1}">${((rks(p).tawar||[])[n])>0?'🔗 '+rp(Number(rks(p).tawar[n])):'🔗 isi di Analisis Kewajaran'}</a>`})():docBtns(x.dok)}</td></tr>`}).join('')}
   </tbody></table></div>
   <div class="note">Tanggal di kolom Tanggal bisa diedit. Mengubah satu tanggal menggeser semua tanggal di bawahnya sebanyak selisih hari kerja. Sabtu, Minggu, libur nasional, dan cuti bersama dilewati. Tanggal selesai pekerjaan = SPK + ${p.pen} hari kalender (SPK hari ke-1), dimajukan bila jatuh di hari libur.</div></div>`;
 };
@@ -1707,7 +1752,9 @@ function lembarDoc(p){
 </div></div>`}
 
 /* ---------- Lampiran analisis kewajaran per mitra ---------- */
-['akw1','akw2','akw3'].forEach((key,n)=>{V[key]=()=>{const p=pkg(cur);return docView('Analisis Kewajaran Mitra '+(n+1),'Analisis Kewajaran Penawaran Harga Mitra '+(n+1),akwDoc(p,n),(rks(p).peserta[n]&&Number((rks(p).tawar||[])[n])>0)?[]:['peserta dan nilai penawaran'],'flat')}});
+['akw1','akw2','akw3'].forEach((key,n)=>{V[key]=()=>{const p=pkg(cur);return docView('Analisis Kewajaran Mitra '+(n+1),'Analisis Kewajaran Penawaran Harga Mitra '+(n+1),akwDoc(p,n),(rks(p).peserta[n]&&Number((rks(p).tawar||[])[n])>0)?[]:['peserta dan nilai penawaran'],'flat').replace('<div class="pvbar">',akwPanel(p,n)+'<div class="pvbar">')}});
+function akwPanel(p,n){const k=rks(p),tw=Number((k.tawar||[])[n])||0,rab=Number(p.rab)||0,pct=rab>0&&tw>0?((tw-rab)/rab*100):null;
+  return `<div class="panel notpv" id="awpanel"><div class="panel-h"><h2>Nilai penawaran Mitra ${n+1}</h2><span class="chip ${k.peserta[n]?'ok':'warn'}">${esc(k.peserta[n]||'mitra belum dipilih di timeline')}</span><span class="sp"></span><span class="src">Nilai ini otomatis tampil di timeline dan dokumen terkait (BA Pembukaan, BA Analisis Kewajaran)</span></div><div class="grid2" style="padding:12px 16px"><div class="fld"><label for="aw_in">Jumlah total penawaran sebelum PPN (Rp)</label><input id="aw_in" type="text" inputmode="numeric" data-aw="${n}" value="${tw>0?fmtN(tw):''}" autocomplete="off" placeholder="mis. 190.000.000"><small>${rab>0?'Pagu (RAB sebelum PPN): '+rp(rab)+(pct===null?'':' · selisih '+(pct>0?'+':'')+pct.toFixed(3).replace('.',',')+'%'):''}</small></div></div></div>`}
 function akwDoc(p,n){
   const k=rks(p),d=rowOf(p,'Analisis Kewajaran Penawaran Harga Mitra '+(n+1)),t=d.tgl,nm=k.peserta[n]||'',tw=Number((k.tawar||[])[n])||0,rab=Number(p.rab)||0,R=rank(p),rk=R.findIndex(x=>x.n===n)+1;
   const c='border:1px solid #000;padding:0 2px;height:9.3px;line-height:9px;overflow:hidden;white-space:nowrap',G1='background:#C6E0B4',G2='background:#E2EFD9',f0=v=>v>0?v.toLocaleString('id-ID'):'-';
@@ -2326,11 +2373,12 @@ document.addEventListener('click',e=>{
     if(act==='cp-add'){const r=cpMig(MON[Number(a.dataset.i)]);if(a.dataset.k==='adds')r.adds.push({p1:'',p2:'',n:'',t:''});else r.tms.push({ke:String(r.tms.length+1),p:'',n:'',mg:'',rn:'',rt:'',bn:'',bt:''});render(true);return}
     if(act==='cp-del'){const r=cpMig(MON[Number(a.dataset.i)]);if(confirm('Hapus baris ini?')){r[a.dataset.k].splice(Number(a.dataset.j),1);render(true)}return}
     if(act==='op-view'){opView=a.dataset.v==='lengkap'?'lengkap':'ringkas';render(true);return}
-    if(act==='op-tog'){const k=Number(a.dataset.i);opOpen.has(k)?opOpen.delete(k):opOpen.add(k);render(true);return}
+    if(act==='op-tog'){const k=Number(a.dataset.i);opOpen.has(k)?opOpen.delete(k):opOpen.add(k);render(true);showResume(k);return}
     if(act==='cp-view'){cpView=a.dataset.v==='tabel'?'tabel':'kartu';render(true);return}
     if(act==='mon-tab'){monTab.ang=a.dataset.ang==='CAPEX'?'CAPEX':'OPEX';if(a.dataset.sub)monTab.sub=a.dataset.sub;render(true);return}
     if(act==='mon-add'){MON.push({...blankRow(),ang:a.dataset.ang==='CAPEX'?'CAPEX':'OPEX',tipe:a.dataset.ang==='CAPEX'?'':monTab.sub});render(true);return}
     if(act==='mon-del'){const i=Number(a.dataset.i);if(a.dataset.armed){MON.splice(i,1);if(i<rabSel)rabSel--;render(true)}else{a.dataset.armed='1';a.textContent='Yakin?'}return}
+    if(act==='tl-print'){tlPrint();return}
     if(act==='rs-print'){if(window._rsI==null||!MON[window._rsI]){const h=document.getElementById('rs_hint');if(h)h.textContent='Klik dulu satu baris pekerjaan, lalu tekan Cetak PDF';return}
       const st=document.createElement('style');st.id='rsprint';st.textContent='@page{size:A4 landscape;margin:9mm}';document.head.appendChild(st);document.body.classList.add('prs');const done=()=>{document.body.classList.remove('prs');const x=document.getElementById('rsprint');if(x)x.remove();window.removeEventListener('afterprint',done)};window.addEventListener('afterprint',done);setTimeout(()=>window.print(),60);return}
     if(act==='mon-copy'&&monTab.ang==='CAPEX'){const L=MON.map((r,i)=>[cpMig(r),i]).filter(([r])=>angOf(r)==='CAPEX');const A=Math.max(1,...L.map(([r])=>r.adds.length)),T2=Math.max(1,...L.map(([r])=>r.tms.length));
@@ -2374,6 +2422,7 @@ function fillFromMon(val){
 function setLogo(u){const i=document.getElementById('logoimg'),p=document.getElementById('logoph');if(!i)return;i.src=u;i.hidden=false;p.style.display='none'}
 try{const u=localStorage.getItem('logo.unit');if(u)setLogo(u)}catch(_){}
 document.addEventListener('change',e=>{
+  if(e.target.dataset&&e.target.dataset.aw!==undefined){const p=pkg(cur),n=Number(e.target.dataset.aw);p.rks=p.rks||{};const t=(p.rks.tawar||rks(p).tawar||['','','']).slice();const v=toNum(e.target.value);t[n]=v>0?v:'';p.rks.tawar=t;render(true);return}
   if(e.target.dataset&&e.target.dataset.tw!==undefined){const p=pkg(cur);p.rks=p.rks||{};const t=(p.rks.tawar||rks(p).tawar||['','','']).slice();t[Number(e.target.dataset.tw)]=e.target.value;p.rks.tawar=t;return}
   if(e.target.dataset&&e.target.dataset.nm!==undefined){const p=pkg(cur);p.nov=p.nov||{};p.nov[Number(e.target.dataset.nm)]=e.target.value.trim();return}
   if(e.target.dataset&&e.target.dataset.dt!==undefined){
@@ -2515,6 +2564,14 @@ document.addEventListener('click',e=>{const tr=e.target.closest('table.montbl tb
 const RS_ART=`<svg class="rs-art" viewBox="0 0 200 130" aria-hidden="true"><rect x="14" y="96" width="172" height="8" rx="4" fill="rgba(255,255,255,.14)"/><rect x="34" y="40" width="58" height="56" rx="5" fill="#fff" opacity=".95"/><rect x="42" y="50" width="26" height="5" rx="2.5" fill="#1F4079"/><rect x="42" y="61" width="42" height="4" rx="2" fill="#C9D3E4"/><rect x="42" y="70" width="36" height="4" rx="2" fill="#C9D3E4"/><rect x="42" y="79" width="40" height="4" rx="2" fill="#C9D3E4"/><rect x="74" y="22" width="62" height="74" rx="5" fill="#fff"/><rect x="83" y="33" width="30" height="6" rx="3" fill="#E8751A"/><rect x="83" y="46" width="44" height="4" rx="2" fill="#C9D3E4"/><rect x="83" y="55" width="38" height="4" rx="2" fill="#C9D3E4"/><rect x="83" y="64" width="44" height="4" rx="2" fill="#C9D3E4"/><rect x="83" y="73" width="30" height="4" rx="2" fill="#C9D3E4"/><rect x="128" y="50" width="48" height="46" rx="5" fill="#2A5499" stroke="#fff" stroke-width="2"/><path d="M138 96V66h28v30" fill="#E8751A"/><rect x="144" y="72" width="6" height="6" fill="#fff"/><rect x="154" y="72" width="6" height="6" fill="#fff"/><rect x="144" y="82" width="6" height="6" fill="#fff"/><rect x="154" y="82" width="6" height="6" fill="#fff"/><circle cx="160" cy="34" r="15" fill="#2E9E6B" stroke="#fff" stroke-width="2.5"/><path d="M153 34l5 5 9-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const rsIc={rp:'M12 3v18M16 7.5c0-1.7-1.8-3-4-3s-4 1.3-4 3 1.8 2.5 4 3 4 1.3 4 3-1.8 3-4 3-4-1.3-4-3',doc:'M7 3h8l5 5v13H7zM15 3v5h5M10 13h7M10 17h7',cal:'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4',user:'M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM4 21c0-4 4-6 8-6s8 2 8 6',note:'M5 4h14v16H5zM8 9h8M8 13h8M8 17h5'};
 const rsSec=(ic,t,items)=>`<div class="rs-sec"><h4><svg viewBox="0 0 24 24"><path d="${rsIc[ic]}"/></svg>${t}</h4>${items}</div>`;
+function tlPrint(){const p=pkg(cur),s=stat(p);const old=document.getElementById('tlprint');if(old)old.remove();
+  let last='',rows='';s.d.forEach((x,k)=>{if(x.tahap!==last){rows+=`<tr class="tph"><td colspan="5">${esc(x.tahap)}</td></tr>`;last=x.tahap}
+    rows+=`<tr><td class="c">${k+1}</td><td>${esc(x.dok)}</td><td class="m">${esc(x.no==='(nomor dari mitra)'?'':x.no)}</td><td style="white-space:nowrap">${x.blank?'':DAYS[x.tgl.getUTCDay()]+', '+fmtL(x.tgl)}</td><td class="c ${x.st==='Selesai'?'ok':''}">${x.st==='Selesai'?'Selesai':'Belum'}</td></tr>`});
+  const d=document.createElement('div');d.id='tlprint';d.innerHTML=`${KOP.top?`<img class="tpk" src="${KOP.top}" alt="">`:''}<h1>TIMELINE PENGADAAN</h1><h2>Paket ${esc(p.no)} · ${esc(p.nama)}</h2>
+   <div class="tpi"><span><small>Nilai RAB (sebelum PPN)</small><b>${rp(p.rab)}</b></span><span><small>Termasuk PPN ${p.ppn}%</small><b>${rp(withPPN(p.rab))}</b></span><span><small>Masa pelaksanaan</small><b>${p.pen} hari kalender</b></span><span><small>Progres</small><b>${s.s} dari ${s.t} dokumen (${s.pct}%)</b></span></div>
+   <table><thead><tr><th>No</th><th>Dokumen</th><th>Nomor</th><th>Tanggal</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table><p class="tpf">Dicetak ${DAYS[TODAY.getUTCDay()]}, ${fmt(TODAY)}</p>`;
+  document.body.appendChild(d);const st=document.createElement('style');st.id='tlpst';st.textContent='@page{size:A4 portrait;margin:12mm}';document.head.appendChild(st);document.body.classList.add('ptl');
+  const done=()=>{document.body.classList.remove('ptl');const a=document.getElementById('tlprint');if(a)a.remove();const b=document.getElementById('tlpst');if(b)b.remove();window.removeEventListener('afterprint',done)};window.addEventListener('afterprint',done);setTimeout(()=>window.print(),80)}
 function showResume(i){
   window._rsI=i;const r=MON[i],b=document.getElementById('rs_body'),h=document.getElementById('rs_hint');if(!r||!b)return;
   const c=calcRow(r),[sv,sk]=sisaView(c),pk=P.find(p=>p.mon===r)||P.find(p=>String(p.no)===String(monNo(r,i))),stp=pk?stat(pk):null,tp=angOf(r)==='CAPEX'?'CAPEX':'OPEX · '+tipeOf(r);
@@ -2533,7 +2590,7 @@ function showResume(i){
    </div>`;
   b.hidden=false;if(h)h.textContent='Resume baris yang diklik';
 }
-document.addEventListener('click',e=>{const tr0=e.target.closest('table.compact tr.cprow');if(tr0&&!e.target.closest('button,input,select,a')){const k=Number(tr0.querySelector('[data-i]').dataset.i);opOpen.has(k)?opOpen.delete(k):opOpen.add(k);render(true);return}const tr=e.target.closest('table.montbl tbody tr');if(!tr)return;const el=tr.querySelector('[data-i]');if(el)showResume(Number(el.dataset.i))});
+document.addEventListener('click',e=>{const tr0=e.target.closest('table.compact tr.cprow');if(tr0&&!e.target.closest('button,input,select,a')){const k=Number(tr0.querySelector('[data-i]').dataset.i);opOpen.has(k)?opOpen.delete(k):opOpen.add(k);render(true);showResume(k);return}const tr=e.target.closest('table.montbl tbody tr');if(!tr)return;const el=tr.querySelector('[data-i]');if(el)showResume(Number(el.dataset.i))});
 </script>
 
 <script type="module">
