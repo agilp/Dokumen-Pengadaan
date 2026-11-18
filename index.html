@@ -384,6 +384,26 @@ table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
 #mnav a svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 #mnav a.on{color:#E8730C;background:#FFF4EA}}
 @media print{#mnav{display:none!important}}
+.pta{position:relative;height:100%;overflow:hidden;background:#EEF3FA}#ptsvg{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.ptdraw{stroke-dasharray:2000;stroke-dashoffset:2000;animation:ptd 2.4s ease-out forwards}@keyframes ptd{to{stroke-dashoffset:0}}
+.ptflow{animation:ptf 1.4s linear infinite}@keyframes ptf{to{stroke-dashoffset:-34}}
+.ptst{opacity:0;animation:ptsi .5s ease-out forwards}@keyframes ptsi{from{opacity:0}to{opacity:1}}
+.ptlb{fill:#14284B;font:600 calc(var(--lf,10)*1px) 'Plus Jakarta Sans',sans-serif;paint-order:stroke;stroke:#fff;stroke-width:calc(var(--lf,10)*.35px)}
+.ptdot{cursor:pointer}.ptdot .pulse{transform-box:fill-box;transform-origin:center;animation:ptp 1.6s ease-out infinite}@keyframes ptp{0%{transform:scale(.6);opacity:.95}100%{transform:scale(3);opacity:0}}
+.ptdot .sel{animation:ptp2 1.2s ease-in-out infinite alternate}@keyframes ptp2{to{r:12}}
+.ptwm{fill:#14284B;fill-opacity:.06;font:800 54px 'Plus Jakarta Sans',sans-serif;letter-spacing:.3em}.ptwm2{fill:#14284B;fill-opacity:.07;font:700 26px 'Plus Jakarta Sans',sans-serif;letter-spacing:.4em}.ptriv{animation:ptf2 2.6s linear infinite}@keyframes ptf2{to{stroke-dashoffset:-22}}.ptcl{animation:ptcl linear infinite alternate}@keyframes ptcl{from{transform:translateX(-160px)}to{transform:translateX(220px)}}.ptcmp{position:absolute;right:12px;bottom:12px;width:54px;height:54px}
+.ptpk{fill:#5B6B88;fill-opacity:.9;font:500 calc(var(--lf,10)*.9px) 'Plus Jakarta Sans',sans-serif}.ptn{fill:#fff;font:800 12px 'Plus Jakarta Sans',sans-serif}.ptag{cursor:pointer}.ptag circle:not(.pulse),.ptdot circle:not(.pulse):not(.sel){filter:drop-shadow(0 1px 2px rgba(20,40,75,.4))}.ptag .pulse{transform-box:fill-box;transform-origin:center;animation:ptp 1.8s ease-out infinite}
+#ptsvg:not(.zi) #ptdots{display:none}#ptsvg.zi #ptagg{display:none}
+.ptpr{opacity:0;animation:ptpf linear infinite}@keyframes ptpf{0%{opacity:0;transform:translateY(0)}20%{opacity:.5}100%{opacity:0;transform:translateY(-40px)}}
+.ptbr{animation:ptbr 3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}@keyframes ptbr{to{transform:scale(1.5);opacity:.04}}
+.ptmk{background:none;border:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}.ptmk svg{display:block}
+.ptzm{position:absolute;left:12px;top:12px;display:flex;flex-direction:column;gap:6px}.ptzm button{width:38px;height:38px;border-radius:10px;border:0;background:rgba(255,255,255,.95);font-size:20px;font-weight:700;color:#14284B;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.ptleg{position:absolute;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:4px 12px;background:rgba(255,255,255,.94);color:#14284B;box-shadow:0 2px 10px rgba(20,40,75,.18);font-size:11.5px;padding:8px 12px;border-radius:10px;max-width:calc(100% - 24px)}.ptleg span{display:inline-flex;align-items:center;gap:5px}.ptleg i{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px rgba(20,40,75,.25)}.ptleg i.ring{background:none;border:2px solid #E5483A}
+#ptcard{position:absolute;right:12px;top:12px;width:300px;max-height:calc(100% - 24px);overflow:auto;background:#fff;border-radius:14px;padding:0;font-size:13px;line-height:1.5;box-shadow:0 10px 30px rgba(20,40,75,.35);color:#14284B}#ptcard .x{position:absolute;right:8px;top:6px;z-index:2;width:28px;height:28px;border:0;border-radius:50%;background:rgba(255,255,255,.92);font-size:20px;line-height:1;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.ptc{width:100%;min-width:260px}.ptph{position:relative;height:150px;background:#EAF3FC;overflow:hidden;border-radius:14px 14px 0 0}.ptph svg,.ptph img{width:100%;height:100%;object-fit:cover;display:block}.ptph em{position:absolute;left:10px;top:10px;font-style:normal;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px}.ptnf{position:absolute;left:10px;bottom:8px;font-size:10.5px;background:rgba(255,255,255,.9);padding:2px 8px;border-radius:99px;color:#5a6a85}
+.ptcb{padding:12px 14px 14px}.ptct{display:block;font-size:15px}.ptcb small{color:#5a6a85}.ptcb dl{margin:10px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}.ptcb dt{font-size:10.5px;color:#7a88a3;text-transform:uppercase;letter-spacing:.04em}.ptcb dd{margin:0;font-weight:600;font-size:12.5px}.ptkt{margin:10px 0 0;background:#FFF4EA;border-radius:8px;padding:8px 10px;font-size:12px}.ptac{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.ptac .btn{cursor:pointer}.ptbm{font-size:12px;color:#5a6a85;flex-basis:100%}label.btn{cursor:pointer}
+.ptmode{display:inline-flex;background:#EEF1F7;border-radius:99px;padding:3px}.ptmode button{border:0;background:none;padding:6px 14px;border-radius:99px;font:600 12.5px inherit;font-family:inherit;cursor:pointer;color:#5a6a85}.ptmode button.on{background:#14284B;color:#fff}
+@media(prefers-reduced-motion:reduce){.ptflow,.ptdot .pulse,.ptdot .sel{animation:none}.ptdraw{animation-duration:.01s}}
 /* ===== Peta aset ===== */
 .ptsum{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0 0 14px}
 .ptsum span{background:#fff;border:1px solid var(--line,#DDE3EE);border-radius:12px;padding:10px 14px;display:flex;flex-direction:column}
@@ -2080,38 +2100,110 @@ function render0(keep){P.forEach(p=>{p.ppn=12;p.ret=180;p.rks=p.rks||{};p.rks.ja
   if(!keep)window.scrollTo(0,0);
 }
 /* ===== Peta Aset Daop 2 (simulasi) ===== */
+/* ===== Peta animasi Daop 2 (SVG) ===== */
+const PT_LN=[[0,1,2,3,4,5,6,7,8,9,10,11,15,16,17],[11,12,13],[14,2]];
+const PT_W=1000,PT_H=625;
+const ptXY=(la,ln)=>[(ln-107.05)/1.6*PT_W,(-6.45-la)/1.0*PT_H];
+let ptVB={x:0,y:0,w:PT_W,h:PT_H},ptAnimT=null;
+function ptAnimInit(){const el=document.getElementById('ptmap');if(!el)return;ptVB={x:0,y:0,w:PT_W,h:PT_H};
+  const pts=PT_ST.map(([n,la,ln])=>ptXY(la,ln)),paths=PT_LN.map(l=>l.map((i,k)=>(k?'L':'M')+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1)).join(' '));
+  const PK=[['G. Tangkuban Perahu',-6.77,107.61],['G. Burangrang',-6.77,107.52],['G. Malabar',-7.13,107.65],['G. Papandayan',-7.32,107.73],['G. Cikuray',-7.33,107.87],['G. Galunggung',-7.25,108.06],['G. Ciremai',-6.89,108.40]];
+  const cont=PK.map(([n,la,ln],i)=>{const [x,y]=ptXY(la,ln);return `<g transform="translate(${x} ${y}) rotate(${(i*37)%180})">${[0,1,2,3,4,5].map(k=>`<ellipse rx="${12+k*13}" ry="${(12+k*13)*.7}" fill="none" stroke="#9DB8F0" stroke-opacity="${.16-k*.02}"/>`).join('')}</g><path d="M${x-7} ${y+5}L${x} ${y-8}L${x+7} ${y+5}Z" fill="#9DB8F0" fill-opacity=".55"/><text x="${x+10}" y="${y+14}" class="ptpk">${n}</text>`}).join('');
+  const sm=a=>{const q=a.map(([la,ln])=>ptXY(la,ln));let d='M'+q[0][0].toFixed(1)+' '+q[0][1].toFixed(1);for(let i=1;i<q.length;i++){const m=[(q[i-1][0]+q[i][0])/2,(q[i-1][1]+q[i][1])/2];d+=(i==1?'L':'Q'+q[i-1][0].toFixed(1)+' '+q[i-1][1].toFixed(1)+' ')+m[0].toFixed(1)+' '+m[1].toFixed(1)}return d+'L'+q[q.length-1][0].toFixed(1)+' '+q[q.length-1][1].toFixed(1)};
+  const RV=[[[-7.08,107.64],[-7.02,107.56],[-6.94,107.46],[-6.88,107.37],[-6.76,107.37],[-6.55,107.38]],[[-7.30,107.80],[-7.16,107.90],[-6.96,108.00],[-6.76,108.14],[-6.55,108.2]],[[-7.12,108.0],[-7.28,108.2],[-7.38,108.4],[-7.44,108.62]],[[-7.0,107.78],[-7.1,107.82],[-7.2,107.95]]];
+  const rivers=RV.map(r=>`<path d="${sm(r)}" fill="none" stroke="#9CCBEA" stroke-opacity=".55" stroke-width="3.5" stroke-linecap="round"/><path d="${sm(r)}" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="1.2" stroke-dasharray="2 9" class="ptriv"/>`).join('');
+  const [sx,sy]=ptXY(-6.88,107.37),[jx,jy]=ptXY(-6.52,107.38),[gx,gy]=ptXY(-7.22,108.06);
+  const lakes=`<ellipse cx="${sx}" cy="${sy}" rx="15" ry="8" fill="#9CCBEA" fill-opacity=".7" stroke="#7FB6DA"/><ellipse cx="${jx}" cy="${jy}" rx="20" ry="9" fill="#9CCBEA" fill-opacity=".7" stroke="#7FB6DA"/><text x="${sx-60}" y="${sy-12}" class="ptpk">Waduk Saguling</text><text x="${jx+24}" y="${jy+4}" class="ptpk">Waduk Jatiluhur</text>`;
+  const toll=`<path d="${sm([[-6.55,107.44],[-6.8,107.47],[-6.85,107.5],[-6.91,107.62],[-6.94,107.72],[-6.97,107.84]])}" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="2" stroke-dasharray="7 5"/>`;
+  const glows=PK.map(([n,la,ln])=>{const [x,y]=ptXY(la,ln);return `<circle cx="${x}" cy="${y}" r="95" fill="url(#ptg)"/>`}).join('');
+  const clouds=[[120,110,90],[560,60,110],[820,300,100],[300,470,120]].map(([x,y,r],i)=>`<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r*.28}" fill="#fff" opacity=".07" filter="url(#ptblur)" class="ptcl" style="animation-duration:${50+i*17}s;animation-delay:-${i*13}s"/>`).join('');
+  const terr=`${rivers}${lakes}<text x="${PT_W/2}" y="70" text-anchor="middle" class="ptwm">DAOP 2 BANDUNG</text><text x="${ptXY(-7.05,107.45)[0]}" y="${ptXY(-7.05,107.45)[1]}" class="ptwm2">PRIANGAN</text>`;
+  const [bx,by]=ptXY(-6.9147,107.6020),prt=Array.from({length:22},(_,i)=>{const x=(i*137)%PT_W,y=(i*251)%PT_H;return `<circle cx="${x}" cy="${y}" r="${1+(i%3)*.6}" fill="#fff" class="ptpr" style="animation-delay:${(i%7)*.9}s;animation-duration:${6+(i%5)*2}s"/>`}).join('');
+  const trains=[[0,18,0],[1,22,6],[2,9,3]];
+  el.innerHTML=`<div class="pta"><svg id="ptsvg" viewBox="0 0 ${PT_W} ${PT_H}" preserveAspectRatio="xMidYMid meet">
+  <defs><radialGradient id="ptbg" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E6EDF7"/></radialGradient>
+  <radialGradient id="ptg"><stop offset="0" stop-color="#3FD8A0" stop-opacity=".32"/><stop offset="1" stop-color="#3FD8A0" stop-opacity="0"/></radialGradient><filter id="ptblur" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="14"/></filter><filter id="ptnoise" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".010 .016" numOctaves="4" seed="7"/><feColorMatrix type="matrix" values="0 0 0 0 .20  0 0 0 0 .78  0 0 0 0 .62  0 0 0 1.5 -.62"/></filter><filter id="ptnoise2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".03 .02" numOctaves="3" seed="3"/><feColorMatrix type="matrix" values="0 0 0 0 .95  0 0 0 0 .60  0 0 0 0 .25  0 0 0 1.4 -.7"/></filter><pattern id="ptgrid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#14284B" stroke-opacity=".06"/></pattern>
+  <filter id="ptglow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <rect x="-600" y="-500" width="${PT_W+1200}" height="${PT_H+1000}" fill="url(#ptbg)"/><rect x="-600" y="-500" width="${PT_W+1200}" height="${PT_H+1000}" fill="url(#ptgrid)"/>${terr}
+  <g id="ptvp">
+   <g fill="none" stroke-linecap="round" stroke-linejoin="round">${paths.map((d,i)=>{const c=['#1F4079','#E8730C','#2E8B57'][i];return `<path id="ptrl${i}" d="${d}" stroke="#fff" stroke-width="11"/><path d="${d}" stroke="${c}" stroke-width="6.5" class="ptdraw" style="animation-delay:${i*.5}s"/><path d="${d}" stroke="#fff" stroke-opacity=".85" stroke-width="1.8" stroke-dasharray="3 12" class="ptflow"/>`}).join('')}</g>
+   <g id="ptsta">${PT_ST.map(([n],i)=>`<g class="ptst" style="animation-delay:${.8+i*.06}s"><circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="7.5" fill="#fff" stroke="#14284B" stroke-width="3"/><text x="${pts[i][0]+11}" y="${pts[i][1]-9}" class="ptlb">${n}</text></g>`).join('')}</g>
+   <g id="ptdots"></g>
+   <g id="ptagg"></g>
+   <g id="pttr"></g>
+  </g></svg>
+  <svg class="ptcmp" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="26" fill="#fff" stroke="#14284B" stroke-opacity=".3"/><path d="M30 8l7 22H23z" fill="#E8730C"/><path d="M30 52l-7-22h14z" fill="#14284B" fill-opacity=".35"/><text x="30" y="21" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="sans-serif">U</text></svg><div class="ptzm"><button type="button" data-act="pt-z" data-v="1.6">+</button><button type="button" data-act="pt-z" data-v="0.625">−</button><button type="button" data-act="pt-z" data-v="0">⌂</button></div>
+  <div class="ptleg">${Object.keys(PT_JN).map(j=>`<span><i style="background:${PT_JN[j]}"></i>${j}</span>`).join('')}<span class="ptlr"><i class="ring"></i>Rusak berdenyut</span></div>
+  <div id="ptcard" hidden></div></div>`;
+  const sv=document.getElementById('ptsvg');let drag=null;
+  sv.addEventListener('pointerdown',e=>{if(e.target.closest('.ptdot,.ptag,.ptzm'))return;drag={x:e.clientX,y:e.clientY,vx:ptVB.x,vy:ptVB.y};sv.setPointerCapture(e.pointerId)});
+  sv.addEventListener('pointermove',e=>{if(!drag)return;const r=sv.getBoundingClientRect(),k=Math.max(ptVB.w/r.width,ptVB.h/r.height);ptVB.x=drag.vx-(e.clientX-drag.x)*k;ptVB.y=drag.vy-(e.clientY-drag.y)*k;ptVBApply()});
+  sv.addEventListener('pointerup',()=>{drag=null});
+  sv.addEventListener('wheel',e=>{e.preventDefault();ptZoom(e.deltaY<0?1.25:.8)},{passive:false});
+  ptAnimDraw();ptVBApply();ptTrains()}
+let ptTrRaf=0;
+function ptTrains(){cancelAnimationFrame(ptTrRaf);const g=document.getElementById('pttr');if(!g)return;
+  const T=[{li:0,v:46,o:0},{li:0,v:34,o:900},{li:1,v:30,o:120},{li:2,v:26,o:60}],cars=3,gap=27;
+  T.forEach(t=>{t.p=document.getElementById('ptrl'+t.li);t.L=t.p.getTotalLength();t.el=[];for(let c=0;c<cars;c++){const e=document.createElementNS('http://www.w3.org/2000/svg','g');e.setAttribute('filter','url(#ptglow)');
+    e.innerHTML=c?'<rect x="-12" y="-5" width="24" height="10" rx="3.5" fill="#FFE2C4" stroke="#fff" stroke-width="1.6"/><rect x="-8" y="-2.8" width="4.5" height="3.6" rx="1" fill="#14284B"/><rect x="-1.5" y="-2.8" width="4.5" height="3.6" rx="1" fill="#14284B"/><rect x="5" y="-2.8" width="4.5" height="3.6" rx="1" fill="#14284B"/>':'<path d="M14 0L56 -13V13Z" fill="#E8730C" fill-opacity=".18"/><rect x="-14" y="-6" width="30" height="12" rx="5" fill="#FF9A3C" stroke="#fff" stroke-width="1.8"/><rect x="-9" y="-3.2" width="5" height="4" rx="1" fill="#fff"/><rect x="-2" y="-3.2" width="5" height="4" rx="1" fill="#fff"/><rect x="7" y="-3.4" width="6" height="5" rx="1.5" fill="#14284B"/><circle cx="15" cy="0" r="2.2" fill="#FFF3B0"/>';
+    g.appendChild(e);t.el.push(e)}});
+  const loop=now=>{if(!document.getElementById('pttr'))return;
+    T.forEach(t=>{const L=t.L,s=((now+t.o*40)/1000*t.v)%(2*L),fw=s<L,d=fw?s:2*L-s;
+      t.el.forEach((e,c)=>{let dd=d-(fw?1:-1)*c*gap;dd=Math.max(0,Math.min(L,dd));const P=t.p.getPointAtLength(dd),Q=t.p.getPointAtLength(Math.max(0,Math.min(L,dd+(fw?3:-3))));const ang=Math.atan2(Q.y-P.y,Q.x-P.x)*180/Math.PI;e.setAttribute('transform',`translate(${P.x.toFixed(1)} ${P.y.toFixed(1)}) rotate(${ang.toFixed(1)})`)})});
+    ptTrRaf=requestAnimationFrame(loop)};
+  ptTrRaf=requestAnimationFrame(loop)}
+function ptVBApply(){const sv=document.getElementById('ptsvg');if(!sv)return;const o=document.getElementById('ptvp');sv.setAttribute('viewBox',`${ptVB.x} ${ptVB.y} ${ptVB.w} ${ptVB.h}`);sv.classList.toggle('zi',ptVB.w<=430||PTA.length<=PT_ST.length*1.3);sv.style.setProperty('--lf',(10*Math.min(1,ptVB.w/700)).toFixed(2))}
+function ptZoom(f,cx,cy){if(f===0){return ptTo({x:0,y:0,w:PT_W,h:PT_H})}const w=Math.min(PT_W,Math.max(60,ptVB.w/f)),h=w*PT_H/PT_W;cx=cx??ptVB.x+ptVB.w/2;cy=cy??ptVB.y+ptVB.h/2;ptTo({x:cx-w/2,y:cy-h/2,w,h})}
+function ptTo(t){if(ptAnimT)cancelAnimationFrame(ptAnimT);const s={...ptVB},t0=performance.now();const st=n=>{const k=Math.min(1,(n-t0)/450),e=1-Math.pow(1-k,3);['x','y','w','h'].forEach(a=>ptVB[a]=s[a]+(t[a]-s[a])*e);ptVBApply();if(k<1)ptAnimT=requestAnimationFrame(st)};ptAnimT=requestAnimationFrame(st)}
+function ptAnimDraw(){const g=document.getElementById('ptdots');if(!g)return;const L=ptList();
+  g.innerHTML=L.map(a=>{const [x,y]=ptXY(a.lat,a.lng),c=a.jenis==='Stasiun'?(PT_KD[a.kondisi]||'#14284B'):(PT_JN[a.jenis]||'#888'),on=ptSel===a.id,r=a.jenis==='Stasiun'?9:6.2;return `<g class="ptdot ${a.kondisi==='Rusak'?'bad':''} ${on?'on':''}" data-act="pt-dot" data-id="${a.id}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">${a.kondisi==='Rusak'?'<circle class="pulse" r="'+r+'" fill="none" stroke="#FF5A4A" stroke-width="1.6"/>':''}${on?'<circle class="sel" r="'+(r+3)+'" fill="none" stroke="#FF9A3C" stroke-width="2"/>':''}<circle r="${r}" fill="${c}" stroke="#fff" stroke-width="1.2"/><path d="${PT_IC[a.jenis]||PT_IC.Lahan}" transform="translate(${-r*.62} ${-r*.62}) scale(${r*1.24/24})" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>${a.kondisi!=='Baik'&&a.jenis!=='Stasiun'?`<circle cx="${r*.8}" cy="${-r*.8}" r="2.2" fill="${PT_KD[a.kondisi]}" stroke="#fff" stroke-width=".8"/>`:''}</g>`}).join('');
+  const ag=document.getElementById('ptagg');if(ag)ag.innerHTML=PT_ST.map(([n,la,ln],i)=>{const m=L.filter(a=>a.lok===n);if(!m.length)return '';const [x,y]=ptXY(la,ln),bad=m.some(a=>a.kondisi==='Rusak'),mid=m.some(a=>a.kondisi==='Sedang'),c=bad?'#E5483A':mid?'#E8A10C':'#2E8B57';return `<g class="ptag" data-act="pt-agg" data-i="${i}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">${bad?'<circle class="pulse" r="12" fill="none" stroke="#FF5A4A" stroke-width="2"/>':''}<circle r="12" fill="${c}" stroke="#fff" stroke-width="2"/><text y="4" text-anchor="middle" class="ptn">${m.length}</text></g>`}).join('');
+  const l=document.getElementById('ptlist');if(l)l.innerHTML=ptListHtml(L);const h=document.querySelector('.pth');if(h)h.textContent=L.length+' aset ditampilkan'}
+function ptFotoUpd(a){document.querySelectorAll('.ptph[data-id="'+a.id+'"]').forEach(e=>{const em=e.querySelector('em');e.innerHTML=ptPhoto(a);if(em)e.appendChild(em)});document.querySelectorAll('.ptc').forEach(c=>{const ph=c.querySelector('.ptph');if(ph&&ph.dataset.id==a.id){const ac=c.querySelector('.ptac');if(ac){const nb=ac.querySelector('[data-act=pt-nofoto]');if(a.foto&&!nb){const b=document.createElement('button');b.type='button';b.className='btn sm';b.dataset.act='pt-nofoto';b.dataset.id=a.id;b.textContent='Hapus foto';ac.insertBefore(b,ac.lastElementChild)}else if(!a.foto&&nb)nb.remove()}}})}
+function ptSetFoto(a,f,done){const im=new Image,u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,720/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);a.foto=c.toDataURL('image/jpeg',.72);URL.revokeObjectURL(u);ptSave();ptFotoUpd(a);done&&done(true)};im.onerror=()=>{URL.revokeObjectURL(u);done&&done(false)};im.src=u}
+document.addEventListener('change',e=>{const t=e.target;if(!t.matches)return;
+  if(t.matches('input[data-ptf]')){const a=PTA.find(y=>y.id===+t.dataset.ptf),f=t.files&&t.files[0];if(a&&f)ptSetFoto(a,f);t.value='';return}
+  if(t.id==='ptbulk'){const fs=[...t.files],nm=x=>x.toLowerCase().replace(/\.[a-z0-9]+$/,'').replace(/^stasiun[\s_-]*/,'').replace(/[^a-z0-9]/g,''),miss=[];let ok=0,n=fs.length;
+    const fin=()=>{if(--n>0)return;const m=document.getElementById('ptbulkmsg');if(m)m.textContent=ok+' foto terpasang'+(miss.length?'. Tidak cocok: '+miss.join(', '):'');if(ptMode==='anim')ptAnimDraw()};
+    if(!n)return;fs.forEach(f=>{const k=nm(f.name),a=PTA.find(y=>nm(y.nama)===k||(y.kode&&nm(y.kode)===k));if(!a){miss.push(f.name);return fin()}ptSetFoto(a,f,r=>{if(r)ok++;else miss.push(f.name);fin()})});t.value=''}});
+function ptCard(a){const c=document.getElementById('ptcard');if(!c)return;if(!a){c.hidden=true;return}c.hidden=false;c.innerHTML=`<button type="button" class="x" data-act="pt-x">×</button>${ptPop(a)}`}
+
 const PT_ST=[['Purwakarta',-6.5558,107.4391],['Cipeundeuy',-6.7081,107.3181],['Cipatat',-6.8353,107.3956],['Padalarang',-6.8437,107.4837],['Cimahi',-6.8946,107.5372],['Bandung',-6.9147,107.6020],['Kiaracondong',-6.9238,107.6485],['Gedebage',-6.9426,107.6928],['Rancaekek',-6.9686,107.7787],['Cicalengka',-6.9856,107.8330],['Nagreg',-7.0125,107.9120],['Cibatu',-7.1137,107.9888],['Garut',-7.2165,107.9060],['Cikajang',-7.3556,107.8003],['Cianjur',-6.8167,107.1428],['Tasikmalaya',-7.3186,108.2233],['Ciamis',-7.3294,108.3504],['Banjar',-7.3703,108.5372]];
 const PT_JN={'Stasiun':'#14284B','Kantor':'#1F4079','Rumah dinas':'#E8730C','Gudang':'#7A5AC8','Lahan':'#2E8B57','Resor/Dipo':'#C0392B'};
+const PT_IC={'Stasiun':'M6 3h12a2 2 0 0 1 2 2v10a3 3 0 0 1-3 3l2 3M7 18l-2 3M4 11h16M8 15h.01M16 15h.01','Kantor':'M5 21V4h9v17M14 9h5v12M8 8h3M8 12h3M8 16h3M3 21h18','Rumah dinas':'M3 11l9-8 9 8M5 10v11h14V10M10 21v-6h4v6','Gudang':'M3 9l9-6 9 6v12H3zM8 21v-7h8v7M8 17h8','Lahan':'M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15','Resor/Dipo':'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2'};
+const ptIcon=(j,c,z)=>`<svg width="${z}" height="${z}" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="${c}" stroke="#fff" stroke-width="2"/><path d="${PT_IC[j]||PT_IC.Lahan}" transform="translate(7.5 7.5) scale(.62)" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const PT_KD={'Baik':'#2E8B57','Sedang':'#E8A10C','Rusak':'#C0392B'};
-function ptSeed(){let s=7;const R=()=>(s=(s*16807)%2147483647)/2147483647;const out=[];let id=1;
-  PT_ST.forEach(([n,la,ln])=>{const kd=()=>['Baik','Baik','Sedang','Rusak'][Math.floor(R()*4)];
-    out.push({id:id++,nama:'Stasiun '+n,jenis:'Stasiun',lok:n,lat:la,lng:ln,kondisi:kd(),luas:Math.round(300+R()*1700),thn:1900+Math.round(R()*100)});
-    if(R()<.7)out.push({id:id++,nama:'Rumah Dinas '+n,jenis:'Rumah dinas',lok:n,lat:la+(R()-.5)*.006,lng:ln+(R()-.5)*.006,kondisi:kd(),luas:Math.round(60+R()*140),thn:1920+Math.round(R()*90)});
-    if(R()<.4)out.push({id:id++,nama:'Gudang '+n,jenis:'Gudang',lok:n,lat:la+(R()-.5)*.008,lng:ln+(R()-.5)*.008,kondisi:kd(),luas:Math.round(100+R()*500),thn:1930+Math.round(R()*85)});
-    if(R()<.5)out.push({id:id++,nama:'Lahan Aset '+n,jenis:'Lahan',lok:n,lat:la+(R()-.5)*.01,lng:ln+(R()-.5)*.01,kondisi:'Baik',luas:Math.round(500+R()*5000),thn:0})});
-  out.push({id:id++,nama:'Kantor Daop 2 Bandung',jenis:'Kantor',lok:'Bandung',lat:-6.9128,lng:107.6055,kondisi:'Baik',luas:4200,thn:1920});
-  out.push({id:id++,nama:'Resor Jalan Rel 2.8 Kiaracondong',jenis:'Resor/Dipo',lok:'Kiaracondong',lat:-6.9265,lng:107.6520,kondisi:'Sedang',luas:350,thn:1985});
-  out.push({id:id++,nama:'Kantor UPT Sintelis 2.8 Cibatu',jenis:'Kantor',lok:'Cibatu',lat:-7.1160,lng:107.9965,kondisi:'Sedang',luas:280,thn:1990});
-  out.push({id:id++,nama:'Dipo Lokomotif Bandung',jenis:'Resor/Dipo',lok:'Bandung',lat:-6.9180,lng:107.5930,kondisi:'Baik',luas:2600,thn:1918});
-  return out}
-let PTA=(()=>{try{const v=JSON.parse(localStorage.getItem('petaAset'));if(Array.isArray(v)&&v.length)return v}catch(_){}return ptSeed()})();
-let ptF={jenis:'',kondisi:'',q:''},ptMap=null,ptLayer=null,ptAdd=false,ptSel=null;
-const ptSave=()=>{try{localStorage.setItem('petaAset',JSON.stringify(PTA))}catch(_){}};
+function ptSeed(){let s=7;const R=()=>(s=(s*16807)%2147483647)/2147483647;
+  const KT={Baik:'Tidak ada temuan. Bangunan terawat.',Sedang:'Cat mengelupas dan talang perlu dibersihkan. Dijadwalkan perawatan.',Rusak:'Atap bocor dan plafon rusak. Perlu perbaikan segera.'};
+  return PT_ST.map(([n,la,ln],i)=>{const kd=['Baik','Baik','Sedang','Rusak'][Math.floor(R()*4)],m=1+Math.floor(R()*9),d=1+Math.floor(R()*27);
+    return {id:i+1,kode:'STS-'+String(i+1).padStart(3,'0'),nama:'Stasiun '+n,jenis:'Stasiun',lok:n,lat:la,lng:ln,kondisi:kd,luas:Math.round(300+R()*1700),thn:1900+Math.round(R()*100),
+    kelas:['Besar','Kelas I','Kelas II','Kelas III'][Math.floor(R()*4)],lahan:['Bersertifikat (HPL KAI)','Grondkaart','Proses sertifikasi'][Math.floor(R()*3)],nilai:Math.round((1+R()*9)*1e9),
+    insp:'2026-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'),kelola:'Daop 2 Bandung',ket:KT[kd],foto:''}})}
+let PTA=(()=>{try{const v=JSON.parse(localStorage.getItem('petaAset4'));if(Array.isArray(v)&&v.length)return v}catch(_){}return ptSeed()})();
+let ptMode=(()=>{try{return localStorage.getItem('ptMode')||'anim'}catch(_){return 'anim'}})();let ptF={jenis:'',kondisi:'',q:''},ptMap=null,ptLayer=null,ptAdd=false,ptSel=null;
+const ptSave=()=>{try{localStorage.setItem('petaAset4',JSON.stringify(PTA))}catch(_){}};
 const ptList=()=>PTA.filter(a=>(!ptF.jenis||a.jenis===ptF.jenis)&&(!ptF.kondisi||a.kondisi===ptF.kondisi)&&(!ptF.q||(a.nama+' '+a.lok).toLowerCase().includes(ptF.q.toLowerCase())));
 V.peta=()=>{const L=ptList(),cnt=k=>PTA.filter(a=>a.kondisi===k).length;
-  return `<div class="head"><span class="tag">Peta aset</span><h1>Peta aset Daop 2 Bandung</h1><p>Data simulasi untuk mencoba pemetaan. Koordinat stasiun diperkirakan, aset lain disebar di sekitar stasiun. Klik peta saat mode tambah aktif untuk menaruh aset baru.</p></div>
+  return `<div class="head"><span class="tag">Peta aset</span><h1>Peta aset Daop 2 Bandung</h1><p>Data simulasi untuk mencoba pemetaan. Saat ini hanya stasiun yang ditampilkan, dengan koordinat perkiraan. Aset lain bisa ditambahkan nanti.</p></div>
   <div class="ptsum"><span><small>Total aset</small><b>${PTA.length}</b></span><span><small>Kondisi baik</small><b style="color:#2E8B57">${cnt('Baik')}</b></span><span><small>Sedang</small><b style="color:#B27800">${cnt('Sedang')}</b></span><span><small>Rusak</small><b style="color:#C0392B">${cnt('Rusak')}</b></span><span><small>Luas total (m²)</small><b>${fmtN(PTA.reduce((s,a)=>s+(+a.luas||0),0))}</b></span></div>
-  <div class="panel"><div class="ptbar"><div class="ptch">${['', ...Object.keys(PT_JN)].map(j=>`<button type="button" class="chip ${ptF.jenis===j?'ok':''}" data-act="pt-j" data-v="${j}">${j?`<i style="background:${PT_JN[j]}"></i>`:''}${j||'Semua jenis'}</button>`).join('')}</div>
+  <div class="panel"><div class="ptbar"><div class="ptmode"><button type="button" class="${ptMode==='anim'?'on':''}" data-act="pt-m" data-v="anim">Peta animasi</button><button type="button" class="${ptMode==='jalan'?'on':''}" data-act="pt-m" data-v="jalan">Peta jalan</button></div><div class="ptch">${['', ...Object.keys(PT_JN)].map(j=>`<button type="button" class="chip ${ptF.jenis===j?'ok':''}" data-act="pt-j" data-v="${j}">${j?`<i style="background:${PT_JN[j]}"></i>`:''}${j||'Semua jenis'}</button>`).join('')}</div>
    <div class="ptch">${['','Baik','Sedang','Rusak'].map(k=>`<button type="button" class="chip ${ptF.kondisi===k?'ok':''}" data-act="pt-k" data-v="${k}">${k||'Semua kondisi'}</button>`).join('')}</div>
-   <input id="ptq" class="ptq" placeholder="Cari nama atau lokasi aset" value="${esc(ptF.q)}"><button type="button" class="btn ${ptAdd?'pri':''} sm" data-act="pt-add">${ptAdd?'Klik peta untuk menaruh aset…':'Tambah aset di peta'}</button><button type="button" class="btn sm" data-act="pt-reset">Reset simulasi</button></div>
+   <input id="ptq" class="ptq" placeholder="Cari nama atau lokasi aset" value="${esc(ptF.q)}"><button type="button" class="btn ${ptAdd?'pri':''} sm" data-act="pt-add">${ptAdd?'Klik peta untuk menaruh aset…':'Tambah aset di peta'}</button><label class="btn sm" title="Pilih banyak foto sekaligus. Nama berkas = nama stasiun, misalnya Bandung.jpg atau Stasiun Garut.jpg">Unggah foto massal<input type="file" id="ptbulk" accept="image/*" multiple hidden></label><button type="button" class="btn sm" data-act="pt-reset">Reset simulasi</button><span id="ptbulkmsg" class="ptbm"></span></div>
    <div class="ptwrap"><div id="ptmap"></div><div class="ptside"><div class="pth">${L.length} aset ditampilkan</div><div id="ptlist">${ptListHtml(L)}</div></div></div></div>`};
 const ptListHtml=L=>L.slice(0,300).map(a=>`<button type="button" class="ptit ${ptSel===a.id?'on':''}" data-act="pt-pick" data-id="${a.id}"><i style="background:${PT_JN[a.jenis]||'#666'}"></i><span><b>${esc(a.nama)}</b><small>${esc(a.jenis)} · ${esc(a.lok)} · ${fmtN(a.luas)} m²</small></span><em style="background:${PT_KD[a.kondisi]||'#999'}">${esc(a.kondisi)}</em></button>`).join('')||'<div class="note">Tidak ada aset yang cocok.</div>';
-const ptPop=a=>`<b>${esc(a.nama)}</b><br>${esc(a.jenis)} · ${esc(a.lok)}<br>Kondisi: <b style="color:${PT_KD[a.kondisi]}">${esc(a.kondisi)}</b><br>Luas: ${fmtN(a.luas)} m²${a.thn?'<br>Tahun: '+a.thn:''}<br><small>${a.lat.toFixed(5)}, ${a.lng.toFixed(5)}</small><br><button type="button" class="btn sm" data-act="pt-del" data-id="${a.id}" style="margin-top:6px">Hapus</button>`;
-function ptDraw(){if(!ptMap||!window.L)return;if(ptLayer)ptLayer.remove();ptLayer=L.layerGroup().addTo(ptMap);const M={};
-  ptList().forEach(a=>{const m=L.circleMarker([a.lat,a.lng],{radius:a.jenis==='Stasiun'?8:6,color:'#fff',weight:2,fillColor:PT_JN[a.jenis]||'#666',fillOpacity:.95}).bindPopup(ptPop(a)).addTo(ptLayer);m.on('click',()=>{ptSel=a.id;ptListUpd()});M[a.id]=m});window._ptM=M;
+const ptArt=a=>{const c=PT_KD[a.kondisi]||'#2E8B57',nm=esc(a.nama.replace('Stasiun ','')).slice(0,18);return `<svg viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sk${a.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CC6EE"/><stop offset="1" stop-color="#EAF3FC"/></linearGradient></defs><rect width="300" height="150" fill="url(#sk${a.id})"/><circle cx="252" cy="34" r="14" fill="#FFE29A" opacity=".9"/><ellipse cx="70" cy="30" rx="30" ry="8" fill="#fff" opacity=".8"/><ellipse cx="190" cy="48" rx="24" ry="6" fill="#fff" opacity=".7"/><rect y="118" width="300" height="32" fill="#8A93A3"/><rect y="112" width="300" height="8" fill="#C9CFDA"/><path d="M0 138H300M0 146H300" stroke="#fff" stroke-width="2" opacity=".7"/><g><rect x="50" y="62" width="200" height="52" fill="#F6EFE3"/><path d="M40 64L150 30L260 64Z" fill="#14284B"/><rect x="40" y="62" width="220" height="5" fill="#E8730C"/><rect x="120" y="84" width="60" height="30" fill="#14284B"/><rect x="126" y="90" width="22" height="24" fill="#9CC6EE"/><rect x="152" y="90" width="22" height="24" fill="#9CC6EE"/>${[62,84,196,218].map(x=>`<rect x="${x}" y="78" width="14" height="18" fill="#9CC6EE" stroke="#14284B" stroke-width="1.5"/>`).join('')}<rect x="70" y="104" width="160" height="4" fill="#14284B" opacity=".12"/><rect x="100" y="70" width="100" height="14" rx="3" fill="#fff" stroke="#14284B" stroke-width="1.2"/><text x="150" y="80.5" text-anchor="middle" font-size="8.5" font-weight="800" fill="#14284B" font-family="sans-serif">${nm.toUpperCase()}</text></g>${a.kondisi==='Rusak'?'<path d="M205 62l-6 10 6 6-5 12" fill="none" stroke="#6B2A22" stroke-width="1.6"/>':''}<rect x="0" y="0" width="300" height="150" fill="none"/></svg>`};
+const ptPhoto=a=>a.foto?`<img src="${a.foto}" alt="${esc(a.nama)}">`:ptArt(a)+'<span class="ptnf">Ilustrasi, belum ada foto</span>';
+const ptRp=n=>'Rp '+fmtN(n);
+const ptPop=a=>{const R=(k,v)=>v===undefined||v===''||v===0?'':`<div><dt>${k}</dt><dd>${v}</dd></div>`;
+  return `<div class="ptc"><div class="ptph" data-id="${a.id}">${ptPhoto(a)}<em style="background:${PT_KD[a.kondisi]||'#999'}">${esc(a.kondisi)}</em></div><div class="ptcb"><b class="ptct">${esc(a.nama)}</b><small>${esc(a.kode||'')} ${a.kode?'· ':''}${esc(a.jenis)} · ${esc(a.lok)}</small>
+  <dl>${R('Kelas',esc(a.kelas||''))}${R('Luas bangunan',a.luas?fmtN(a.luas)+' m²':'')}${R('Tahun dibangun',a.thn||'')}${R('Status lahan',esc(a.lahan||''))}${R('Nilai aset',a.nilai?ptRp(a.nilai):'')}${R('Pengelola',esc(a.kelola||''))}${R('Inspeksi terakhir',a.insp?new Date(a.insp).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'')}${R('Koordinat',a.lat.toFixed(5)+', '+a.lng.toFixed(5))}</dl>
+  ${a.ket?`<p class="ptkt"><b>Catatan:</b> ${esc(a.ket)}</p>`:''}
+  <div class="ptac"><label class="btn sm">Unggah foto<input type="file" accept="image/*" hidden data-ptf="${a.id}"></label>${a.foto?`<button type="button" class="btn sm" data-act="pt-nofoto" data-id="${a.id}">Hapus foto</button>`:''}<button type="button" class="btn sm" data-act="pt-del" data-id="${a.id}">Hapus aset</button></div></div></div>`};
+function ptDraw(){if(ptMode==='anim')return ptAnimDraw();if(!ptMap||!window.L)return;if(ptLayer)ptLayer.remove();ptLayer=L.layerGroup().addTo(ptMap);const M={};
+  ptList().forEach(a=>{const m=L.marker([a.lat,a.lng],{icon:L.divIcon({html:ptIcon(a.jenis,PT_JN[a.jenis]||'#666',a.jenis==='Stasiun'?32:26),className:'ptmk',iconSize:[30,30],iconAnchor:[15,15]})}).bindPopup(ptPop(a),{maxWidth:300,minWidth:280}).addTo(ptLayer);m.on('click',()=>{ptSel=a.id;ptListUpd()});M[a.id]=m});window._ptM=M;
   const l=document.getElementById('ptlist');if(l)l.innerHTML=ptListHtml(ptList());const h=document.querySelector('.pth');if(h)h.textContent=ptList().length+' aset ditampilkan'}
 function ptListUpd(){const l=document.getElementById('ptlist');if(l)l.innerHTML=ptListHtml(ptList())}
-function ptInit(){const el=document.getElementById('ptmap');if(!el)return;
+function ptInit(){const el=document.getElementById('ptmap');if(!el)return;if(ptMode==='anim'){if(ptMap){try{ptMap.remove()}catch(_){}ptMap=null}return ptAnimInit()}
   const go=()=>{if(!window.L){el.innerHTML='<div class="note" style="margin:20px">Peta tidak dapat dimuat. Periksa koneksi internet.</div>';return}
     if(ptMap){ptMap.remove();ptMap=null}
     ptMap=L.map(el,{zoomControl:true}).setView([-7.0,107.75],9);
@@ -2126,9 +2218,17 @@ document.addEventListener('input',e=>{if(e.target.id==='ptq'){ptF.q=e.target.val
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-act^="pt-"]');if(!b)return;const a=b.dataset.act;
   if(a==='pt-j'){ptF.jenis=b.dataset.v;render(true)}
   else if(a==='pt-k'){ptF.kondisi=b.dataset.v;render(true)}
+  else if(a==='pt-m'){ptMode=b.dataset.v;try{localStorage.setItem('ptMode',ptMode)}catch(_){}render(true)}
+  else if(a==='pt-z'){ptZoom(+b.dataset.v)}
+  else if(a==='pt-x'){ptSel=null;ptCard(null);ptAnimDraw()}
+  else if(a==='pt-nofoto'){const x=PTA.find(y=>y.id===+b.dataset.id);if(x){x.foto='';ptSave();ptFotoUpd(x)}}
+  else if(a==='pt-agg'){const st=PT_ST[+b.dataset.i],[X,Y]=ptXY(st[1],st[2]);ptZoom(3.4,X,Y)}
+  else if(a==='pt-dot'){const x=PTA.find(y=>y.id===+b.dataset.id);if(x){ptSel=x.id;ptCard(x);ptAnimDraw()}}
+  else if(a==='pt-add'&&ptMode==='anim'){alert('Mode tambah aset hanya tersedia di Peta jalan.')}
   else if(a==='pt-add'){ptAdd=!ptAdd;render(true)}
   else if(a==='pt-reset'){if(confirm('Kembalikan ke data simulasi awal? Aset yang Anda tambah akan hilang.')){PTA=ptSeed();ptSave();render(true)}}
-  else if(a==='pt-del'){PTA=PTA.filter(x=>x.id!==+b.dataset.id);ptSave();if(ptMap)ptMap.closePopup();ptDraw()}
+  else if(a==='pt-del'){PTA=PTA.filter(x=>x.id!==+b.dataset.id);ptSave();if(ptMap)ptMap.closePopup();ptSel=null;ptCard(null);ptDraw()}
+  else if(a==='pt-pick'&&ptMode==='anim'){const id=+b.dataset.id,x=PTA.find(y=>y.id===id);if(x){ptSel=id;const [X,Y]=ptXY(x.lat,x.lng);ptZoom(3,X,Y);ptCard(x);ptAnimDraw()}}
   else if(a==='pt-pick'){const id=+b.dataset.id,x=PTA.find(y=>y.id===id);if(x&&ptMap){ptSel=id;ptMap.setView([x.lat,x.lng],14);const m=window._ptM&&window._ptM[id];if(m)m.openPopup();ptListUpd()}}});
 /* ===== Buat RAB (RAB + Analisa Harga Satuan + Database Harga Satuan) ===== */
 let rabSel=(()=>{try{return Number(localStorage.getItem('rabSel'))||0}catch(_){return 0}})(),rabTab='rab',rbDocSel='rab',rbAhsSel=null,rbDbLim=120,rbSugI=0;
