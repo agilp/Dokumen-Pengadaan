@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 </head>
 <body>
-<style>
+<script>(function(){try{if(Math.min(screen.width,screen.height)<1000&&window.innerWidth<1000){var m=document.querySelector('meta[name=viewport]');if(!m){m=document.createElement('meta');m.name='viewport';document.head.appendChild(m)}m.setAttribute('content','width=1100')}}catch(e){}})()</script><style>
 /* Layout: navy top bar with orange rule, one content column. Home = navy hero with live counts, then a grid of menu tiles. Inner pages = white panels with soft shadow. */
 :root{
   color-scheme:light; --bg:#FFFFFF; --surface:#FFFFFF; --ink:#14213D; --muted:#5F6C82; --line:#DEE4EE; --soft:#F2F5FA;
@@ -379,10 +379,10 @@ table.tl input.dtin{width:140px;padding:4px 6px;border-color:var(--line)}
 .paper table.bd .ln div:last-child{border-bottom:0}
 /* ===== Menu bawah HP ===== */
 #mnav{display:none}
-@media (max-width:900px){#mnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid #DDE3EE;box-shadow:0 -6px 20px rgba(20,40,75,.12);padding:6px 4px calc(6px + env(safe-area-inset-bottom));overflow-x:auto;gap:2px}
+@media (max-width:0px){#mnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid #DDE3EE;box-shadow:0 -6px 20px rgba(20,40,75,.12);padding:6px 4px calc(6px + env(safe-area-inset-bottom));overflow-x:auto;gap:2px}
 #mnav a{flex:1 0 auto;min-width:58px;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:#5a6a85;font-size:10.5px;font-weight:600;padding:5px 6px;border-radius:10px}
 #mnav a svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-#mnav a.on{color:#E8730C;background:#FFF4EA}body{padding-bottom:74px}}
+#mnav a.on{color:#E8730C;background:#FFF4EA}}
 @media print{#mnav{display:none!important}}
 /* ===== Peta aset ===== */
 .ptsum{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0 0 14px}
@@ -2049,7 +2049,6 @@ const SIDE=[['Menu utama'],['','Beranda','M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9
 function buildMnav(key){let m=document.getElementById('mnav');if(!m){m=document.createElement('nav');m.id='mnav';m.setAttribute('aria-label','Menu');document.body.appendChild(m)}
   m.innerHTML=SIDE.filter(x=>x.length>1).map(x=>`<a class="${(x[0]||'home')===key?'on':''}" href="#${x[0]}"><svg viewBox="0 0 24 24"><path d="${x[2]}"/></svg><span>${x[1].replace('Paket pengadaan','Paket').replace('Admin dan akses','Admin')}</span></a>`).join('')}
 function buildSide(key){
-  try{buildMnav(key)}catch(_){}
   const el=document.getElementById('side');if(!el)return;
   el.innerHTML=SIDE.map(x=>x.length===1?`<div class="sdh">${x[0]}</div>`:`<a class="sdi ${(x[0]||'home')===key?'on':''}" href="#${x[0]}"><svg viewBox="0 0 24 24"><path d="${x[2]}"/></svg>${x[1]}</a>`).join('')}
 const TITLES={'peta':'Peta aset','rab':'Buat RAB','aanw':'BA Rapat Penjelasan (Aanwijzing)','spph':'Surat Permintaan Penawaran Harga','bapph':'BA Pembukaan Penawaran','ceklist':'Ceklist Kelengkapan','fpph':'Formulir Penawaran Harga','pakta':'Pakta Integritas','paktapbj':'Pakta Integritas PBJ','suratpern':'Surat Pernyataan','coverspk':'Cover SPK','akw1':'Analisis Kewajaran Mitra 1','akw2':'Analisis Kewajaran Mitra 2','akw3':'Analisis Kewajaran Mitra 3','lembar':'Lembar Pemeriksaan Dokumen','rdsppp':'Surat Permohonan Pengujian','bapp':'BA Pengujian Barang/Jasa','bapplamp':'Lampiran BA Pengujian','paktapeng':'Pakta Integritas Penguji','bast':'BA Serah Terima (BAST)','spkdoc':'Surat Perintah Kerja (SPK)','spklamp':'Lampiran SPK','uneg':'Surat Undangan Negosiasi','baakh':'BA Analisis Kewajaran Harga','ban':'BA Negosiasi','kp':'Keputusan Penetapan','input':'Data input','daftar':'Daftar pengambilan dokumen','undangan':'Surat Undangan','':'','paket':'Paket pengadaan','baru':'Buat paket baru','timeline':'Timeline dokumen','dashboard':'Dashboard','monitoring':'Monitoring','mitra':'Mitra','rks':'Surat RKS','kak':'Kerangka Acuan Kerja','spektek':'Spesifikasi Teknis','format':'Format dokumen','admin':'Admin dan akses'};
