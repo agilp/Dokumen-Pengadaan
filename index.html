@@ -2952,6 +2952,6 @@ else try{
 }catch(e){console.error(e);window.__fbDone(false)}
 </script>
 
-<script>(function(){function f(){let st=document.getElementById('pgsize');const rb=!!document.querySelector('.pg.rbp'),L=rb||!!document.querySelector('.pg.land');if(L){if(!st){st=document.createElement('style');st.id='pgsize';document.head.appendChild(st)}st.textContent=rb?'@page{size:A4 portrait;margin:20mm 22mm}':'@page{size:A4 landscape;margin:0}'}else if(st)st.remove()}window.addEventListener('beforeprint',f);window.__pgf=f})()</script>
+<script>(function(){function f(){let st=document.getElementById('pgsize');const rb=!!document.querySelector('.pg.rbp'),L=rb||!!document.querySelector('.pg.land');if(L){if(!st){st=document.createElement('style');st.id='pgsize';document.head.appendChild(st)}st.textContent=rb?'@page{size:A4 portrait;margin:20mm 22mm}':'@page{size:A4 landscape;margin:0}'}else if(st)st.remove()}window.addEventListener('beforeprint',f);window.matchMedia&&matchMedia('print').addListener&&matchMedia('print').addListener(f);let t;new MutationObserver(()=>{clearTimeout(t);t=setTimeout(f,60)}).observe(document.body,{childList:true,subtree:true});f();window.__pgf=f})()</script>
 </body>
 </html>
