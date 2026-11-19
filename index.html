@@ -2568,6 +2568,13 @@ function rbDocLk(r){const c=rbCalc(r),P=['Assistant Manager Perawatan Bangunan D
 <table class="jt"><thead><tr><td style="text-align:center">Oleh Unit</td><td style="text-align:center">Tanggal</td><td style="text-align:center">Jam</td><td style="text-align:center">Pos Anggaran</td><td style="text-align:center">Sisa Dana</td></tr></thead><tbody><tr><td rowspan="2" style="text-align:center;vertical-align:middle;height:46px">Anggaran</td><td rowspan="2"></td><td rowspan="2"></td><td style="height:23px"></td><td></td></tr><tr><td style="height:23px"></td><td></td></tr></tbody></table>
 <p style="margin:14px 0 4px">Telah Dilakukan Pengecekan Oleh:</p>
 <table class="jt"><thead><tr><td style="width:34px;text-align:center">No</td><td style="text-align:center">Pihak-Pihak</td><td style="width:16%;text-align:center">Tanggal</td><td style="width:16%;text-align:center">Tanda Tangan</td><td style="width:16%;text-align:center">Catatan</td></tr></thead><tbody>${P.map((x,i)=>`<tr><td style="text-align:center;vertical-align:middle;height:62px">${i+1}</td><td style="vertical-align:middle">${x}</td><td></td><td></td><td></td></tr>`).join('')}</tbody></table></div></div>`}
+function rbPrintDoc(){const src=document.getElementById('rksdoc');if(!src){window.print();return}
+  const css=[...document.querySelectorAll('style')].filter(x=>x.id!=='pgsize').map(x=>x.textContent).join('\n');
+  const old=document.getElementById('rbpf');if(old)old.remove();
+  const fr=document.createElement('iframe');fr.id='rbpf';fr.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden';
+  fr.srcdoc='<!doctype html><html><head><meta charset="utf-8"><title>&nbsp;</title><style>'+css+'</style><style>@page{size:A4 portrait;margin:0}html,body{margin:0;background:#fff}</style></head><body><div class="paperwrap"><div class="paper flat">'+src.innerHTML+'</div></div></body></html>';
+  fr.onload=()=>{setTimeout(()=>{try{fr.contentWindow.focus();fr.contentWindow.print()}catch(e){window.print()}setTimeout(()=>fr.remove(),60000)},400)};
+  document.body.appendChild(fr)}
 function rbSugHide(){const e=document.getElementById('rbsug');if(e)e.remove()}
 function rbSugShow(inp){rbSugHide();const i=Number(inp.dataset.ri),x=rbItems(rbCur())[i];if(!x||x.t==='h')return;const t=inp.value.toLowerCase().split(/\s+/).filter(Boolean);if(!t.length)return;
   const all=AHS.filter(a=>!a.del&&(t.every(w=>a.low.includes(w))||t.every(w=>(a.low+' '+String(a.k).toLowerCase()).includes(w)))),rs=all.slice(0,80);if(!rs.length)return;rbSugI=0;
@@ -2621,7 +2628,7 @@ document.addEventListener('click',e=>{const pk=e.target.closest&&e.target.closes
   else if(a==='dn'&&i<it.length-1)[it[i+1],it[i]]=[it[i],it[i+1]];
   else if(a==='clear'){if(!it.length||confirm('Kosongkan semua baris RAB pekerjaan ini?'))r.rabItems=[]}
   else if(a==='apply'){const c=rbCalc(r);r.rab=c.tot||null;rbMsg('Nilai RAB di Monitoring diperbarui: '+rp(c.tot)+' (belum PPN).');return}
-  else if(a==='print'){window.print();return}
+  else if(a==='print'){rbPrintDoc();return}
   else return;
   render(true)});
 document.addEventListener('input',e=>{const t=e.target;if(!t.closest||!t.closest('#app'))return;
