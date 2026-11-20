@@ -1105,7 +1105,7 @@ V.baru=()=>{
   const ang=E?(E.ang||(m?angOf(m):'OPEX')):(m?angOf(m):'OPEX');
   const names=mitOrder().map(i=>MIT[i].nama).filter(Boolean);
   const f=(l,id,type,v,extra='',w2='')=>`<div class="fld ${w2}"><label for="${id}">${l}</label><input id="${id}" type="${type}" value="${esc(v)}" ${extra}></div>`;
-  const rk=(id,label,key,type='text',extra='',w2='')=>`<div class="fld ${w2}"><label for="${id}">${label}</label><input id="${id}" type="${type}" data-rk="${key}" value="${esc(k[key])}" ${extra}></div>`;
+  const rk=(id,label,key,type='text',extra='',w2='')=>{const au=key==='sptTahun'||key==='sptBulan';return `<div class="fld ${w2}"><label for="${id}">${label}</label><input id="${id}" type="${type}" data-rk="${key}" value="${esc(au&&sptDef(key,k[key])?'':k[key])}" ${au?'placeholder="Otomatis dari tanggal pembukaan penawaran"':''} ${extra}></div>`};
   const ps=n=>`<div class="fld"><label for="rk_p${n}">Peserta ${n+1}</label><select id="rk_p${n}" data-rk="peserta" data-k="${n}"><option value="">(belum dipilih)</option>${names.map(x=>`<option ${k.peserta[n]===x?'selected':''}>${esc(x)}</option>`).join('')}</select></div>`;
   const G=(title,body)=>`<div class="panel-h" style="border-top:1px solid var(--line)"><h2 style="font-size:14px">${title}</h2></div><div class="grid2">${body}</div>`;
   return `<div class="head"><span class="tag">${E?'Ubah paket':'Buat paket baru'}</span><h1>${E?'Paket '+esc(E.no):'Data paket'}</h1><p>Isi sekali di sini: data paket, anggaran, tanggal kunci, dan identitas surat. Berkas dokumen tinggal dipratinjau dan dicetak.</p></div>
@@ -1351,6 +1351,12 @@ const SGL=[['Kepala Daerah Operasi 2 Bandung','HENDRA WAHYONO','41124'],['Manage
 function syncSign(){const by=r=>SGL.filter(x=>x.role.trim().toLowerCase()===r.toLowerCase()),one=(r,i=0)=>by(r)[i]||{nama:'',nipp:''};
   SIGN.mgr=one('Manager Bangunan').nama;SIGN.mgrNipp=one('Manager Bangunan').nipp;SIGN.ketua=one('Ketua PBJ').nama;SIGN.ketuaNipp=one('Ketua PBJ').nipp;
   SIGN.kPeng=one('Ketua Penguji').nama;SIGN.kPengNipp=one('Ketua Penguji').nipp;SIGN.aPeng=one('Anggota Penguji').nama;SIGN.aPengNipp=one('Anggota Penguji').nipp;SIGN.aPeng2=one('Anggota Penguji',1).nama||'VACANT';SIGN.aPeng2Nipp=one('Anggota Penguji',1).nama?one('Anggota Penguji',1).nipp:'……………….';SIGN.terima=one('Penerima Barang Jasa').nama;SIGN.terimaNipp=one('Penerima Barang Jasa').nipp;SIGN.wakil=one('Perwakilan Unit PBJ').nama;SIGN.wakilNipp=one('Perwakilan Unit PBJ').nipp;SIGN.tim2=one('Anggota PBJ',1).nama||one('Anggota PBJ',0).nama;SIGN.tim3=one('Anggota PBJ',0).nama;SIGN.tim2Nipp=one('Anggota PBJ',1).nama?one('Anggota PBJ',1).nipp:one('Anggota PBJ',0).nipp;SIGN.tim3Nipp=one('Anggota PBJ',0).nipp}
+const sptDef=(key,v)=>!v||(key==='sptTahun'&&v==='2024')||(key==='sptBulan'&&v==='Desember, November, Oktober');
+function sptV(p,k){let d=null;try{const q=DTI(p,'BA Pembukaan Penawaran');d=q?d0(q):null}catch(e){}
+  const ok=d&&!isNaN(d);let th=k.sptTahun,bl=k.sptBulan;
+  if(sptDef('sptTahun',th))th=ok?String(d.getUTCFullYear()-1):'';
+  if(sptDef('sptBulan',bl))bl=ok?[1,2,3].map(i=>BLNF[(d.getUTCMonth()-i+24)%12]).join(', '):'';
+  return {th,bl}}
 const RKSDEF={fpphLok:'Ruang Rapat Unit Bangunan',tim2:'ADAM DICKY UTOMO',tim3:'RIZQI AKBAR H.',lampiran:'-',daftarTgl:'',daftarJam:'09.00',aanwJam:'11.00',aanwTempat:'Ruang Rapat Kantor Unit Bangunan Daop 2 Bandung',surtug:'KH.204/V/13/DO.2 2024 tanggal 13 Mei 2024',jabatan:'Assistant Manager Perawatan Bangunan Dinas Stasiun',pem:90,sptTahun:'2024',sptBulan:'Desember, November, Oktober',skf:'Mei 2025',mgr:'SINGGIH SUTRISNO',mgrNipp:'64486',ketua:'YUSUF FIRMANSYAH',ketuaNipp:'71871',buka:'',bukaJam:'11.00',tutup:'',tutupJam:'10.00',bapphTempat:'Ruang Rapat Unit Bangunan Daop 2 Bandung',akhJam:'13.30',akhTempat:'Ruang Rapat Kantor Bangunan Daop 2 Bandung PT Kereta Api Indonesia (Persero)',negoJam:'13.00',negoTempat:'Ruang Rapat Unit Bangunan Daop 2 Bandung',banJam:'10.30',banTempat:'Ruang Rapat Unit Bangunan Daop 2 Bandung'};
 syncSign();
 const rks=p=>{if(!p.rks)p.rks={...RKSDEF,...SIGN,tawar:['','',''],peserta:['','',''],jaminan:p.ret};else for(const q in RKSDEF)if(p.rks[q]===undefined)p.rks[q]=RKSDEF[q];return p.rks};
@@ -1469,7 +1475,7 @@ ${RK_I(0,'4.','Nomor Pokok Wajib Pajak (NPWP)')}
 ${RK_I(0,'5.','Surat Pengukuhan Pengusaha Kena Pajak (PKP)')}
 ${RK_I(0,'6.','Surat Izin Usaha Jasa Konstruksi (SIUJK) yang berlaku / Sertifikat Badan Usaha Jasa Konstruksi (SBUJK) yang masih berlaku')}
 ${RK_I(0,'7.','Tanda Daftar Perusahaan (TDP)')}
-${RK_I(0,'8.','Copy bukti laporan SPT tahunan untuk pajak tahun terakhir ('+esc(k.sptTahun)+') dan SPT masa untuk pajak 3 (tiga) bulan terakhir minimal '+esc(k.sptBulan))}
+${RK_I(0,'8.','Copy bukti laporan SPT tahunan untuk pajak tahun terakhir ('+esc(sptV(p,k).th)+') dan SPT masa untuk pajak 3 (tiga) bulan terakhir minimal '+esc(sptV(p,k).bl))}
 ${RK_I(0,'9.','Persyaratan pada poin 8 dapat diaganti dengan surat keterangan Fiskal (SKF) minimal terbit di '+esc(k.skf)+' yang dikeluarkan oleh kantor pelayanan pajak;')}
 ${RK_I(0,'10.','Referensi Bank (Asli / Foto Copy)')}
 ${RK_H2('b.','Persyaratan Data Administrasi')}
@@ -1887,7 +1893,7 @@ function lembarDoc(p){
   const k=rks(p),sg=rowOf(p,'Surat Perintah Kerja (SPK)'),c='border:1px solid #000;font-size:9px;line-height:1.08;padding:0 4px',ck='&#8730;';
   const rr=nm=>rowOf(p,nm);
   const rpb=v=>v>0?'Rp '+Number(v).toLocaleString('id-ID')+'<span style="font-size:10px"> (Belum Termasuk PPN)</span>':'';
-  const line=(no,nm,st,nomor,tgl,ket,sub)=>`<tr><td style="${c};text-align:center;width:28px">${no}</td><td style="${c}${sub?';padding-left:14px':''};white-space:nowrap">${nm}</td><td style="${c};text-align:center;width:44px">${st===1?ck:''}</td><td style="${c};text-align:center;width:44px">${st===2?ck:''}</td><td style="${c};text-align:center;width:44px">${st===3?ck:''}</td><td style="${c};white-space:nowrap">${nomor||''}</td><td style="${c};white-space:nowrap">${tgl?fmtL(tgl):''}</td><td style="${c}">${ket||''}</td></tr>`;
+  const line=(no,nm,st,nomor,tgl,ket,sub)=>`<tr><td style="${c};text-align:center;padding:0 1px">${no}</td><td style="${c}${sub?';padding-left:14px':''}">${nm}</td><td style="${c};text-align:center;width:36px">${st===1?ck:''}</td><td style="${c};text-align:center;width:36px">${st===2?ck:''}</td><td style="${c};text-align:center;width:36px">${st===3?ck:''}</td><td style="${c}">${nomor||''}</td><td style="${c};white-space:nowrap">${tgl?fmtL(tgl):''}</td><td style="${c}">${ket||''}</td></tr>`;
   const sec=x=>`<tr><td colspan="8" style="${c};background:#eee"><b>${x}</b></td></tr>`;
   const tw=(k.tawar||[]).map(Number),bp=rr('BA Pembukaan Penawaran Harga').tgl,pd=rr('Persetujuan Dana').tgl,ra=rr('Rencana Anggaran Biaya').tgl;
   const spkv=(p.mon&&Number(p.mon.spk))||0,mp=p.mon&&p.mon.mppl;
@@ -1916,7 +1922,7 @@ function lembarDoc(p){
     D.push(line('-','TDP/NIB',m.nib?1:3,esc(m.nib||''),dd(m.nibT),'',1));
     D.push(line('-','PKP',m.pkp?1:3,esc(m.pkp||''),dd(m.pkpT),'',1));
     D.push(line('-','NPWP',m.npwp?1:3,esc(m.npwp||''),null,m.pkp?'':'Non PKP',1));
-    D.push(line('-','Bukti Setor Pajak 3 Bulan Terakhir/Fiskal',1,'',null,esc((k.sptBulan||'')+' '+(k.sptTahun||'')),1));
+    D.push(line('-','Bukti Setor Pajak 3 Bulan Terakhir/Fiskal',1,'',null,esc(sptV(p,k).bl),1));
     D.push(line('-','SK Menteri Hukum & HAM Pendirian',m.kpmP?1:3,esc(m.kpmP||''),dd(m.kpmPT),'',1));
     D.push(line('-','SK Menteri Hukum & HAM Perubahan',m.kpmU?1:3,esc(m.kpmU||''),dd(m.kpmUT),'',1));
     D.push(line('-','Referensi Bank',m.refBank?1:3,esc(m.refBank||''),dd(m.refBankT),esc(m.anRek?'a.n. '+m.anRek:''),1));
@@ -1935,7 +1941,7 @@ function lembarDoc(p){
   return `<div class="pg lp nf"><div class="lpz" style="padding:4px 8px">
 <p style="text-align:center;margin:0 0 6px"><b>LEMBAR PEMERIKSAAN DOKUMEN PENGADAAN LANGSUNG</b></p>
 <table style="margin-bottom:6px;font-size:12px"><tr><td style="width:80px">UNIT</td><td>: BANGUNAN DAOP 2 BANDUNG</td></tr><tr><td>PEKERJAAN</td><td>: <b>${esc(nmK(p))}</b></td></tr></table>
-<table style="width:100%;border-collapse:collapse"><tr><td rowspan="2" style="${c};text-align:center"><b>NO</b></td><td rowspan="2" style="${c};text-align:center"><b>KELENGKAPAN DOKUMEN</b></td><td colspan="2" style="${c};text-align:center"><b>ADA</b></td><td rowspan="2" style="${c};text-align:center"><b>TIDAK ADA</b></td><td rowspan="2" style="${c};text-align:center"><b>NOMOR</b></td><td rowspan="2" style="${c};text-align:center"><b>TANGGAL</b></td><td rowspan="2" style="${c};text-align:center"><b>KETERANGAN</b></td></tr>
+<table style="width:100%;border-collapse:collapse;table-layout:fixed"><colgroup><col style="width:20px"><col style="width:25%"><col style="width:42px"><col style="width:42px"><col style="width:36px"><col style="width:23%"><col style="width:12%"><col></colgroup><tr><td rowspan="2" style="${c};text-align:center"><b>NO</b></td><td rowspan="2" style="${c};text-align:center"><b>KELENGKAPAN DOKUMEN</b></td><td colspan="2" style="${c};text-align:center"><b>ADA</b></td><td rowspan="2" style="${c};text-align:center"><b>TIDAK ADA</b></td><td rowspan="2" style="${c};text-align:center"><b>NOMOR</b></td><td rowspan="2" style="${c};text-align:center"><b>TANGGAL</b></td><td rowspan="2" style="${c};text-align:center"><b>KETERANGAN</b></td></tr>
 <tr><td style="${c};text-align:center"><b>SESUAI</b></td><td style="${c};text-align:center"><b>TIDAK SESUAI</b></td></tr>${D.join('')}</table>
 <table style="width:100%;margin-top:10px;font-size:12px"><tr><td style="vertical-align:top">DITERIMA DI UNIT PBJ<br>TGL.<br><br>KEMBALI KE USER<br>TGL.</td><td style="text-align:right;vertical-align:top">an. UNIT PBJ DAOP 2 BANDUNG<div style="height:46px"></div>………………………………..<br>NIPP. ……………</td></tr></table>
 </div></div>`}
