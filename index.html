@@ -1105,7 +1105,7 @@ V.baru=()=>{
   const ang=E?(E.ang||(m?angOf(m):'OPEX')):(m?angOf(m):'OPEX');
   const names=mitOrder().map(i=>MIT[i].nama).filter(Boolean);
   const f=(l,id,type,v,extra='',w2='')=>`<div class="fld ${w2}"><label for="${id}">${l}</label><input id="${id}" type="${type}" value="${esc(v)}" ${extra}></div>`;
-  const rk=(id,label,key,type='text',extra='',w2='')=>{const au=key==='sptTahun'||key==='sptBulan';return `<div class="fld ${w2}"><label for="${id}">${label}</label><input id="${id}" type="${type}" data-rk="${key}" value="${esc(au&&sptDef(key,k[key])?'':k[key])}" ${au?'placeholder="Otomatis dari tanggal pembukaan penawaran"':''} ${extra}></div>`};
+  const rk=(id,label,key,type='text',extra='',w2='')=>{const au=key==='sptTahun'||key==='sptBulan'||key==='skf';return `<div class="fld ${w2}"><label for="${id}">${label}</label><input id="${id}" type="${type}" data-rk="${key}" value="${esc(au&&sptDef(key,k[key])?'':k[key])}" ${au?'placeholder="Otomatis dari tanggal pembukaan penawaran"':''} ${extra}></div>`};
   const ps=n=>`<div class="fld"><label for="rk_p${n}">Peserta ${n+1}</label><select id="rk_p${n}" data-rk="peserta" data-k="${n}"><option value="">(belum dipilih)</option>${names.map(x=>`<option ${k.peserta[n]===x?'selected':''}>${esc(x)}</option>`).join('')}</select></div>`;
   const G=(title,body)=>`<div class="panel-h" style="border-top:1px solid var(--line)"><h2 style="font-size:14px">${title}</h2></div><div class="grid2">${body}</div>`;
   return `<div class="head"><span class="tag">${E?'Ubah paket':'Buat paket baru'}</span><h1>${E?'Paket '+esc(E.no):'Data paket'}</h1><p>Isi sekali di sini: data paket, anggaran, tanggal kunci, dan identitas surat. Berkas dokumen tinggal dipratinjau dan dicetak.</p></div>
@@ -1351,12 +1351,13 @@ const SGL=[['Kepala Daerah Operasi 2 Bandung','HENDRA WAHYONO','41124'],['Manage
 function syncSign(){const by=r=>SGL.filter(x=>x.role.trim().toLowerCase()===r.toLowerCase()),one=(r,i=0)=>by(r)[i]||{nama:'',nipp:''};
   SIGN.mgr=one('Manager Bangunan').nama;SIGN.mgrNipp=one('Manager Bangunan').nipp;SIGN.ketua=one('Ketua PBJ').nama;SIGN.ketuaNipp=one('Ketua PBJ').nipp;
   SIGN.kPeng=one('Ketua Penguji').nama;SIGN.kPengNipp=one('Ketua Penguji').nipp;SIGN.aPeng=one('Anggota Penguji').nama;SIGN.aPengNipp=one('Anggota Penguji').nipp;SIGN.aPeng2=one('Anggota Penguji',1).nama||'VACANT';SIGN.aPeng2Nipp=one('Anggota Penguji',1).nama?one('Anggota Penguji',1).nipp:'……………….';SIGN.terima=one('Penerima Barang Jasa').nama;SIGN.terimaNipp=one('Penerima Barang Jasa').nipp;SIGN.wakil=one('Perwakilan Unit PBJ').nama;SIGN.wakilNipp=one('Perwakilan Unit PBJ').nipp;SIGN.tim2=one('Anggota PBJ',1).nama||one('Anggota PBJ',0).nama;SIGN.tim3=one('Anggota PBJ',0).nama;SIGN.tim2Nipp=one('Anggota PBJ',1).nama?one('Anggota PBJ',1).nipp:one('Anggota PBJ',0).nipp;SIGN.tim3Nipp=one('Anggota PBJ',0).nipp}
-const sptDef=(key,v)=>!v||(key==='sptTahun'&&v==='2024')||(key==='sptBulan'&&v==='Desember, November, Oktober');
+const sptDef=(key,v)=>!v||(key==='skf'&&v==='Mei 2025')||(key==='sptTahun'&&v==='2024')||(key==='sptBulan'&&v==='Desember, November, Oktober');
 function sptV(p,k){let d=null;try{const q=DTI(p,'BA Pembukaan Penawaran');d=q?d0(q):null}catch(e){}
   const ok=d&&!isNaN(d);let th=k.sptTahun,bl=k.sptBulan;
   if(sptDef('sptTahun',th))th=ok?String(d.getUTCFullYear()-1):'';
   if(sptDef('sptBulan',bl))bl=ok?[1,2,3].map(i=>BLNF[(d.getUTCMonth()-i+24)%12]).join(', '):'';
-  return {th,bl}}
+  let sk=k.skf;if(sptDef('skf',sk))sk=ok?BLNF[(d.getUTCMonth()-3+24)%12]+' '+(d.getUTCFullYear()-(d.getUTCMonth()<3?1:0)):'';
+  return {th,bl,sk}}
 const RKSDEF={fpphLok:'Ruang Rapat Unit Bangunan',tim2:'ADAM DICKY UTOMO',tim3:'RIZQI AKBAR H.',lampiran:'-',daftarTgl:'',daftarJam:'09.00',aanwJam:'11.00',aanwTempat:'Ruang Rapat Kantor Unit Bangunan Daop 2 Bandung',surtug:'KH.204/V/13/DO.2 2024 tanggal 13 Mei 2024',jabatan:'Assistant Manager Perawatan Bangunan Dinas Stasiun',pem:90,sptTahun:'2024',sptBulan:'Desember, November, Oktober',skf:'Mei 2025',mgr:'SINGGIH SUTRISNO',mgrNipp:'64486',ketua:'YUSUF FIRMANSYAH',ketuaNipp:'71871',buka:'',bukaJam:'11.00',tutup:'',tutupJam:'10.00',bapphTempat:'Ruang Rapat Unit Bangunan Daop 2 Bandung',akhJam:'13.30',akhTempat:'Ruang Rapat Kantor Bangunan Daop 2 Bandung PT Kereta Api Indonesia (Persero)',negoJam:'13.00',negoTempat:'Ruang Rapat Unit Bangunan Daop 2 Bandung',banJam:'10.30',banTempat:'Ruang Rapat Unit Bangunan Daop 2 Bandung'};
 syncSign();
 const rks=p=>{if(!p.rks)p.rks={...RKSDEF,...SIGN,tawar:['','',''],peserta:['','',''],jaminan:p.ret};else for(const q in RKSDEF)if(p.rks[q]===undefined)p.rks[q]=RKSDEF[q];return p.rks};
@@ -1476,7 +1477,7 @@ ${RK_I(0,'5.','Surat Pengukuhan Pengusaha Kena Pajak (PKP)')}
 ${RK_I(0,'6.','Surat Izin Usaha Jasa Konstruksi (SIUJK) yang berlaku / Sertifikat Badan Usaha Jasa Konstruksi (SBUJK) yang masih berlaku')}
 ${RK_I(0,'7.','Tanda Daftar Perusahaan (TDP)')}
 ${RK_I(0,'8.','Copy bukti laporan SPT tahunan untuk pajak tahun terakhir ('+esc(sptV(p,k).th)+') dan SPT masa untuk pajak 3 (tiga) bulan terakhir minimal '+esc(sptV(p,k).bl))}
-${RK_I(0,'9.','Persyaratan pada poin 8 dapat diaganti dengan surat keterangan Fiskal (SKF) minimal terbit di '+esc(k.skf)+' yang dikeluarkan oleh kantor pelayanan pajak;')}
+${RK_I(0,'9.','Persyaratan pada poin 8 dapat diaganti dengan surat keterangan Fiskal (SKF) minimal terbit di '+esc(sptV(p,k).sk)+' yang dikeluarkan oleh kantor pelayanan pajak;')}
 ${RK_I(0,'10.','Referensi Bank (Asli / Foto Copy)')}
 ${RK_H2('b.','Persyaratan Data Administrasi')}
 ${RK_T('Peserta Pengadaan barang/jasa harus melampirkan Asli dan Copy dokumen-dokumen tersebut dibawah ini, yaitu:')}
