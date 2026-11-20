@@ -1779,7 +1779,7 @@ ${blank}
 
 /* ---------- Pengujian, serah terima, cover SPK, lembar pemeriksaan ---------- */
 const surtugN=k=>String(k.surtug).replace(/DO\.2 (\d{4})/,'DO.2-$1').replace(/ tanggal /,' Tanggal ');
-const mitM=nm=>(nm?MIT.find(x=>x.nama===nm):null)||{};
+const mitM=nm=>{if(!nm)return{};const t=String(nm).trim().toLowerCase();return MIT.find(x=>x.nama===nm)||MIT.find(x=>String(x.nama||'').trim().toLowerCase()===t)||MIT.find(x=>mkey(x.nama)&&mkey(x.nama)===mkey(nm))||{}};
 const dM=v=>{if(!v)return '';try{const t=d0(String(v).slice(0,10));return isNaN(t)?esc(v):fmtL(t)}catch(e){return esc(v)}};
 const mitraNm=p=>lowNm(p);
 const ttdPeng=(t,h=56)=>`<table style="width:100%"><tr>${sgn('Ketua',SIGN.kPeng,SIGN.kPengNipp,h)}${sgn('Anggota',SIGN.aPeng,SIGN.aPengNipp,h)}${sgn('Anggota',SIGN.aPeng2,SIGN.aPeng2Nipp,h)}</tr></table>`;
@@ -1909,17 +1909,17 @@ function lembarDoc(p){
     D.push(line('-','Rincian Penawaran<br>Nilai Penawaran',1,esc(mr.no),bp,rpb(tw[i]),1));
     D.push(line('-','Rekening Bank<br>MPPL',m.noRek?1:3,esc([m.bank,m.noRek].filter(Boolean).join(' ')),null,mp?'MPPL '+esc(mp):'',1));
     D.push(line('-','Pakta Integritas',1,'',bp,'',1));
-    D.push(line('-','Akta Pendirian',m.aktaNo?1:3,esc(m.aktaNo||''),m.aktaTgl&&!isNaN(d0(String(m.aktaTgl).slice(0,10)))?d0(String(m.aktaTgl).slice(0,10)):null,'',1));
-    const dd=v=>v&&!isNaN(d0(String(v).slice(0,10)))?d0(String(v).slice(0,10)):null;
+    const dd=v=>{v=String(v||'').trim();if(!v)return null;let x=v.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);if(x)v=x[3]+'-'+x[2].padStart(2,'0')+'-'+x[1].padStart(2,'0');v=v.slice(0,10);return /^\d{4}-\d\d-\d\d$/.test(v)&&!isNaN(d0(v))?d0(v):null};
+    D.push(line('-','Akta Pendirian',m.aktaNo?1:3,esc(m.aktaNo||''),dd(m.aktaTgl),esc(m.notaris?'Notaris '+m.notaris:''),1));
     D.push(line('-','Akta Perubahan (jika ada)',m.aktaUbah?1:3,esc(m.aktaUbah||''),dd(m.aktaUbahT),'',1));
-    D.push(line('-','SIUP/IUJK/SBUJK',m.siup?1:3,esc(m.siup||''),dd(m.siupT),'',1));
+    D.push(line('-','SIUP/IUJK/SBUJK',m.siup?1:3,esc(m.siup||''),dd(m.siupT),(()=>{const a=m.aktif?aktifView(m.aktif)[0]:'';return a?'Masa aktif: '+esc(a==='aktif'?m.aktif:a):''})(),1));
     D.push(line('-','TDP/NIB',m.nib?1:3,esc(m.nib||''),dd(m.nibT),'',1));
     D.push(line('-','PKP',m.pkp?1:3,esc(m.pkp||''),dd(m.pkpT),'',1));
-    D.push(line('-','NPWP',m.npwp?1:3,esc(m.npwp||''),null,'',1));
+    D.push(line('-','NPWP',m.npwp?1:3,esc(m.npwp||''),null,m.pkp?'':'Non PKP',1));
     D.push(line('-','Bukti Setor Pajak 3 Bulan Terakhir/Fiskal',1,'',null,esc((k.sptBulan||'')+' '+(k.sptTahun||'')),1));
     D.push(line('-','SK Menteri Hukum & HAM Pendirian',m.kpmP?1:3,esc(m.kpmP||''),dd(m.kpmPT),'',1));
     D.push(line('-','SK Menteri Hukum & HAM Perubahan',m.kpmU?1:3,esc(m.kpmU||''),dd(m.kpmUT),'',1));
-    D.push(line('-','Referensi Bank',m.refBank?1:3,esc(m.refBank||''),dd(m.refBankT),'',1));
+    D.push(line('-','Referensi Bank',m.refBank?1:3,esc(m.refBank||''),dd(m.refBankT),esc(m.anRek?'a.n. '+m.anRek:''),1));
     D.push(line('-','Daftar & Nilai Pekerjaan di Lingkungan PT KAI selama 1 Tahun',3,'',null,'(Khusus CV & Bermaterai)',1));});
   D.push(line(5,'Berita Acara Pembukaan Penawaran',1,esc(rr('BA Pembukaan Penawaran Harga').no),bp).replace('>5<','>6<'));
   D.push(line(7,'Form Penilaian Data Administrasi & Teknis',1,'',bp));
