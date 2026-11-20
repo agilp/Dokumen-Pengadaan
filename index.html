@@ -2165,7 +2165,6 @@ function katPu(x){const r=x.r,n=r[1],c=r[0],p=r[2];let m;
  if(/Besi beton/.test(c)){m=n.match(/(\d+)\s*mm/);const W={8:.395,10:.617,12:.888,13:1.04,16:1.58,19:2.226};if(m&&W[m[1]]){const q=Math.round(W[m[1]]*12*100)/100;return{q,u:'kg',per:p/q,note:'Bobot teoretis '+q.toLocaleString('id-ID')+' kg per batang 12 m (d²/162). Berat asli di toko bisa sedikit lebih ringan, jadi harga per kg asli sedikit lebih tinggi.'}}}
  if(/^Keramik & granit/.test(c))return{q:1.44,u:'m²',per:p/1.44,note:'Asumsi 1 dus = 4 lembar 60x60 = 1,44 m². Cek isi dus di halaman toko.'};
  if(/^Baja ringan/.test(c)){if(/Sekrup/.test(n)){m=n.match(/(\d+)\s*pcs/);const q=m?+m[1]:1000;return{q,u:'pcs',per:p/q,note:'Isi '+q.toLocaleString('id-ID')+' pcs per bungkus'}}return{q:6,u:'m',per:p/6,note:'Asumsi panjang 1 batang 6 m'}}
- if(/^Tandon/.test(c)){m=n.match(/(\d[\d.]*)\s*L\b/);if(m){const q=parseInt(m[1].replace(/\./g,''),10);return{q,u:'liter kapasitas',per:p/q,note:'Kapasitas '+q.toLocaleString('id-ID')+' liter'}}}
  return null}
 function katPuH(x){const u=katPu(x);return u?`<div class="katsub" style="margin-top:2px;white-space:nowrap">≈ ${rbRp(Math.round(u.per))} / ${u.u.replace(' kapasitas','')}</div>`:''}
 function katPuR(x){const u=katPu(x);return u?`<tr><th>Harga per ${esc(u.u.replace(' kapasitas',''))}</th><td><b>${rbRp(Math.round(u.per))}</b> / ${esc(u.u.replace(' kapasitas',''))}<div class="katsub">${esc(u.note)}</div></td></tr>`:''}
