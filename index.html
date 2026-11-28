@@ -1594,11 +1594,11 @@ function lgFilter(arr,p,kind){const s=lgSel(p),out=[];let bab=-1,c=0,skip=false,
 function kakDoc(p){const nm=nmK(p),yr=ldYear(p,'Kerangka Acuan Kerja'),M=rbSgd('Manager Bangunan'),A=rbSgd('Penerima Barang Jasa'),pen=Number(p.pen)||0;
   const sub=t=>t.replace('FALSE ()',pen?`${pen} (${terb(pen)}) hari kalender`.replace(/\s+hari kalender$/,'')+'':'. . .').replace('Dana RKAD Unit Bangunan Tahun 2025','Dana RKAD Unit Bangunan Tahun '+yr);
   const sg=(a,b,x)=>`<td style="width:50%;text-align:center;vertical-align:top;border:0">${a}<br>${b}<div style="height:90px"></div><b><u>${esc(x.nama)}</u></b><br><b>NIPP. ${esc(x.nipp)}</b></td>`;
-  const cover=ldFrame(`<div style="padding-top:10mm">${ldLogo(260)}</div><div><p style="margin:0 0 14px;font-weight:700;font-size:28px">KERANGKA ACUAN KERJA</p><p style="margin:0 0 30px;font-weight:700;font-size:28px">TERM OF REFERENCES (TOR)</p><p style="margin:0;font-weight:700;font-size:22px;line-height:1.35">${esc(nm.toUpperCase())}</p></div><table style="width:100%;font-size:17px"><tr>${sg('Diperiksa oleh,','Manager Bangunan<br>Daop 2 Bandung',M)}${sg('Dibuat oleh,','Ass. Manager Perawatan Bangunan<br>Dinas Non Stasiun',A)}</tr></table>`);
+  const cover=ldFrame(`<div style="padding-top:10mm">${ldLogo(150)}</div><div><p style="margin:0 0 14px;font-weight:700;font-size:28px">KERANGKA ACUAN KERJA</p><p style="margin:0 0 30px;font-weight:700;font-size:28px">TERM OF REFERENCES (TOR)</p><p style="margin:0;font-weight:700;font-size:22px;line-height:1.35">${esc(nm.toUpperCase())}</p></div><table style="width:100%;font-size:17px"><tr>${sg('Diperiksa oleh,','Manager Bangunan<br>Daop 2 Bandung',M)}${sg('Dibuat oleh,','Ass. Manager Perawatan Bangunan<br>Dinas Non Stasiun',A)}</tr></table>`);
   return `<div class="ldoc" style="font-size:14px;line-height:1.4">${cover}${ldBody(lgFilter(ldDoc('kakdata'),p,'kak'),sub)}</div>`}
 function spekDoc(p){const nm=nmK(p),yr=ldYear(p,'Spesifikasi Teknis');
   const sub=t=>t.replace('dilaksanakan adalah .','dilaksanakan adalah '+nm+'.');
-  const cover=ldFrame(`<div style="padding-top:6mm"><p style="margin:0 0 14px;font-weight:700;font-size:30px;letter-spacing:.02em">SPESIFIKASI TEKNIS</p><p style="margin:0;font-weight:700;font-size:23px;line-height:1.35">${esc(nm.toUpperCase())}</p></div><div>${ldLogo(260)}</div><div style="font-weight:700;line-height:1.7;font-size:20px">PT. KERETA API INDONESIA (Persero)<br>UNIT BANGUNAN<br>DAERAH OPERASI 2 BANDUNG<br>${yr}</div>`);
+  const cover=ldFrame(`<div style="padding-top:6mm"><p style="margin:0 0 14px;font-weight:700;font-size:30px;letter-spacing:.02em">SPESIFIKASI TEKNIS</p><p style="margin:0;font-weight:700;font-size:23px;line-height:1.35">${esc(nm.toUpperCase())}</p></div><div>${ldLogo(150)}</div><div style="font-weight:700;line-height:1.7;font-size:20px">PT. KERETA API INDONESIA (Persero)<br>UNIT BANGUNAN<br>DAERAH OPERASI 2 BANDUNG<br>${yr}</div>`);
   const arr=lgFilter(ldDoc('spekdata'),p,'spek');if(arr[0])arr[0].first=1;
   const Mg=rbSgd('Manager Bangunan'),As=rbSgd('Penerima Barang Jasa'),sg=(a,b,x)=>`<td style="width:50%;text-align:center;vertical-align:top;border:0">${a}<br>${b}<div style="height:90px"></div><b><u>${esc(x.nama)}</u></b><br><b>NIPP. ${esc(x.nipp)}</b></td>`;
   const ttd=`<table style="width:100%;margin-top:34px;page-break-inside:avoid"><tr>${sg('Diperiksa oleh,','Manager Bangunan<br>Daop 2 Bandung',Mg)}${sg('Dibuat oleh,','Ass. Manager Perawatan Bangunan<br>Dinas Non Stasiun',As)}</tr></table>`;
@@ -1810,14 +1810,16 @@ const mitraNm=p=>lowNm(p);
 const ttdPeng=(t,h=56)=>`<table style="width:100%"><tr>${sgn('Ketua',SIGN.kPeng,SIGN.kPengNipp,h)}${sgn('Anggota',SIGN.aPeng,SIGN.aPengNipp,h)}${sgn('Anggota',SIGN.aPeng2,SIGN.aPeng2Nipp,h)}</tr></table>`;
 const ttdMit=(p,h=56)=>{const nm=mitraNm(p);return `<div style="text-align:center;margin-top:16px"><b>PENYEDIA JASA</b><br>${esc(nm)}<div style="height:${h}px"></div><b><u>${esc(dirOf(nm))||'&nbsp;'}</u></b><br>DIREKTUR</div>`};
 V.coverspk=()=>{const p=pkg(cur);return docView('Cover SPK','Cover SPK',coverSpkDoc(p),kpmiss(p),'flat')};
-function coverSpkDoc(p){const d=rowOf(p,'Surat Perintah Kerja (SPK)');
-  return `<div class="pg nf"><div style="position:absolute;inset:8mm;pointer-events:none"><div style="position:absolute;inset:0;border:1px solid #000"></div><div style="position:absolute;inset:1.5mm;border:3px solid #000"></div></div><div style="padding:90px 40px 140px;text-align:center;line-height:1.6;font-size:17px"><div style="margin:0 0 40px">${ldLogo(110)}</div>
-<p style="margin:0 0 6px"><b>SURAT PERINTAH KERJA ( SPK )</b></p><p style="margin:0 0 60px">${esc(d.no)}</p>
-<p style="margin:0 0 60px">ANTARA</p>
-<p style="margin:0 0 60px"><b>PT. KERETA API INDONESIA (Persero)<br>Daerah Operasi 2 Bandung<br>Jl. Stasiun Selatan Nomor 25 Bandung</b></p>
-<p style="margin:0 0 60px">DENGAN</p>
-<p style="margin:0 0 60px"><b>${esc(mitraNm(p))}</b></p>
-<p style="margin:0 0 10px">UNTUK PEKERJAAN</p><p style="margin:0;border:2px solid #000;padding:10px 14px"><b>${esc(nmK(p)).toUpperCase()}</b></p>
+function coverSpkDoc(p){const d=rowOf(p,'Surat Perintah Kerja (SPK)'),X='-webkit-print-color-adjust:exact;print-color-adjust:exact';
+  const lb='font:700 11px/1.2 Arial,sans-serif;letter-spacing:3px;color:#E8751A;margin:34px 0 8px';
+  return `<div class="pg nf" style="position:relative;overflow:hidden;height:297mm;min-height:297mm;padding:0!important"><div style="position:absolute;left:0;top:0;bottom:0;width:130px;background:#13294B;${X}"></div><div style="position:absolute;left:0;bottom:70px;width:130px;display:flex;justify-content:center"><div style="writing-mode:vertical-rl;transform:rotate(180deg);color:#fff;font:800 92px/1 Arial,sans-serif;letter-spacing:12px;${X}">SPK</div></div><div style="position:absolute;left:200px;right:56px;top:90px;text-align:left;line-height:1.35">
+<div style="margin:0 0 26px">${ldLogo(84)}</div>
+<p style="font:700 11px/1.2 Arial,sans-serif;letter-spacing:3px;color:#E8751A;margin:0 0 8px">SURAT PERINTAH KERJA</p>
+<p style="margin:0 0 8px;font-size:16px">${esc(d.no)}</p>
+<p style="font-size:27px;font-weight:bold;margin:34px 0 18px;line-height:1.25">${esc(nmK(p)).toUpperCase()}</p>
+<div style="height:5px;width:90px;background:#E8751A;margin:0 0 6px;${X}"></div>
+<p style="${lb}">ANTARA</p><p style="font-size:19px;font-weight:bold;margin:0">PT. Kereta Api Indonesia (Persero)<br>Daerah Operasi 2 Bandung<br><span style="font-weight:normal;font-size:15px">Jl. Stasiun Selatan Nomor 25 Bandung</span></p>
+<p style="${lb}">DENGAN</p><p style="font-size:19px;font-weight:bold;margin:0">${esc(mitraNm(p))}</p>
 </div></div>`}
 V.rdsppp=()=>{const p=pkg(cur);return docView('Surat Permohonan Pengujian','RDS Permohonan Pengujian',pppDoc(p),[],'flat')};
 function pppDoc(p){
